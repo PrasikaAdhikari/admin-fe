@@ -1,21 +1,19 @@
-import { Button } from "react-bootstrap";
-import "./App.css";
-import { ToastContainer, toast } from "react-toastify";
-import { RiHome4Fill } from "react-icons/ri";
+import React from "react";
+import { Routes, Route } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+import Dashboard from "./pages/dashboard/Dashboard";
+import { Navigate } from "react-router-dom";
 
-function App() {
-  toast.success("vOILA!");
+const App = () => {
   return (
     <>
-      <Button>
-        {" "}
-        Click here
-        <RiHome4Fill />
-      </Button>
-      <h1> Hello world</h1>
       <ToastContainer />
+      <Routes>
+        <Route path="/" element={<Navigate to="/dashboard" />} />
+        <Route path="/dashboard" element={<Dashboard />} />
+      </Routes>
     </>
   );
-}
+};
 
 export default App;
