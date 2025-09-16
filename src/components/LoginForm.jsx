@@ -1,31 +1,45 @@
 import { Button, Form } from "react-bootstrap";
+import "bootstrap-icons/font/bootstrap-icons.css";
 import { Link } from "react-router-dom";
 import { CustomInput } from "./customInput";
 
 const LoginForm = () => {
   return (
-    <Form>
-      <fieldset disabled>
-        <Form.Group className="mb-3">
-          <Form.Label htmlFor="disabledTextInput">Disabled input</Form.Label>
-          <Form.Control id="disabledTextInput" placeholder="Disabled input" />
-        </Form.Group>
-        <Form.Group className="mb-3">
-          <Form.Label htmlFor="disabledSelect">Disabled select menu</Form.Label>
-          <Form.Select id="disabledSelect">
-            <option>Disabled select</option>
-          </Form.Select>
-        </Form.Group>
-        <Form.Group className="mb-3">
-          <Form.Check
-            type="checkbox"
-            id="disabledFieldsetCheck"
-            label="Can't check this"
-          />
-        </Form.Group>
-        <Button type="submit">Submit</Button>
-      </fieldset>
-    </Form>
+    <>
+      <div className="mt-5 border border-dark border-lg p-5 rounded rounded-3 w-50 mx-auto">
+        <div className="text-center h4">
+          <i className="bi bi-shop"></i>
+        </div>
+        <div className="text-center">
+          <h2>Admin Login Page</h2>
+          <p>Access your dashboard</p>
+        </div>
+        <hr />
+        <Form>
+          <Form.Group className="mb-3">
+            <Form.Label htmlFor="disabledTextInput">Email</Form.Label>
+            <Form.Control id="disabledTextInput" placeholder="Enter email" />
+          </Form.Group>
+          <Form.Group className="mb-3">
+            <Form.Label htmlFor="disabledTextInput">Password</Form.Label>
+            <Form.Control
+              id="disabledTextInput"
+              placeholder="Enter password
+        "
+            />
+          </Form.Group>
+
+          <Form.Group className="mb-3">
+            {/* <Form.Check
+          type="checkbox"
+          id="disabledFieldsetCheck"
+          label="Can't check this"
+        /> */}
+          </Form.Group>
+          <Button type="submit">Submit</Button>
+        </Form>
+      </div>
+    </>
   );
 };
 
