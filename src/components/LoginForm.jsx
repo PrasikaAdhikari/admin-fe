@@ -1,7 +1,5 @@
 import { Button, Form } from "react-bootstrap";
 import "bootstrap-icons/font/bootstrap-icons.css";
-import { Link } from "react-router-dom";
-import { CustomInput } from "./customInput";
 
 const LoginForm = () => {
   return (
@@ -17,26 +15,15 @@ const LoginForm = () => {
         <hr />
         <Form>
           <Form.Group className="mb-3">
-            <Form.Label htmlFor="disabledTextInput">Email</Form.Label>
-            <Form.Control id="disabledTextInput" placeholder="Enter email" />
+            <Form.Label>Email</Form.Label>
+            <Form.Control placeholder="Enter email" />
           </Form.Group>
           <Form.Group className="mb-3">
             <Form.Label htmlFor="disabledTextInput">Password</Form.Label>
-            <Form.Control
-              id="disabledTextInput"
-              placeholder="Enter password
-        "
-            />
+            <Form.Control placeholder="Enter password" />
           </Form.Group>
 
-          <Form.Group className="mb-3">
-            {/* <Form.Check
-          type="checkbox"
-          id="disabledFieldsetCheck"
-          label="Can't check this"
-        /> */}
-          </Form.Group>
-          <Button type="submit">Submit</Button>
+          <Button type="submit">Login</Button>
         </Form>
       </div>
     </>
