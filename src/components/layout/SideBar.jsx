@@ -17,7 +17,7 @@ const Sidebar = ({ isOpen, isMobile, onToggle, showHamburger }) => {
       {(!isMobile || isOpen) && (
         <div
           style={{
-            width: "200px",
+            width: "230px",
             height: "100vh",
             background: "#2a3877ff",
             color: "#fff",
@@ -37,6 +37,8 @@ const Sidebar = ({ isOpen, isMobile, onToggle, showHamburger }) => {
               gap: "12px",
             }}
           >
+            <h1 style={{ margin: 0, color: "#f1f1f1ff" }}> Dashboard</h1>
+            <br></br>
             <li>Home</li>
             <li>Products</li>
             <li>About</li>

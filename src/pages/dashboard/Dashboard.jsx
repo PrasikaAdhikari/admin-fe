@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Sidebar from "../../components/layout/SideBar";
+import admin from "../../assets/admin.avif";
 
 // Main Dashboard Component
 const AdminDashboard = () => {
@@ -88,11 +89,21 @@ const AdminDashboard = () => {
             borderRadius: "8px",
           }}
         >
-          <h1 style={{ margin: 0, color: "#333" }}>Admin Dashboard</h1>
+          <h1 style={{ margin: 0, color: "#333" }}>Welcome, Admin</h1>
           <div style={{ display: "flex", alignItems: "center" }}>
             {/* Placeholder user info */}
             <div style={{ marginLeft: "20px" }}>
-              <span style={{ color: "#666" }}>Welcome, Admin</span>
+              <img
+                src={admin}
+                alt="Admin"
+                style={{
+                  width: "64px",
+                  height: "64px",
+                  borderRadius: "50%",
+                  objectFit: "cover",
+                  border: "1px solid #ccc",
+                }}
+              />
             </div>
           </div>
         </header>
