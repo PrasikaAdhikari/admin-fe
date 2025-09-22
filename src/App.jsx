@@ -1,25 +1,23 @@
-import { Button } from "react-bootstrap";
 import "./App.css";
-import { Route, Routes } from "react-router-dom";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 import Login from "./pages/Login";
-import { Provider } from "react-redux";
 import Dashboard from "./pages/Dashboard";
+import { Routes, Route } from "react-router-dom";
 
-function App() {
-  toast.success("vOILA!");
+const App = () => {
   return (
     <>
-      <div>
-        <Routes>
-          <Route index element={<Login />}></Route>
-          <Route path="dashboard" element={<Dashboard />} />
-        </Routes>
-      </div>
-      <ToastContainer />
+    
+      <ToastContainer position="top-right" autoClose={3000} />
+
+      <Routes>
+        <Route path="/" element={<Login />} />
+        <Route path="/dashboard" element={<Dashboard />} />
+      </Routes>
     </>
   );
-}
+};
 
 export default App;
