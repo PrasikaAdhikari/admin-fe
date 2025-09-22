@@ -4,7 +4,7 @@ const apiUrl = import.meta.env.VITE_APP_API_URL + "/api/v1";
 export const loginUser = async (obj) => {
   return apiProcessor({
     method: "POST",
-    url: `${apiUrl}/auth/login`,
+    url: `${apiUrl}/login`,
     data: obj,
   });
 };
