@@ -1,18 +1,20 @@
-import React from "react";
-import { Routes, Route } from "react-router-dom";
+import "./App.css";
 import { ToastContainer } from "react-toastify";
-import Dashboard from "./pages/dashboard/Dashboard";
-import { Navigate } from "react-router-dom";
-import Sidebar from "./components/layout/SideBar";
+import "react-toastify/dist/ReactToastify.css";
+
+import Login from "./pages/Login";
+import Dashboard from "./pages/Dashboard";
+import { Routes, Route } from "react-router-dom";
 
 const App = () => {
   return (
     <>
-      <ToastContainer />
+    
+      <ToastContainer position="top-right" autoClose={3000} />
+
       <Routes>
-        <Route path="/" element={<Navigate to="/dashboard" />} />
+        <Route path="/" element={<Login />} />
         <Route path="/dashboard" element={<Dashboard />} />
-        {/* <Route path="/" element={<Navigate to="/sidebar" />} /> */}
       </Routes>
     </>
   );
