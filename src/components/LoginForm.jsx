@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, useLocation } from "react-router-dom";
 import { toast } from "react-toastify";
 import { Button, Form } from "react-bootstrap";
-import "bootstrap-icons/font/bootstrap-icons.css";
+// import "bootstrap-icons/font/bootstrap-icons.css";
 import { loginUserAction } from "../features/users/userActions";
 
 const LoginForm = () => {

@@ -1,22 +1,15 @@
-import "./App.css";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-
+import React from "react";
+import { Routes, Route, Navigate } from "react-router-dom";
 import Login from "./pages/Login";
-import Dashboard from "./pages/Dashboard";
-import { Routes, Route } from "react-router-dom";
+
+import AdminDashboard from "./pages/dashboard/Dashboard";
 
 const App = () => {
   return (
-    <>
-    
-      <ToastContainer position="top-right" autoClose={3000} />
-
-      <Routes>
-        <Route path="/" element={<Login />} />
-        <Route path="/dashboard" element={<Dashboard />} />
-      </Routes>
-    </>
+    <Routes>
+      <Route path="/" element={<Login />} />
+      <Route path="/dashboard" element={<AdminDashboard />} />
+    </Routes>
   );
 };
 

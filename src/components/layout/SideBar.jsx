@@ -1,11 +1,11 @@
 import React from "react";
 import { GiHamburgerMenu } from "react-icons/gi";
 
-const Sidebar = ({ isOpen, isMobile, onToggle, showHamburger }) => {
+const Sidebar = ({ isOpen, isMobile, onToggle }) => {
   return (
     <div className="flex">
-      {/* Hamburger for mobile, always visible when showHamburger is true */}
-      {showHamburger && (
+      {/* Hamburger visible on mobile */}
+      {isMobile && (
         <GiHamburgerMenu
           size={30}
           style={{ margin: "10px", cursor: "pointer" }}
@@ -13,7 +13,7 @@ const Sidebar = ({ isOpen, isMobile, onToggle, showHamburger }) => {
         />
       )}
 
-      {/* Sidebar content, hidden when closed on mobile */}
+      {/* Sidebar content */}
       {(!isMobile || isOpen) && (
         <div
           style={{
@@ -37,14 +37,14 @@ const Sidebar = ({ isOpen, isMobile, onToggle, showHamburger }) => {
               gap: "12px",
             }}
           >
-            <h1 style={{ margin: 0, color: "#f1f1f1ff" }}> Dashboard</h1>
-            <br></br>
+            <h1 style={{ margin: 0, color: "#f1f1f1ff" }}>Dashboard</h1>
+            <br />
             <li>Home</li>
             <li>Products</li>
             <li>About</li>
-            <li>Contact</li>
             <li>Users</li>
             <li>Orders</li>
+            <li>Reviews</li>
           </ul>
         </div>
       )}
