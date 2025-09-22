@@ -15,7 +15,7 @@ export const apiProcessor = async ({
         data: data,
         headers: isPrivate
           ? {
-              Authorization: "Bearer " + sessionStorage.getItem("accessToken"),
+              Authorization: sessionStorage.getItem("accessToken"),
               "Content-type": contentType,
             }
           : {},
@@ -27,7 +27,7 @@ export const apiProcessor = async ({
       data: data,
       headers: isPrivate
         ? {
-            Authorization: "Bearer " + sessionStorage.getItem("accessToken"),
+            Authorization: sessionStorage.getItem("accessToken"),
             "Content-type": contentType,
           }
         : {},
@@ -36,7 +36,7 @@ export const apiProcessor = async ({
     return response.data;
   } catch (error) {
     return {
-      status: false,
+      status: "error",
       message: error?.response?.data?.message || error.message,
     };
   }
