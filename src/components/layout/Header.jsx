@@ -5,20 +5,14 @@ import { LuLogOut, LuNotebookPen } from "react-icons/lu";
 import { FaHouseUser } from "react-icons/fa";
 import { MdSpaceDashboard } from "react-icons/md";
 import { AiOutlineTransaction } from "react-icons/ai";
-import { useUser } from "../../context/userContext";
+import { setUser } from "../../features/users/userSlice";
 
 const Header = () => {
-  const { user, setUser } = useUser();
+  const user = [];
   return (
-    <Navbar
-      expand="lg"
-      className="bg-body-tertiary"
-      variant="dark"
-      data-bs-theme="dark"
-      bg="dark"
-    >
+    <Navbar expand="lg" variant="dark" style={{ backgroundColor: "#2a3877ff" }}>
       <Container>
-        <Navbar.Brand href="#home">FT</Navbar.Brand>
+        <Navbar.Brand href="#home">Electronic</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ms-auto">

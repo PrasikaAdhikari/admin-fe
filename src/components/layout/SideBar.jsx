@@ -1,9 +1,15 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { GiHamburgerMenu } from "react-icons/gi";
+import Products from "../../pages/products/ProductLanding";
+import { Link } from "react-router-dom";
+
 import { useDispatch, useSelector } from "react-redux";
 import { getUserDetail } from "../../features/users/userActions";
 
+import { AiOutlineDown, AiOutlineRight } from "react-icons/ai";
+
 const Sidebar = ({ isOpen, isMobile, onToggle, showHamburger }) => {
+  const [showProducts, setShowProducts] = useState(false);
   const dispatch = useDispatch();
   const { user } = useSelector((store) => store.userStore);
   useEffect(() => {
@@ -24,7 +30,7 @@ const Sidebar = ({ isOpen, isMobile, onToggle, showHamburger }) => {
       {(!isMobile || isOpen) && (
         <div
           style={{
-            width: "200px",
+            width: "230px",
             height: "100vh",
             background: "#2a3877ff",
             color: "#fff",
@@ -35,6 +41,8 @@ const Sidebar = ({ isOpen, isMobile, onToggle, showHamburger }) => {
             zIndex: 1000,
           }}
         >
+          <h1 style={{ margin: 0, color: "#f1f1f1ff" }}>Dashboard</h1>
+
           <ul
             style={{
               listStyle: "none",
@@ -42,15 +50,95 @@ const Sidebar = ({ isOpen, isMobile, onToggle, showHamburger }) => {
               display: "flex",
               flexDirection: "column",
               gap: "12px",
+              marginTop: "20px",
+              font: "white",
             }}
           >
-            <li>{`Welcome, ${user?.email}`}</li>
-            <li>Home</li>
-            <li>Products</li>
-            <li>About</li>
-            <li>Contact</li>
-            <li>Users</li>
-            <li>Orders</li>
+            <li>
+              <div
+                onClick={() => setShowProducts(!showProducts)}
+                style={{ cursor: "pointer" }}
+              >
+                Products
+                {showProducts ? <AiOutlineDown /> : <AiOutlineRight />}
+              </div>
+              {showProducts && (
+                <ul
+                  style={{
+                    listStyle: "none",
+                    paddingLeft: "15px",
+                    marginTop: "5px",
+                  }}
+                >
+                  <li>
+                    <Link
+                      to="/editproduct"
+                      style={{ color: "inherit", textDecoration: "none" }}
+                    >
+                      Edit Products
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      to="/newproduct"
+                      style={{ color: "inherit", textDecoration: "none" }}
+                    >
+                      New Products
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      to="/product"
+                      style={{ color: "inherit", textDecoration: "none" }}
+                    >
+                      Product Landing
+                    </Link>
+                  </li>
+                </ul>
+              )}
+            </li>
+
+            <li>
+              <Link
+                to="/user"
+                style={{ color: "inherit", textDecoration: "none" }}
+              >
+                User
+              </Link>
+            </li>
+
+            <li>
+              <Link
+                to="/categories"
+                style={{ color: "inherit", textDecoration: "none" }}
+              >
+                Category
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="/orders"
+                style={{ color: "inherit", textDecoration: "none" }}
+              >
+                Orders
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="/reviews"
+                style={{ color: "inherit", textDecoration: "none" }}
+              >
+                Reviews
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="/setting"
+                style={{ color: "inherit", textDecoration: "none" }}
+              >
+                Settings
+              </Link>
+            </li>
           </ul>
         </div>
       )}

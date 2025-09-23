@@ -1,64 +1,54 @@
 import React, { useState, useEffect } from "react";
 import Sidebar from "../../components/layout/SideBar";
 import admin from "../../assets/admin.avif";
+import "./Dashboard.css";
+import { useDispatch, useSelector } from "react-redux";
+import { getUserDetail } from "../../features/users/userActions";
 
-// Main Dashboard Component
 const AdminDashboard = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
 
+  const dispatch = useDispatch();
+  const { user } = useSelector((store) => store.userStore);
+  useEffect(() => {
+    dispatch(getUserDetail());
+  }, []);
+
   useEffect(() => {
     const checkScreenSize = () => {
-      const mobile = window.innerWidth < 768; // Breakpoint for mobile
+      const mobile = window.innerWidth < 768;
       setIsMobile(mobile);
-      if (!mobile) {
-        setIsSidebarOpen(true); // Open by default on large screens
-      } else {
-        setIsSidebarOpen(false); // Closed by default on small screens
-      }
+      setIsSidebarOpen(!mobile);
     };
 
-    checkScreenSize(); // Initial check
+    checkScreenSize();
     window.addEventListener("resize", checkScreenSize);
-
     return () => window.removeEventListener("resize", checkScreenSize);
   }, []);
 
-  const toggleSidebar = () => {
-    setIsSidebarOpen(!isSidebarOpen);
-  };
+  const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
 
-  // Sidebar wrapper styles based on state (for slide animation)
   const sidebarWrapperStyle = {
     transform:
       isMobile && !isSidebarOpen ? "translateX(-100%)" : "translateX(0)",
     transition: "transform 0.3s ease-in-out",
   };
 
-  // Overlay for mobile when sidebar is open
   const overlayStyle = {
     display: isMobile && isSidebarOpen ? "block" : "none",
-    position: "fixed",
-    top: 0,
-    left: 0,
-    width: "100vw",
-    height: "100vh",
-    backgroundColor: "rgba(0, 0, 0, 0.5)",
-    zIndex: 999,
   };
 
   return (
-    <div
-      style={{
-        display: "flex",
-        minHeight: "100vh",
-        backgroundColor: "#f8f9fa",
-      }}
-    >
+    <div className="dashboard-container">
       {/* Overlay for mobile */}
-      <div style={overlayStyle} onClick={toggleSidebar} />
+      <div
+        className="dashboard-overlay"
+        style={overlayStyle}
+        onClick={toggleSidebar}
+      />
 
-      {/* Sidebar Wrapper for Animation */}
+      {/* Sidebar */}
       <div style={sidebarWrapperStyle}>
         <Sidebar
           isOpen={isSidebarOpen}
@@ -67,98 +57,36 @@ const AdminDashboard = () => {
         />
       </div>
 
-      {/* Main Content Area */}
+      {/* Main content */}
       <div
-        style={{
-          flex: 1,
-          marginLeft: !isMobile ? "200px" : 0, // Offset for sidebar on desktop (200px width)
-          transition: "margin-left 0.3s ease-in-out",
-          padding: "20px",
-        }}
+        className="dashboard-main"
+        style={{ marginLeft: !isMobile ? "200px" : 0 }}
       >
-        {/* Header */}
-        <header
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            backgroundColor: "white",
-            padding: "15px 20px",
-            boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
-            marginBottom: "20px",
-            borderRadius: "8px",
-          }}
-        >
-          <h1 style={{ margin: 0, color: "#333" }}>Welcome, Admin</h1>
-          <div style={{ display: "flex", alignItems: "center" }}>
-            {/* Placeholder user info */}
-            <div style={{ marginLeft: "20px" }}>
-              <img
-                src={admin}
-                alt="Admin"
-                style={{
-                  width: "64px",
-                  height: "64px",
-                  borderRadius: "50%",
-                  objectFit: "cover",
-                  border: "1px solid #ccc",
-                }}
-              />
-            </div>
+        <header className="dashboard-header">
+          <h1>Welcome, {`${user?.username}`}</h1>
+          <div className="dashboard-user">
+            <img src={admin} alt="Admin" />
           </div>
         </header>
 
-        {/* Dashboard Content */}
         <main>
-          <div
-            style={{
-              backgroundColor: "white",
-              padding: "20px",
-              borderRadius: "8px",
-              boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
-            }}
-          >
+          <div className="dashboard-content">
             <h2>Dashboard Overview</h2>
             <p>
               An admin dashboard with all the ins and outs of the e-commerce
               business.
             </p>
-            {/* NEED TO ADD CHARTS HERE */}
-            <div
-              style={{
-                display: "grid",
-                gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))",
-                gap: "20px",
-                marginTop: "20px",
-              }}
-            >
-              <div
-                style={{
-                  padding: "20px",
-                  backgroundColor: "#e9ecef",
-                  borderRadius: "8px",
-                }}
-              >
+
+            <div className="dashboard-grid">
+              <div className="dashboard-card">
                 <h3>Users</h3>
                 <p>1,234 active</p>
               </div>
-              <div
-                style={{
-                  padding: "20px",
-                  backgroundColor: "#e9ecef",
-                  borderRadius: "8px",
-                }}
-              >
+              <div className="dashboard-card">
                 <h3>Revenue</h3>
                 <p>$12,345</p>
               </div>
-              <div
-                style={{
-                  padding: "20px",
-                  backgroundColor: "#e9ecef",
-                  borderRadius: "8px",
-                }}
-              >
+              <div className="dashboard-card">
                 <h3>Orders</h3>
                 <p>567</p>
               </div>

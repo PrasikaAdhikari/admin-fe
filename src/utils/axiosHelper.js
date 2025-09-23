@@ -1,5 +1,7 @@
 import axios from "axios";
 
+export const apiUrl = import.meta.env.VITE_APP_API_URL + "/api/v1";
+
 export const apiProcessor = async ({
   method,
   url,
