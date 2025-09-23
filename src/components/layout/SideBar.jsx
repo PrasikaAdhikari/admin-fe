@@ -94,7 +94,7 @@ const Sidebar = ({ isOpen, isMobile, onToggle, showHamburger }) => {
                   </li>
                   <li>
                     <Link
-                      to="/productlanding"
+                      to="/product"
                       style={{ color: "inherit", textDecoration: "none" }}
                     >
                       Product Landing

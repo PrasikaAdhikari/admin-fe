@@ -2,3 +2,7 @@
 .tableItem td {
   text-align: center;
 }
+
+.formContainer {
+  max-width: 60vw !important;
+}
