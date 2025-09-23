@@ -5,6 +5,7 @@ import { LuLogOut, LuNotebookPen } from "react-icons/lu";
 import { FaHouseUser } from "react-icons/fa";
 import { MdSpaceDashboard } from "react-icons/md";
 import { AiOutlineTransaction } from "react-icons/ai";
+import { setUser } from "../../features/users/userSlice";
 
 const Header = () => {
   const user = [];
