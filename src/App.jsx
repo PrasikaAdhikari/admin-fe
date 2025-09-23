@@ -1,14 +1,30 @@
 import React from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import Login from "./pages/Login";
-
 import AdminDashboard from "./pages/dashboard/Dashboard";
+import User from "./pages/user/User";
+import Home from "./pages/home/Home";
+import EditProduct from "./pages/products/EditProduct";
+import NewProduct from "./pages/products/NewProduct";
+import ProductLanding from "./pages/products/ProductLanding";
+import Order from "./pages/orders/Order";
+import Review from "./pages/reviews/Review";
+import Setting from "./pages/settings/Setting";
 
 const App = () => {
   return (
     <Routes>
-      <Route path="/" element={<Login />} />
+      {/* <Route path="/" element={<Login />} /> */}
+      <Route path="/" element={<Home />} />
       <Route path="/dashboard" element={<AdminDashboard />} />
+      <Route path="/user" element={<User />} />
+      {/* <Route path="/products" element={<Product />} /> */}
+      <Route path="/editproduct" element={<EditProduct />} />
+      <Route path="/newproduct" element={<NewProduct />} />
+      <Route path="/productlanding" element={<ProductLanding />}></Route>
+      <Route path="/orders" element={<Order />} />
+      <Route path="/reviews" element={<Review />} />
+      <Route path="/settings" element={<Setting />} />
     </Routes>
   );
 };

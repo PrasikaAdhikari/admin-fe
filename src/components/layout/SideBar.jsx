@@ -1,5 +1,6 @@
 import React from "react";
 import { GiHamburgerMenu } from "react-icons/gi";
+import { Link } from "react-router-dom";
 
 const Sidebar = ({ isOpen, isMobile, onToggle }) => {
   return (
@@ -39,12 +40,37 @@ const Sidebar = ({ isOpen, isMobile, onToggle }) => {
           >
             <h1 style={{ margin: 0, color: "#f1f1f1ff" }}>Dashboard</h1>
             <br />
-            <li>Home</li>
-            <li>Products</li>
-            <li>About</li>
-            <li>Users</li>
-            <li>Orders</li>
-            <li>Reviews</li>
+            <li>
+              <Link to="/">Home</Link>
+            </li>
+            <li>
+              <ul>
+                <Link to="/products">Products</Link>
+
+                <li>
+                  <Link to="/editproduct">Edit Products</Link>
+                </li>
+                <li>
+                  <Link to="/newproduct">New Products</Link>
+                </li>
+                <li>
+                  <Link to="/productlanding">Product Landing</Link>
+                </li>
+              </ul>
+            </li>
+
+            <li>
+              <Link to="/user">User</Link>
+            </li>
+            <li>
+              <Link to="/orders">Orders</Link>
+            </li>
+            <li>
+              <Link to="/reviews">Reviews</Link>
+            </li>
+            <li>
+              <Link to="/settings">Settings</Link>
+            </li>
           </ul>
         </div>
       )}
