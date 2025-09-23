@@ -5,10 +5,9 @@ import { LuLogOut, LuNotebookPen } from "react-icons/lu";
 import { FaHouseUser } from "react-icons/fa";
 import { MdSpaceDashboard } from "react-icons/md";
 import { AiOutlineTransaction } from "react-icons/ai";
-import { useUser } from "../../context/userContext";
 
 const Header = () => {
-  const { user, setUser } = useUser();
+  const user = [];
   return (
     <Navbar
       expand="lg"
@@ -18,7 +17,7 @@ const Header = () => {
       bg="dark"
     >
       <Container>
-        <Navbar.Brand href="#home">FT</Navbar.Brand>
+        <Navbar.Brand href="#home">Electronic</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ms-auto">
