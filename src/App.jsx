@@ -9,7 +9,7 @@ import NewProduct from "./pages/products/NewProduct";
 import ProductLanding from "./pages/products/ProductLanding";
 import Order from "./pages/orders/Order";
 import Review from "./pages/reviews/Review";
-import Setting from "./pages/settings/Setting";
+import Setting from "./pages/setting/Setting";
 import DefaultLayout from "./components/layout/DefaultLayout";
 
 const App = () => {
@@ -17,17 +17,18 @@ const App = () => {
     <Routes>
       {/* <Route path="/" element={<Login />} /> */}
       <Route path="/dashboard" element={<AdminDashboard />} />
+      <Route path="/login" element={<Login />} />
       <Route path="/" element={<DefaultLayout />}>
         <Route path="/" element={<Home />} />
 
         <Route path="/user" element={<User />} />
-        {/* <Route path="/products" element={<Product />} /> */}
+
         <Route path="/editproduct" element={<EditProduct />} />
         <Route path="/newproduct" element={<NewProduct />} />
         <Route path="/productlanding" element={<ProductLanding />}></Route>
         <Route path="/orders" element={<Order />} />
         <Route path="/reviews" element={<Review />} />
-        <Route path="/settings" element={<Setting />} />
+        <Route path="/setting" element={<Setting />} />
       </Route>
     </Routes>
   );

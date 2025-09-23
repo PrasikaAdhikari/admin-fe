@@ -1,13 +1,14 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { GiHamburgerMenu } from "react-icons/gi";
 
 import { useDispatch, useSelector } from "react-redux";
 import { getUserDetail } from "../../features/users/userActions";
 
 import { Link } from "react-router-dom";
-
+import { AiOutlineDown, AiOutlineRight } from "react-icons/ai";
 
 const Sidebar = ({ isOpen, isMobile, onToggle, showHamburger }) => {
+  const [showProducts, setShowProducts] = useState(false);
   const dispatch = useDispatch();
   const { user } = useSelector((store) => store.userStore);
   useEffect(() => {
@@ -28,7 +29,7 @@ const Sidebar = ({ isOpen, isMobile, onToggle, showHamburger }) => {
       {(!isMobile || isOpen) && (
         <div
           style={{
-            width: "200px",
+            width: "230px",
             height: "100vh",
             background: "#2a3877ff",
             color: "#fff",
@@ -52,15 +53,6 @@ const Sidebar = ({ isOpen, isMobile, onToggle, showHamburger }) => {
               font: "white",
             }}
           >
-
-            <li>{`Welcome, ${user?.email}`}</li>
-            <li>Home</li>
-            <li>Products</li>
-            <li>About</li>
-            <li>Contact</li>
-            <li>Users</li>
-            <li>Orders</li>
-
             <li>
               <Link to="/" style={{ color: "inherit", textDecoration: "none" }}>
                 Home
@@ -68,39 +60,47 @@ const Sidebar = ({ isOpen, isMobile, onToggle, showHamburger }) => {
             </li>
 
             <li>
-              Products
-              <ul
-                style={{
-                  listStyle: "none",
-                  paddingLeft: "15px",
-                  marginTop: "5px",
-                }}
+              <div
+                onClick={() => setShowProducts(!showProducts)}
+                style={{ cursor: "pointer" }}
               >
-                <li>
-                  <Link
-                    to="/editproduct"
-                    style={{ color: "inherit", textDecoration: "none" }}
-                  >
-                    Edit Products
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    to="/newproduct"
-                    style={{ color: "inherit", textDecoration: "none" }}
-                  >
-                    New Products
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    to="/productlanding"
-                    style={{ color: "inherit", textDecoration: "none" }}
-                  >
-                    Product Landing
-                  </Link>
-                </li>
-              </ul>
+                Products
+                {showProducts ? <AiOutlineDown /> : <AiOutlineRight />}
+              </div>
+              {showProducts && (
+                <ul
+                  style={{
+                    listStyle: "none",
+                    paddingLeft: "15px",
+                    marginTop: "5px",
+                  }}
+                >
+                  <li>
+                    <Link
+                      to="/editproduct"
+                      style={{ color: "inherit", textDecoration: "none" }}
+                    >
+                      Edit Products
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      to="/newproduct"
+                      style={{ color: "inherit", textDecoration: "none" }}
+                    >
+                      New Products
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      to="/productlanding"
+                      style={{ color: "inherit", textDecoration: "none" }}
+                    >
+                      Product Landing
+                    </Link>
+                  </li>
+                </ul>
+              )}
             </li>
 
             <li>
@@ -134,7 +134,6 @@ const Sidebar = ({ isOpen, isMobile, onToggle, showHamburger }) => {
                 Settings
               </Link>
             </li>
-
           </ul>
         </div>
       )}
