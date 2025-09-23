@@ -1,5 +1,7 @@
 import React from "react";
 import { GiHamburgerMenu } from "react-icons/gi";
+import Products from "../../pages/products/ProductLanding";
+import { Link } from "react-router-dom";
 
 const Sidebar = ({ isOpen, isMobile, onToggle, showHamburger }) => {
   return (
@@ -39,8 +41,24 @@ const Sidebar = ({ isOpen, isMobile, onToggle, showHamburger }) => {
           >
             <h1 style={{ margin: 0, color: "#f1f1f1ff" }}> Dashboard</h1>
             <br></br>
-            <li>Home</li>
-            <li>Products</li>
+
+            <li>
+              <Link
+                to="/home"
+                className="text-decoration-none text-white link-opacity-50-hover d-block"
+              >
+                Home
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="/products"
+                className="text-decoration-none text-white link-opacity-50 d-block"
+              >
+                Products
+              </Link>
+            </li>
+
             <li>About</li>
             <li>Contact</li>
             <li>Users</li>
