@@ -4,4 +4,4 @@ const Category = () => {
   return <div>Category Page</div>;
 };
 
-export default Order;
+export default Category;
