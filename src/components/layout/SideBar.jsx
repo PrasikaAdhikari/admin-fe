@@ -55,7 +55,7 @@ const Sidebar = ({ isOpen, isMobile, onToggle, showHamburger }) => {
           >
             <li>
               <Link to="/" style={{ color: "inherit", textDecoration: "none" }}>
-                Home
+                Category
               </Link>
             </li>
 
