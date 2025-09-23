@@ -43,7 +43,9 @@ const Sidebar = ({ isOpen, isMobile, onToggle }) => {
             }}
           >
             <li>
-              <Link to="/">Home</Link>
+              <Link to="/" style={{ color: "inherit", textDecoration: "none" }}>
+                Home
+              </Link>
             </li>
 
             <li>
@@ -56,28 +58,62 @@ const Sidebar = ({ isOpen, isMobile, onToggle }) => {
                 }}
               >
                 <li>
-                  <Link to="/editproduct">Edit Products</Link>
+                  <Link
+                    to="/editproduct"
+                    style={{ color: "inherit", textDecoration: "none" }}
+                  >
+                    Edit Products
+                  </Link>
                 </li>
                 <li>
-                  <Link to="/newproduct">New Products</Link>
+                  <Link
+                    to="/newproduct"
+                    style={{ color: "inherit", textDecoration: "none" }}
+                  >
+                    New Products
+                  </Link>
                 </li>
                 <li>
-                  <Link to="/productlanding">Product Landing</Link>
+                  <Link
+                    to="/productlanding"
+                    style={{ color: "inherit", textDecoration: "none" }}
+                  >
+                    Product Landing
+                  </Link>
                 </li>
               </ul>
             </li>
 
             <li>
-              <Link to="/user">User</Link>
+              <Link
+                to="/user"
+                style={{ color: "inherit", textDecoration: "none" }}
+              >
+                User
+              </Link>
             </li>
             <li>
-              <Link to="/orders">Orders</Link>
+              <Link
+                to="/orders"
+                style={{ color: "inherit", textDecoration: "none" }}
+              >
+                Orders
+              </Link>
             </li>
             <li>
-              <Link to="/reviews">Reviews</Link>
-            </li>
-            <li>
-              <Link to="/settings">Settings</Link>
+              <Link
+                to="/reviews"
+                style={{ color: "inherit", textDecoration: "none" }}
+              >
+                Reviews
+              </Link>
+
+              <Link
+                to="/settings"
+                style={{ color: "inherit", textDecoration: "none" }}
+              >
+                Settings
+              </Link>
             </li>
           </ul>
         </div>
