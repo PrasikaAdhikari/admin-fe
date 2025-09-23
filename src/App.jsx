@@ -1,6 +1,4 @@
-import React from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
-import Login from "./pages/Login";
 import AdminDashboard from "./pages/dashboard/Dashboard";
 import User from "./pages/user/User";
 import Home from "./pages/home/Home";
@@ -11,6 +9,7 @@ import Order from "./pages/orders/Order";
 import Review from "./pages/reviews/Review";
 import Setting from "./pages/setting/Setting";
 import DefaultLayout from "./components/layout/DefaultLayout";
+import Login from "./pages/login/Login";
 
 const App = () => {
   return (

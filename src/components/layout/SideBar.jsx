@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { GiHamburgerMenu } from "react-icons/gi";
+import Products from "../../pages/products/ProductLanding";
+import { Link } from "react-router-dom";
 
 import { useDispatch, useSelector } from "react-redux";
 import { getUserDetail } from "../../features/users/userActions";
 
-import { Link } from "react-router-dom";
 import { AiOutlineDown, AiOutlineRight } from "react-icons/ai";
 
 const Sidebar = ({ isOpen, isMobile, onToggle, showHamburger }) => {
