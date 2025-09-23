@@ -1,6 +1,5 @@
 import { Col, Container, Row } from "react-bootstrap";
-import LoginForm from "../components/LoginForm";
-
+import LoginForm from "../../components/LoginForm";
 const Login = () => {
   return (
     <Container>

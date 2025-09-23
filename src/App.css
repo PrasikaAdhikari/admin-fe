@@ -1,0 +1,7 @@
+.nav-link-custom {
+  transition: color 0.3s ease;
+}
+
+.nav-link-custom:hover {
+  color: #007bff !important;
+}

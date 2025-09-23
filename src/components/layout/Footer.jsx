@@ -3,7 +3,11 @@ import { Col, Container, Row } from "react-bootstrap";
 
 const Footer = () => {
   return (
-    <Container fluid className="bg-dark p-5 text-white">
+    <Container
+      fluid
+      className=" p-5 text-white"
+      style={{ backgroundColor: "#2a3877ff" }}
+    >
       <Row className="text-center">
         <Col>Copyright @ 2025</Col>
       </Row>
