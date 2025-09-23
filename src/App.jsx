@@ -15,10 +15,11 @@ const App = () => {
   return (
     <Routes>
       {/* Public Route */}
-      <Route path="/" element={<Login />} />
+
       <Route path="/dashboard" element={<AdminDashboard />} />
 
       <Route element={<DefaultLayout />}>
+        <Route path="/" element={<Login />} />
         <Route path="/user" element={<User />} />
         <Route path="/editproduct" element={<EditProduct />} />
         <Route path="/newproduct" element={<NewProduct />} />
