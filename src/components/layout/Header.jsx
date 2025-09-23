@@ -10,13 +10,7 @@ import { setUser } from "../../features/users/userSlice";
 const Header = () => {
   const user = [];
   return (
-    <Navbar
-      expand="lg"
-      className="bg-body-tertiary"
-      variant="dark"
-      data-bs-theme="dark"
-      bg="dark"
-    >
+    <Navbar expand="lg" variant="dark" style={{ backgroundColor: "#2a3877ff" }}>
       <Container>
         <Navbar.Brand href="#home">Electronic</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />

@@ -12,24 +12,25 @@ import DefaultLayout from "./components/layout/DefaultLayout";
 import Login from "./pages/login/Login";
 
 const App = () => {
-  return (
-    <Routes>
-      {/* <Route path="/" element={<Login />} /> */}
+return (
+      <Routes>
+      {/* Public Route */}
+      <Route path="/" element={<Login />} />
       <Route path="/dashboard" element={<AdminDashboard />} />
-      <Route path="/" element={<DefaultLayout />}>
-        <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
 
+      <Route element={<DefaultLayout />}>
         <Route path="/user" element={<User />} />
 
         <Route path="/editproduct" element={<EditProduct />} />
         <Route path="/newproduct" element={<NewProduct />} />
-        <Route path="/productlanding" element={<ProductLanding />}></Route>
+        <Route path="/productlanding" element={<ProductLanding />}/>
         <Route path="/orders" element={<Order />} />
         <Route path="/reviews" element={<Review />} />
         <Route path="/setting" element={<Setting />} />
       </Route>
     </Routes>
+  );
+
   );
 };
 
