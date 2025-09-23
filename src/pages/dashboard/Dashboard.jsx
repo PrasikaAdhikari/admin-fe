@@ -89,7 +89,9 @@ const AdminDashboard = () => {
             borderRadius: "8px",
           }}
         >
-          <h1 style={{ margin: 0, color: "#333" }}>Welcome, Admin</h1>
+          <h1 style={{ margin: 0, color: "#333" }}>
+            Welcome, {"name from redux will be here"}
+          </h1>
           <div style={{ display: "flex", alignItems: "center" }}>
             {/* Placeholder user info */}
             <div style={{ marginLeft: "20px" }}>

@@ -9,7 +9,7 @@ import NewProduct from "./pages/products/NewProduct";
 import ProductLanding from "./pages/products/ProductLanding";
 import Order from "./pages/orders/Order";
 import Review from "./pages/reviews/Review";
-import Setting from "./pages/settings/Setting";
+import Setting from "./pages/setting/Setting";
 import DefaultLayout from "./components/layout/DefaultLayout";
 
 const App = () => {
@@ -27,7 +27,7 @@ const App = () => {
         <Route path="/productlanding" element={<ProductLanding />}></Route>
         <Route path="/orders" element={<Order />} />
         <Route path="/reviews" element={<Review />} />
-        <Route path="/settings" element={<Setting />} />
+        <Route path="/setting" element={<Setting />} />
       </Route>
     </Routes>
   );
