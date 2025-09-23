@@ -1,7 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 const NewProduct = () => {
-  return <div>This is a new product page</div>;
+  return (
+    <div>
+      <NewProductForm />
+    </div>
+  );
 };
 
 export default NewProduct;
