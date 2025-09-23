@@ -29,6 +29,8 @@ const Sidebar = ({ isOpen, isMobile, onToggle }) => {
             zIndex: 1000,
           }}
         >
+          <h1 style={{ margin: 0, color: "#f1f1f1ff" }}>Dashboard</h1>
+
           <ul
             style={{
               listStyle: "none",
@@ -36,17 +38,23 @@ const Sidebar = ({ isOpen, isMobile, onToggle }) => {
               display: "flex",
               flexDirection: "column",
               gap: "12px",
+              marginTop: "20px",
+              font: "white",
             }}
           >
-            <h1 style={{ margin: 0, color: "#f1f1f1ff" }}>Dashboard</h1>
-            <br />
             <li>
               <Link to="/">Home</Link>
             </li>
-            <li>
-              <ul>
-                <Link to="/products">Products</Link>
 
+            <li>
+              Products
+              <ul
+                style={{
+                  listStyle: "none",
+                  paddingLeft: "15px",
+                  marginTop: "5px",
+                }}
+              >
                 <li>
                   <Link to="/editproduct">Edit Products</Link>
                 </li>
