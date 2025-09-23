@@ -29,7 +29,7 @@ const Sidebar = ({ isOpen, isMobile, onToggle, showHamburger }) => {
       {(!isMobile || isOpen) && (
         <div
           style={{
-            width: "220px",
+            width: "230px",
             height: "100vh",
             background: "#2a3877ff",
             color: "#fff",
