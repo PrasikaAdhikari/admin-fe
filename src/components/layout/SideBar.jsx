@@ -6,7 +6,6 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getUserDetail } from "../../features/users/userActions";
 
-import { Link } from "react-router-dom";
 import { AiOutlineDown, AiOutlineRight } from "react-icons/ai";
 
 const Sidebar = ({ isOpen, isMobile, onToggle, showHamburger }) => {
@@ -55,32 +54,6 @@ const Sidebar = ({ isOpen, isMobile, onToggle, showHamburger }) => {
               font: "white",
             }}
           >
-<<<<<<< HEAD
-            <h1 style={{ margin: 0, color: "#f1f1f1ff" }}> Dashboard</h1>
-            <br></br>
-
-            <li>
-              <Link
-                to="/home"
-                className="text-decoration-none text-white link-opacity-50-hover d-block"
-              >
-                Home
-              </Link>
-            </li>
-            <li>
-              <Link
-                to="/products"
-                className="text-decoration-none text-white link-opacity-50 d-block"
-              >
-                Products
-              </Link>
-            </li>
-
-            <li>About</li>
-            <li>Contact</li>
-            <li>Users</li>
-            <li>Orders</li>
-=======
             <li>
               <Link to="/" style={{ color: "inherit", textDecoration: "none" }}>
                 Home
@@ -162,7 +135,6 @@ const Sidebar = ({ isOpen, isMobile, onToggle, showHamburger }) => {
                 Settings
               </Link>
             </li>
->>>>>>> 4d082d6c6d1571b0b75af095e8a23cad25def775
           </ul>
         </div>
       )}
