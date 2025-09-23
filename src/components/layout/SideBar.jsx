@@ -3,6 +3,7 @@ import { GiHamburgerMenu } from "react-icons/gi";
 import { Link } from "react-router-dom";
 
 const Sidebar = ({ isOpen, isMobile, onToggle }) => {
+  const [showProducts, setShowProducts] = useState(false);
   return (
     <div className="flex">
       {/* Hamburger visible on mobile */}
