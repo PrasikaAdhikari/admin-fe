@@ -15,16 +15,15 @@ import DefaultLayout from "./components/layout/DefaultLayout";
 const App = () => {
   return (
     <Routes>
-      {/* <Route path="/" element={<Login />} /> */}
+      {/* Public Route */}
       <Route path="/" element={<Login />} />
       <Route path="/dashboard" element={<AdminDashboard />} />
 
-      <Route path="/" element={<DefaultLayout />}>
+      <Route element={<DefaultLayout />}>
         <Route path="/user" element={<User />} />
-
         <Route path="/editproduct" element={<EditProduct />} />
         <Route path="/newproduct" element={<NewProduct />} />
-        <Route path="/product" element={<ProductLanding />}></Route>
+        <Route path="/productlanding" element={<ProductLanding />} />
         <Route path="/orders" element={<Order />} />
         <Route path="/reviews" element={<Review />} />
         <Route path="/setting" element={<Setting />} />
