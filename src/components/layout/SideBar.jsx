@@ -1,13 +1,21 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { GiHamburgerMenu } from "react-icons/gi";
+
+import { useDispatch, useSelector } from "react-redux";
+import { getUserDetail } from "../../features/users/userActions";
+
 import { Link } from "react-router-dom";
 
-const Sidebar = ({ isOpen, isMobile, onToggle }) => {
-  const [showProducts, setShowProducts] = useState(false);
+const Sidebar = ({ isOpen, isMobile, onToggle, showHamburger }) => {
+  const dispatch = useDispatch();
+  const { user } = useSelector((store) => store.userStore);
+  useEffect(() => {
+    dispatch(getUserDetail());
+  }, []);
   return (
     <div className="flex">
-      {/* Hamburger visible on mobile */}
-      {isMobile && (
+      {/* Hamburger for mobile, always visible when showHamburger is true */}
+      {showHamburger && (
         <GiHamburgerMenu
           size={30}
           style={{ margin: "10px", cursor: "pointer" }}
@@ -15,11 +23,11 @@ const Sidebar = ({ isOpen, isMobile, onToggle }) => {
         />
       )}
 
-      {/* Sidebar content */}
+      {/* Sidebar content, hidden when closed on mobile */}
       {(!isMobile || isOpen) && (
         <div
           style={{
-            width: "230px",
+            width: "200px",
             height: "100vh",
             background: "#2a3877ff",
             color: "#fff",
@@ -43,6 +51,14 @@ const Sidebar = ({ isOpen, isMobile, onToggle }) => {
               font: "white",
             }}
           >
+            <li>{`Welcome, ${user?.email}`}</li>
+            <li>Home</li>
+            <li>Products</li>
+            <li>About</li>
+            <li>Contact</li>
+            <li>Users</li>
+            <li>Orders</li>
+
             <li>
               <Link to="/" style={{ color: "inherit", textDecoration: "none" }}>
                 Home
