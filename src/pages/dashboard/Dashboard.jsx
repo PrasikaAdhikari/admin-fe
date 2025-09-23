@@ -2,10 +2,18 @@ import React, { useState, useEffect } from "react";
 import Sidebar from "../../components/layout/SideBar";
 import admin from "../../assets/admin.avif";
 import "./Dashboard.css";
+import { useDispatch, useSelector } from "react-redux";
+import { getUserDetail } from "../../features/users/userActions";
 
 const AdminDashboard = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+
+  const dispatch = useDispatch();
+  const { user } = useSelector((store) => store.userStore);
+  useEffect(() => {
+    dispatch(getUserDetail());
+  }, []);
 
   useEffect(() => {
     const checkScreenSize = () => {
@@ -55,7 +63,7 @@ const AdminDashboard = () => {
         style={{ marginLeft: !isMobile ? "200px" : 0 }}
       >
         <header className="dashboard-header">
-          <h1>Welcome, {"name from redux will be here"}</h1>
+          <h1>Welcome, {`${user?.username}`}</h1>
           <div className="dashboard-user">
             <img src={admin} alt="Admin" />
           </div>
