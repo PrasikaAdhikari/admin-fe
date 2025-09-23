@@ -126,9 +126,10 @@ const Sidebar = ({ isOpen, isMobile, onToggle, showHamburger }) => {
               >
                 Reviews
               </Link>
-
+            </li>
+            <li>
               <Link
-                to="/settings"
+                to="/setting"
                 style={{ color: "inherit", textDecoration: "none" }}
               >
                 Settings
