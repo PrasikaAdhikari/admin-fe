@@ -1,6 +1,7 @@
 import { fetchUserDetail, loginUser } from "./usersApi";
 import { setUser } from "./userSlice";
 import { storeToken } from "../../utils/storageFunction.js";
+import { toast } from "react-toastify";
 
 export const getUserDetail = () => async (dispatch) => {
   let data = await fetchUserDetail();

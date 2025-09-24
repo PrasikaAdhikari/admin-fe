@@ -11,26 +11,29 @@ import Setting from "./pages/setting/Setting";
 import DefaultLayout from "./components/layout/DefaultLayout";
 import Category from "./pages/categories/Category";
 import Login from "./pages/login/Login";
+import { ToastContainer } from "react-toastify";
 
 const App = () => {
   return (
-    <Routes>
-      {/* Public Route */}
-      <Route path="/" element={<Login />} />
-      <Route path="/dashboard" element={<AdminDashboard />} />
+    <>
+      <Routes>
+        {/* Public Route */}
+        <Route path="/" element={<Login />} />
+        <Route path="/dashboard" element={<AdminDashboard />} />
 
-      <Route element={<DefaultLayout />}>
-        <Route path="/user" element={<User />} />
-        <Route path="/editproduct" element={<EditProduct />} />
-        <Route path="/newproduct" element={<NewProduct />} />
-
-        <Route path="/product" element={<ProductLanding />} />
-        <Route path="/categories" element={<Category />} />
-        <Route path="/orders" element={<Order />} />
-        <Route path="/reviews" element={<Review />} />
-        <Route path="/setting" element={<Setting />} />
-      </Route>
-    </Routes>
+        <Route element={<DefaultLayout />}>
+          <Route path="/user" element={<User />} />
+          <Route path="/editproduct" element={<EditProduct />} />
+          <Route path="/newproduct" element={<NewProduct />} />
+          <Route path="/product" element={<ProductLanding />} />
+          <Route path="/categories" element={<Category />} />
+          <Route path="/orders" element={<Order />} />
+          <Route path="/reviews" element={<Review />} />
+          <Route path="/setting" element={<Setting />} />
+        </Route>
+      </Routes>
+      <ToastContainer />
+    </>
   );
 };
 
