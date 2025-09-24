@@ -1,4 +1,4 @@
-import { getProductsApi } from "./productApi";
+import { addProductApi, getProductsApi } from "./productApi";
 import { setProducts } from "./productSlice";
 
 export const getProdcutsAction = () => async (dispatch) => {
@@ -7,4 +7,12 @@ export const getProdcutsAction = () => async (dispatch) => {
     dispatch(setProducts(products.products));
   }
   return { status: products.status, message: products.message };
+};
+
+export const addProductAction = (form) => async (dispatch) => {
+  const result = await addProductApi(form);
+  if (result.status === "success") {
+    dispatch(getProdcutsAction);
+  }
+  toast(result.status)[result.message];
 };
