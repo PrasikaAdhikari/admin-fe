@@ -1,5 +1,5 @@
-import { fetchUserDetail, loginUser } from "./usersApi";
-import { setUser } from "./userSlice";
+import { fetchAllUserDetail, fetchUserDetail, loginUser } from "./usersApi";
+import { setUser, setAllUser } from "./userSlice";
 import { storeToken } from "../../utils/storageFunction.js";
 
 export const getUserDetail = () => async (dispatch) => {
@@ -27,4 +27,13 @@ export const loginUserAction = (form) => async (dispatch) => {
     status: data.status,
     message: data.message,
   };
+};
+
+export const getAllUserAction = () => async (dispatch) => {
+  let data = await fetchAllUserDetail();
+
+  if (data.status === "success") {
+    //update the store
+    dispatch(setAllUser(data?.users || []));
+  }
 };
