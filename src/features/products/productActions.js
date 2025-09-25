@@ -1,5 +1,6 @@
 import { addProductApi, getProductsApi } from "./productApi";
 import { setProducts } from "./productSlice";
+import { toast } from "react-toastify";
 
 export const getProdcutsAction = () => async (dispatch) => {
   const products = await getProductsApi();
