@@ -17,7 +17,11 @@ const NewProductForm = () => {
     const formData = new FormData();
 
     Object.keys(form).forEach((key) => {
-      formData.append(key, form[key]);
+      if (key === "images") {
+        form[key].forEach((file) => formData.append("images", file));
+      } else {
+        formData.append(key, form[key]);
+      }
     });
     dispatch(addProductAction(formData));
   };
