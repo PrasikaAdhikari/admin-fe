@@ -24,7 +24,12 @@ function ProductTable({ products }) {
             <td>{product.price}</td>
             <td>{product.stock}</td>
             <td>
-              <img src={product.images[0]} width="50px" />
+              {product?.images.map((url) => (
+                <img
+                  src={`${import.meta.env.VITE_APP_API_URL}/${url}`}
+                  width="50px"
+                />
+              ))}
             </td>
             <td>{product.averageRating}</td>
             <td>

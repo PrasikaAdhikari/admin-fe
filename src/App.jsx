@@ -9,6 +9,7 @@ import Order from "./pages/orders/Order";
 import Review from "./pages/reviews/Review";
 import Setting from "./pages/setting/Setting";
 import DefaultLayout from "./components/layout/DefaultLayout";
+import Category from "./pages/categories/Category";
 import Login from "./pages/login/Login";
 
 const App = () => {
@@ -24,8 +25,7 @@ const App = () => {
         <Route path="/newproduct" element={<NewProduct />} />
 
         <Route path="/product" element={<ProductLanding />} />
-
-
+        <Route path="/categories" element={<Category />} />
         <Route path="/orders" element={<Order />} />
         <Route path="/reviews" element={<Review />} />
         <Route path="/setting" element={<Setting />} />
