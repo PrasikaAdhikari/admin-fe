@@ -15,3 +15,11 @@ export const addProductApi = (form) => {
     contentType: "multipart/form-data",
   });
 };
+
+export const deleteProductApi = (id) => {
+  return apiProcessor({
+    method: "DELETE",
+    url: `${apiUrl}/products`,
+    data: { id },
+  });
+};
