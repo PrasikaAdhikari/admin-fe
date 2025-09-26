@@ -6,3 +6,12 @@ export const getProductsApi = () => {
     url: `${apiUrl}/products`,
   });
 };
+
+export const addProductApi = (form) => {
+  return apiProcessor({
+    method: "POST",
+    url: `${apiUrl}/products`,
+    data: form,
+    contentType: "multipart/form-data",
+  });
+};
