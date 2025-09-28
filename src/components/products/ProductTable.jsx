@@ -1,8 +1,20 @@
 import { Button } from "react-bootstrap";
 import Table from "react-bootstrap/Table";
 import styles from "./Product.module.css";
+import { useState } from "react";
+import ImageModal from "../../pages/products/ImageModal";
+import { useDispatch } from "react-redux";
+import { handleDeleteAction } from "../../features/products/productActions";
 
 function ProductTable({ products }) {
+  const [modalShow, setModalShow] = useState(false);
+  const dispatch = useDispatch();
+  const [activeImage, setActiveImage] = useState("");
+
+  const handleDelete = (id) => {
+    dispatch(handleDeleteAction(id));
+  };
+
   return (
     <Table hover className={styles.tableItem}>
       <thead>
@@ -18,23 +30,49 @@ function ProductTable({ products }) {
       </thead>
       <tbody>
         {products.map((product, index) => (
-          <tr>
+          <tr key={index}>
             <td>{index + 1}</td>
             <td>{product.name}</td>
             <td>{product.price}</td>
             <td>{product.stock}</td>
             <td>
-              <img src={product.images[0]} width="50px" />
+              <div className="d-flex gap-1">
+                {product?.images.map((url) => (
+                  <img
+                    className={styles.imageThumbnail}
+                    src={`${import.meta.env.VITE_APP_API_URL}/${url}`}
+                    width="80px"
+                    onClick={() => {
+                      setModalShow(true);
+                      setActiveImage(
+                        `${import.meta.env.VITE_APP_API_URL}/${url}`
+                      );
+                    }}
+                  />
+                ))}
+              </div>
             </td>
             <td>{product.averageRating}</td>
             <td>
               <div className="d-flex gap-2 justify-content-center">
                 <Button className="btn-warning">Edit</Button>
-                <Button className="btn-danger">Delete</Button>
+                <Button
+                  className="btn-danger"
+                  onClick={() => {
+                    handleDelete(product._id);
+                  }}
+                >
+                  Delete
+                </Button>
               </div>
             </td>
           </tr>
         ))}
+        <ImageModal
+          show={modalShow}
+          onHide={() => setModalShow(false)}
+          image={activeImage}
+        />
       </tbody>
     </Table>
   );

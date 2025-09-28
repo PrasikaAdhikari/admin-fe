@@ -55,12 +55,6 @@ const Sidebar = ({ isOpen, isMobile, onToggle, showHamburger }) => {
             }}
           >
             <li>
-              <Link to="/" style={{ color: "inherit", textDecoration: "none" }}>
-                Home
-              </Link>
-            </li>
-
-            <li>
               <div
                 onClick={() => setShowProducts(!showProducts)}
                 style={{ cursor: "pointer" }}
@@ -94,7 +88,7 @@ const Sidebar = ({ isOpen, isMobile, onToggle, showHamburger }) => {
                   </li>
                   <li>
                     <Link
-                      to="/productlanding"
+                      to="/product"
                       style={{ color: "inherit", textDecoration: "none" }}
                     >
                       Product Landing
@@ -110,6 +104,15 @@ const Sidebar = ({ isOpen, isMobile, onToggle, showHamburger }) => {
                 style={{ color: "inherit", textDecoration: "none" }}
               >
                 User
+              </Link>
+            </li>
+
+            <li>
+              <Link
+                to="/categories"
+                style={{ color: "inherit", textDecoration: "none" }}
+              >
+                Category
               </Link>
             </li>
             <li>
