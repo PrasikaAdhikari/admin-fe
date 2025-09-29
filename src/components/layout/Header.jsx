@@ -1,50 +1,45 @@
 import React from "react";
-import { Button, Container, Nav, Navbar } from "react-bootstrap";
-import { Link } from "react-router-dom";
-import { LuLogOut, LuNotebookPen } from "react-icons/lu";
+import { Navbar, Container, Nav, Button } from "react-bootstrap";
 import { FaHouseUser } from "react-icons/fa";
-import { MdSpaceDashboard } from "react-icons/md";
-import { AiOutlineTransaction } from "react-icons/ai";
+import { LuNotebookPen, LuLogOut } from "react-icons/lu";
+import { useSelector, useDispatch } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
 import { setUser } from "../../features/users/userSlice";
 
 const Header = () => {
-  const user = [];
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { user } = useSelector((store) => store.userStore); // fixed store name
+
+  const handleLogout = () => {
+    dispatch(setUser({})); // remove user from store
+    sessionStorage.removeItem("accessToken"); // remove token
+    navigate("/");
+  };
+
   return (
     <Navbar expand="lg" variant="dark" style={{ backgroundColor: "#2a3877ff" }}>
       <Container>
-        <Navbar.Brand href="#home">Electronic</Navbar.Brand>
+        <Navbar.Brand as={Link} to="/dashboard">
+          Electronic
+        </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="ms-auto">
+          <Nav className="ms-auto align-items-center">
             {user && user?._id ? (
               <>
-                <Nav.Link as={Link} to="/dashboard">
-                  <MdSpaceDashboard />
-                  Dashboard
-                </Nav.Link>
-                <Nav.Link as={Link} to="/transaction">
-                  <AiOutlineTransaction />
-                  Transaction
-                </Nav.Link>
-                <Button
-                  onClick={() => {
-                    //remove user data from context
-                    setUser({});
-                    localStorage.removeItem("accessToken");
-                  }}
-                >
-                  <LuLogOut />
+                <span className="text-white me-3">
+                  Welcome, {user?.username}
+                </span>
+                <Button variant="outline-light" onClick={handleLogout}>
+                  <LuLogOut className="me-1" />
                   Logout
                 </Button>
               </>
             ) : (
               <>
-                <Nav.Link as={Link} to="/signup">
-                  <LuNotebookPen />
-                  Signup
-                </Nav.Link>
-                <Nav.Link as={Link} to="/login">
-                  <FaHouseUser />
+                <Nav.Link as={Link} to="/">
+                  <FaHouseUser className="me-1" />
                   Login
                 </Nav.Link>
               </>

@@ -11,16 +11,27 @@ import DefaultLayout from "./components/layout/DefaultLayout";
 import Category from "./pages/categories/Category";
 import Login from "./pages/login/Login";
 import { ToastContainer } from "react-toastify";
+import { useDispatch } from "react-redux";
+import { getUserDetail } from "./features/users/userActions";
+import { useEffect } from "react";
 
 const App = () => {
+  const dispatch = useDispatch();
+  const autoLogin = async () => {
+    let data = await dispatch(getUserDetail());
+  };
+  useEffect(() => {
+    autoLogin();
+  }, []);
   return (
     <>
       <Routes>
         {/* Public Route */}
         <Route path="/" element={<Login />} />
-        <Route path="/dashboard" element={<AdminDashboard />} />
 
+        {/* private route */}
         <Route element={<DefaultLayout />}>
+          <Route path="/dashboard" element={<AdminDashboard />} />
           <Route path="/user" element={<User />} />
           <Route path="/editproduct" element={<EditProduct />} />
           <Route path="/newproduct" element={<NewProduct />} />
