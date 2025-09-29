@@ -48,27 +48,11 @@ const AdminDashboard = () => {
         onClick={toggleSidebar}
       />
 
-      {/* Sidebar */}
-      <div style={sidebarWrapperStyle}>
-        <Sidebar
-          isOpen={isSidebarOpen}
-          isMobile={isMobile}
-          onToggle={toggleSidebar}
-        />
-      </div>
-
       {/* Main content */}
       <div
         className="dashboard-main"
         style={{ marginLeft: !isMobile ? "200px" : 0 }}
       >
-        <header className="dashboard-header">
-          <h1>Welcome, {`${user?.username}`}</h1>
-          <div className="dashboard-user">
-            <img src={admin} alt="Admin" />
-          </div>
-        </header>
-
         <main>
           <div className="dashboard-content">
             <h2>Dashboard Overview</h2>
