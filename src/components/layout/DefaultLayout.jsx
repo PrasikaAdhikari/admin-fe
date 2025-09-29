@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import Header from "./Header";
 import Footer from "./Footer";
-import Sidebar from "./Sidebar";
 import { Outlet } from "react-router-dom";
 import Auth from "../../auth/Auth";
+import Sidebar from "./SideBar";
 
 const DefaultLayout = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);

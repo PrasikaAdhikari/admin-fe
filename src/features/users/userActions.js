@@ -6,17 +6,24 @@ import {
 } from "./usersApi";
 import { setUser, setAllUser } from "./userSlice";
 import { storeToken } from "../../utils/storageFunction.js";
+import { toast } from "react-toastify";
 
 export const registerUserAction = (form) => async (dispatch) => {
   try {
     const data = await registerUser(form);
     if (data.status === "success") {
-      // refresh user list after adding new user
       dispatch(getAllUserAction());
+      toast[data.status](data.message);
+    } else {
+      toast[data.status](data.message || "Something went wrong");
     }
     return data;
   } catch (error) {
-    console.error(error);
+    toast[data.status](data?.message || "Something went wrong");
+    return {
+      status: "error",
+      message: error?.message || "Something went wrong",
+    };
   }
 };
 
