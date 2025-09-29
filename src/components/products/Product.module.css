@@ -6,3 +6,14 @@
 .formContainer {
   max-width: 60vw !important;
 }
+
+.imageThumbnail {
+  transition: all 0.2s ease-in-out;
+}
+
+.imageThumbnail:hover {
+  cursor: pointer;
+  filter: brightness(1.05);
+  transform: scale(1.02);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}

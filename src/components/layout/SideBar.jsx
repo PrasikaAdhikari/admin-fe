@@ -14,7 +14,7 @@ const Sidebar = ({ isOpen, isMobile, onToggle, showHamburger }) => {
   const { user } = useSelector((store) => store.userStore);
   useEffect(() => {
     dispatch(getUserDetail());
-  }, []);
+  }, [1]);
   return (
     <div className="flex">
       {/* Hamburger for mobile, always visible when showHamburger is true */}

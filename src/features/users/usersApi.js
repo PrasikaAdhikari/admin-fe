@@ -16,3 +16,11 @@ export const fetchUserDetail = async () => {
     isPrivate: true,
   });
 };
+
+export const fetchAllUserDetail = async () => {
+  return apiProcessor({
+    method: "GET",
+    url: `${apiUrl}/user`,
+    isPrivate: true,
+  });
+};
