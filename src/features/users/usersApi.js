@@ -24,3 +24,12 @@ export const fetchAllUserDetail = async () => {
     isPrivate: true,
   });
 };
+
+export const updateUserDetail = async (obj) => {
+  return apiProcessor({
+    method: "PUT",
+    url: `${apiUrl}/user/setting`,
+    data: obj,
+    isPrivate: true,
+  });
+};
