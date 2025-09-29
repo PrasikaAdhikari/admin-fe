@@ -5,13 +5,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { CustomModal } from "../../components/customModal/CustomModal";
 import { getAllUserAction } from "../../features/users/userActions";
 import RegisterUserForm from "../../components/RegisterForm";
+import { isSuperAdmin } from "../../hooks/isSuperAdmin";
 
 const User = () => {
-  const { users } = useSelector((store) => store.userStore);
+  const { users, user } = useSelector((store) => store.userStore);
   const dispatch = useDispatch();
-
-  // const [user, setUser] = useState({});
   const [showModal, setShowModal] = useState(false);
+  const superAdmin = isSuperAdmin();
+
   useEffect(() => {
     dispatch(getAllUserAction());
   }, [dispatch]);
@@ -19,28 +20,30 @@ const User = () => {
     <Container>
       <h4 className="mt-2 text-center">User Dashboard</h4>
 
-      <div>
-        <Button variant="primary" onClick={() => setShowModal(true)}>
-          Add New User
-        </Button>
+      {superAdmin && (
+        <div>
+          <Button variant="primary" onClick={() => setShowModal(true)}>
+            Add New User
+          </Button>
 
-        {showModal && (
-          <CustomModal
-            title="Add New User"
-            show={showModal}
-            onHide={() => setShowModal(false)}
-          >
-            {/*modal to add new user to be done completed by deep  */}
-            <RegisterUserForm onHide={() => setShowModal(false)} />
-          </CustomModal>
-        )}
-      </div>
+          {showModal && (
+            <CustomModal
+              title="Add New User"
+              show={showModal}
+              onHide={() => setShowModal(false)}
+            >
+              <RegisterUserForm onHide={() => setShowModal(false)} />
+            </CustomModal>
+          )}
+        </div>
+      )}
+
       <Row className=" m-2">
         <Table className="text-center m-3 pe-3">
           <thead>
             <tr>
               <th>#</th>
-              <th>Name</th>
+              <th>Username</th>
               <th>Email</th>
               <th>Role</th>
             </tr>

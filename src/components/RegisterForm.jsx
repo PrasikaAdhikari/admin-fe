@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { registerUserAction } from "../features/users/userActions";
+import { toast } from "react-toastify";
 
 const RegisterUserForm = ({ onHide }) => {
   const dispatch = useDispatch();
@@ -10,6 +11,7 @@ const RegisterUserForm = ({ onHide }) => {
     username: "",
     email: "",
     password: "",
+    role: "",
   });
 
   const handleChange = (e) => {
@@ -18,33 +20,31 @@ const RegisterUserForm = ({ onHide }) => {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault(); // stop page reload
-    // dispatch Redux action to register user
+    e.preventDefault();
+
     const res = await dispatch(registerUserAction(form));
     if (res?.status === "success") {
-      // reset form
       setForm({
         username: "",
         email: "",
         password: "",
+        role: "",
       });
-      // close modal
+
       onHide();
-    } else {
-      alert(res?.message || "Something went wrong");
     }
   };
 
   return (
     <Form onSubmit={handleSubmit}>
       <Form.Group className="mb-3">
-        <Form.Label>Name</Form.Label>
+        <Form.Label>Username</Form.Label>
         <Form.Control
           type="text"
           name="username"
           value={form.username}
           onChange={handleChange}
-          placeholder="Enter full name"
+          placeholder="Enter username"
           required
         />
       </Form.Group>
@@ -71,6 +71,20 @@ const RegisterUserForm = ({ onHide }) => {
           placeholder="Enter password"
           required
         />
+      </Form.Group>
+
+      <Form.Group className="mb-3">
+        <Form.Label>Role</Form.Label>
+        <Form.Select
+          name="role"
+          value={form.role || ""}
+          onChange={handleChange}
+          required
+        >
+          <option value="">-- Select Role --</option>
+          <option value="admin">Admin</option>
+          <option value="superadmin">Superadmin</option>
+        </Form.Select>
       </Form.Group>
 
       <Button variant="primary" type="submit">

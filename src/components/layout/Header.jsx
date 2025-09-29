@@ -9,11 +9,13 @@ import { setUser } from "../../features/users/userSlice";
 const Header = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { user } = useSelector((store) => store.userStore); // fixed store name
+  const { user } = useSelector((store) => store.userStore);
+
+  const username = user?.username?.split(" ")[0];
 
   const handleLogout = () => {
-    dispatch(setUser({})); // remove user from store
-    sessionStorage.removeItem("accessToken"); // remove token
+    dispatch(setUser({}));
+    sessionStorage.removeItem("accessToken");
     navigate("/");
   };
 
@@ -28,9 +30,7 @@ const Header = () => {
           <Nav className="ms-auto align-items-center">
             {user && user?._id ? (
               <>
-                <span className="text-white me-3">
-                  Welcome, {user?.username}
-                </span>
+                <span className="text-white me-3">Welcome, {username}</span>
                 <Button variant="outline-light" onClick={handleLogout}>
                   <LuLogOut className="me-1" />
                   Logout

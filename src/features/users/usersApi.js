@@ -4,7 +4,7 @@ const apiUrl = import.meta.env.VITE_APP_API_URL + "/api/v1";
 export const registerUser = (form) => {
   return apiProcessor({
     method: "POST",
-    url: `${apiUrl}/auth`,
+    url: `${apiUrl}/user/setting`,
     data: form,
     isPrivate: true,
   });
@@ -31,5 +31,15 @@ export const fetchAllUserDetail = async () => {
     method: "GET",
     url: `${apiUrl}/user`,
     isPrivate: true,
+  });
+};
+
+// refresh token
+export const refreshTokenApi = () => {
+  return apiProcessor({
+    method: "get",
+    url: `${apiUrl}/auth/refresh-token`,
+    isPrivate: true,
+    isRefresh: true,
   });
 };
