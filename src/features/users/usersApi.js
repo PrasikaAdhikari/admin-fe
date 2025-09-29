@@ -12,7 +12,7 @@ export const loginUser = async (obj) => {
 export const fetchUserDetail = async () => {
   return apiProcessor({
     method: "GET",
-    url: `${apiUrl}/user/detail`,
+    url: `${apiUrl}/user/setting`,
     isPrivate: true,
   });
 };
