@@ -14,14 +14,23 @@ const NewProductForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(addProductAction(form));
+    const formData = new FormData();
+
+    Object.keys(form).forEach((key) => {
+      if (key === "images") {
+        form[key].forEach((file) => formData.append("images", file));
+      } else {
+        formData.append(key, form[key]);
+      }
+    });
+    dispatch(addProductAction(formData));
   };
 
   const handleImageChange = (e) => {
     const fileList = e.target.files;
-    const imageArray = Array.from(fileList);
-    console.log(imageArray);
-    setForm((prev) => ({ ...prev, imageArray }));
+    const images = Array.from(fileList);
+    console.log(images);
+    setForm((prev) => ({ ...prev, images }));
   };
 
   return (
