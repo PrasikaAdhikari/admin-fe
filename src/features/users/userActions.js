@@ -1,6 +1,24 @@
-import { fetchAllUserDetail, fetchUserDetail, loginUser } from "./usersApi";
+import {
+  fetchAllUserDetail,
+  fetchUserDetail,
+  loginUser,
+  registerUser,
+} from "./usersApi";
 import { setUser, setAllUser } from "./userSlice";
 import { storeToken } from "../../utils/storageFunction.js";
+
+export const registerUserAction = (form) => async (dispatch) => {
+  try {
+    const data = await registerUser(form);
+    if (data.status === "success") {
+      // refresh user list after adding new user
+      dispatch(getAllUserAction());
+    }
+    return data;
+  } catch (error) {
+    console.error(error);
+  }
+};
 
 export const getUserDetail = () => async (dispatch) => {
   let data = await fetchUserDetail();
