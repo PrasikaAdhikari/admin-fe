@@ -21,7 +21,7 @@ export const apiProcessor = async ({
       data: data,
       headers: isPrivate
         ? {
-            // Authorization: sessionStorage.getItem("accessToken"),
+            Authorization: sessionStorage.getItem("accessToken"),
             "Content-type": contentType,
           }
         : {},

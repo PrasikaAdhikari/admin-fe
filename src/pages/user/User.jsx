@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 // import AddNewUserForm from "../components/forms/AddNewUserForm";
 import { CustomModal } from "../../components/customModal/CustomModal";
 import { getAllUserAction } from "../../features/users/userActions";
+import RegisterUserForm from "../../components/RegisterForm";
 
 const User = () => {
   const { users } = useSelector((store) => store.userStore);
@@ -30,6 +31,7 @@ const User = () => {
             onHide={() => setShowModal(false)}
           >
             {/*modal to add new user to be done completed by deep  */}
+            <RegisterUserForm onHide={() => setShowModal(false)} />
           </CustomModal>
         )}
       </div>
