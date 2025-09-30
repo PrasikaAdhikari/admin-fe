@@ -1,7 +1,6 @@
 import { fetchAllUserDetail, fetchUserDetail, loginUser, updateUserDetail } from "./usersApi";
 import { setUser, setAllUser } from "./userSlice";
 import { storeToken } from "../../utils/storageFunction.js";
-import { toast } from "react-toastify";
 
 export const getUserDetail = () => async (dispatch) => {
   let data = await fetchUserDetail();
@@ -40,10 +39,10 @@ export const getAllUserAction = () => async (dispatch) => {
 };
 
 export const updateUserDetailAction = (form) => async (dispatch) => {
-  let data = await updateUserDetail(form);
+  const data = await updateUserDetail(form);
   if (data.status === "success") {
     // update the store
     dispatch(setUser(data.user));
   }
-  toast[data.status](data.message);
+  return { status: data.status, message: data.message };
 };
