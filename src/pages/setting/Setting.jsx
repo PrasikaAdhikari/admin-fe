@@ -1,10 +1,9 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getUserDetail,
   updateUserDetailAction,
 } from "../../features/users/userActions";
-import { setUser } from "../../features/users/userSlice";
 import {
   Badge,
   Button,
@@ -18,6 +17,7 @@ import {
   Row,
 } from "react-bootstrap";
 import { CgProfile } from "react-icons/cg";
+import { toast } from "react-toastify";
 
 const initialsFrom = (name) => {
   const parts = String(name).trim().split(/\s+/);
@@ -93,7 +93,9 @@ const Setting = () => {
 
     try {
       const res = await dispatch(updateUserDetailAction(body));
-      if (res.status === "success") {
+      if (res?.status === "success") {
+        await dispatch(getUserDetail());
+        toast.success(res?.message || "Profile updated successfully");
         setShowEdit(false);
       } else {
         alert(res?.message || "Update failed");
@@ -284,6 +286,7 @@ const Setting = () => {
                     type="email"
                     placeholder="name@example.com"
                     value={form.emailInput}
+                    readOnly
                     onChange={onChange}
                   />
                 </Form.Group>
@@ -308,8 +311,8 @@ const Setting = () => {
                     name="roleInput"
                     value={form.roleInput}
                     onChange={onChange}
+                    disabled
                   >
-                    <option value="user">User</option>
                     <option value="admin">Admin</option>
                     <option value="superadmin">Super Admin</option>
                   </Form.Select>
@@ -337,7 +340,7 @@ const Setting = () => {
           >
             Cancel
           </Button>
-          <Button variant="primary" onClick={handleOnSave}>
+          <Button variant="primary" type="button" onClick={handleOnSave}>
             Save changes
           </Button>
         </Modal.Footer>

@@ -42,6 +42,7 @@ export const updateUserDetail = async (obj) => {
     isPrivate: true,
   });
 };
+
 // refresh token
 export const refreshTokenApi = () => {
   return apiProcessor({

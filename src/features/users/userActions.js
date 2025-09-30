@@ -65,10 +65,13 @@ export const getAllUserAction = () => async (dispatch) => {
 };
 
 export const updateUserDetailAction = (form) => async (dispatch) => {
-  let data = await updateUserDetail(form);
+  const data = await updateUserDetail(form);
   if (data.status === "success") {
     // update the store
     dispatch(setUser(data.user));
   }
+  return { status: data.status, message: data.message };
+};
   toast[data.status](data.message);
 };
+
