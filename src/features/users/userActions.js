@@ -1,6 +1,32 @@
 import { fetchAllUserDetail, fetchUserDetail, loginUser, updateUserDetail } from "./usersApi";
 import { setUser, setAllUser } from "./userSlice";
 import { storeToken } from "../../utils/storageFunction.js";
+import { toast } from "react-toastify";
+import {
+  fetchAllUserDetail,
+  fetchUserDetail,
+  loginUser,
+  registerUser,
+} from "./usersApi";
+
+export const registerUserAction = (form) => async (dispatch) => {
+  try {
+    const data = await registerUser(form);
+    if (data.status === "success") {
+      dispatch(getAllUserAction());
+      toast[data.status](data.message);
+    } else {
+      toast[data.status](data.message || "Something went wrong");
+    }
+    return data;
+  } catch (error) {
+    toast[data.status](data?.message || "Something went wrong");
+    return {
+      status: "error",
+      message: error?.message || "Something went wrong",
+    };
+  }
+};
 
 export const getUserDetail = () => async (dispatch) => {
   let data = await fetchUserDetail();
