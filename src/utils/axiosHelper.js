@@ -28,8 +28,10 @@ export const apiProcessor = async ({
       data: data,
       headers: isPrivate
         ? {
-            Authorization: isRefresh ? getRefreshToken() : getAccessToken(),
-            // "Content-type": contentType,
+            Authorization: `Bearer ${
+              isRefresh ? getRefreshToken() : getAccessToken()
+            }`,
+            "Content-type": contentType,
           }
         : {},
     });
