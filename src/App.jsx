@@ -15,6 +15,7 @@ import { useDispatch } from "react-redux";
 import { getUserDetail } from "./features/users/userActions";
 import { useEffect } from "react";
 
+
 const App = () => {
   const dispatch = useDispatch();
   const autoLogin = async () => {
