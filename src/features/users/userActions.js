@@ -2,12 +2,6 @@ import { fetchAllUserDetail, fetchUserDetail, loginUser, updateUserDetail } from
 import { setUser, setAllUser } from "./userSlice";
 import { storeToken } from "../../utils/storageFunction.js";
 import { toast } from "react-toastify";
-import {
-  fetchAllUserDetail,
-  fetchUserDetail,
-  loginUser,
-  registerUser,
-} from "./usersApi";
 
 export const registerUserAction = (form) => async (dispatch) => {
   try {
@@ -27,6 +21,7 @@ export const registerUserAction = (form) => async (dispatch) => {
     };
   }
 };
+
 
 export const getUserDetail = () => async (dispatch) => {
   let data = await fetchUserDetail();
