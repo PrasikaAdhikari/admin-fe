@@ -5,7 +5,7 @@ const Footer = () => {
   return (
     <Container
       fluid
-      className=" p-5 text-white"
+      className="p-2 text-white"
       style={{ backgroundColor: "#2a3877ff" }}
     >
       <Row className="text-center">
