@@ -72,6 +72,3 @@ export const updateUserDetailAction = (form) => async (dispatch) => {
   }
   return { status: data.status, message: data.message };
 };
-  toast[data.status](data.message);
-};
-
