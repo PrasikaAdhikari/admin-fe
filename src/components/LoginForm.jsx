@@ -38,8 +38,7 @@ const LoginForm = () => {
   };
 
   // --- Redirect after login ---
-  const lastLocation =
-    location?.state?.from?.location?.pathname || "/dashboard";
+  const lastLocation = location?.state?.from?.pathname || "/dashboard";
 
   useEffect(() => {
     if (user?._id) {
