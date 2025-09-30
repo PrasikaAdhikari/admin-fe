@@ -28,9 +28,11 @@ export const apiProcessor = async ({
       data: data,
       headers: isPrivate
         ? {
+
             Authorization: isRefresh ? getRefreshToken() : getAccessToken(),
-            // "Content-type": contentType,
+             "Content-type": contentType,
           }
+
         : {},
     });
 

@@ -34,6 +34,14 @@ export const fetchAllUserDetail = async () => {
   });
 };
 
+
+export const updateUserDetail = async (obj) => {
+  return apiProcessor({
+    method: "PUT",
+    url: `${apiUrl}/user/setting`,
+    data: obj,
+    isPrivate: true,
+
 // refresh token
 export const refreshTokenApi = () => {
   return apiProcessor({
@@ -41,5 +49,6 @@ export const refreshTokenApi = () => {
     url: `${apiUrl}/auth/refresh-token`,
     isPrivate: true,
     isRefresh: true,
+
   });
 };
