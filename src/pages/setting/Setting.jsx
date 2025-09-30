@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { FaRegEdit } from "react-icons/fa";
 import {
   getUserDetail,
   updateUserDetailAction,
@@ -199,8 +200,10 @@ const Setting = () => {
               <Button
                 size="sm"
                 variant="primary"
+                className="d-flex align-items-center"
                 onClick={() => setShowEdit(true)}
               >
+                <FaRegEdit className="me-1" />
                 Edit Profile
               </Button>
             </Card.Header>

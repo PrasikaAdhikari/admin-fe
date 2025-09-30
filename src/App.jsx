@@ -15,7 +15,6 @@ import { useDispatch } from "react-redux";
 import { getUserDetail } from "./features/users/userActions";
 import { useEffect } from "react";
 
-
 const App = () => {
   const dispatch = useDispatch();
   const autoLogin = async () => {
@@ -44,7 +43,7 @@ const App = () => {
           <Route path="/setting" element={<Setting />} />
         </Route>
       </Routes>
-      <ToastContainer />
+      <ToastContainer position="top-center" theme="light" />
     </>
   );
 };
