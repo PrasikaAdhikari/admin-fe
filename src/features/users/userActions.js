@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-import { fetchAllUserDetail, fetchUserDetail, loginUser, updateUserDetail } from "./usersApi";
-=======
 import {
   fetchAllUserDetail,
   fetchUserDetail,
@@ -8,7 +5,6 @@ import {
   registerUser,
   updateUserDetail,
 } from "./usersApi";
->>>>>>> 59b47621cb73813ddc98a60e8a8824764da16e8c
 import { setUser, setAllUser } from "./userSlice";
 import { storeToken } from "../../utils/storageFunction.js";
 import { toast } from "react-toastify";
@@ -75,7 +71,5 @@ export const updateUserDetailAction = (form) => async (dispatch) => {
     dispatch(setUser(data.user));
   }
   return { status: data.status, message: data.message };
-};
-  toast[data.status](data.message);
 };
 
