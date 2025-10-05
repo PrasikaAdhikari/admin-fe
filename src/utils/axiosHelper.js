@@ -12,7 +12,6 @@ export const apiProcessor = async ({
   method,
   url,
   data,
-  isPrivate = false,
   isRefresh = false,
   contentType = "application/json",
 }) => {
@@ -23,11 +22,7 @@ export const apiProcessor = async ({
       headers["Content-Type"] = contentType;
     }
 
-    if (isPrivate) {
-      headers["Authorization"] = isRefresh
-        ? getRefreshToken()
-        : getAccessToken();
-    }
+    headers["Authorization"] = isRefresh ? getRefreshToken() : getAccessToken();
 
     let response = await axios({
       method: method,
