@@ -13,6 +13,7 @@ export const addProductApi = (form) => {
     url: `${apiUrl}/products`,
     data: form,
     contentType: "multipart/form-data",
+    isPrivate: true,
   });
 };
 
