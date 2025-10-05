@@ -12,7 +12,6 @@ export const apiProcessor = async ({
   method,
   url,
   data,
-  isPrivate = false,
   isRefresh = false,
   contentType = "application/json",
 }) => {
@@ -22,16 +21,14 @@ export const apiProcessor = async ({
     if (!(data instanceof FormData)) {
       headers["Content-Type"] = contentType;
     }
+
+    headers["Authorization"] = isRefresh ? getRefreshToken() : getAccessToken();
+
     let response = await axios({
       method: method,
       url: url,
       data: data,
-      headers: isPrivate
-        ? {
-            Authorization: isRefresh ? getRefreshToken() : getAccessToken(),
-            "Content-type": contentType,
-          }
-        : {},
+      headers,
     });
 
     return response.data;
