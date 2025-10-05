@@ -22,16 +22,18 @@ export const apiProcessor = async ({
     if (!(data instanceof FormData)) {
       headers["Content-Type"] = contentType;
     }
+
+    if (isPrivate) {
+      headers["Authorization"] = isRefresh
+        ? getRefreshToken()
+        : getAccessToken();
+    }
+
     let response = await axios({
       method: method,
       url: url,
       data: data,
-      headers: isPrivate
-        ? {
-            Authorization: isRefresh ? getRefreshToken() : getAccessToken(),
-            "Content-type": contentType,
-          }
-        : {},
+      headers,
     });
 
     return response.data;
