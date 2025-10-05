@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { FaRegEdit } from "react-icons/fa";
 import {
-  getUserDetail,
+  getUserDetailAction,
   updateUserDetailAction,
 } from "../../features/users/userActions";
 import {
@@ -33,13 +33,13 @@ const Setting = () => {
   const [showEdit, setShowEdit] = useState(false);
 
   useEffect(() => {
-    dispatch(getUserDetail());
+    dispatch(getUserDetailAction());
   }, [dispatch]);
 
   const fullName = user.username || "User";
   const email = user.email || "";
   const role = (user.role || user.userType || "user").toString();
-  const phone = user.phone || user.mobile || "";
+  const phone = user.phone || "";
   const memberSince = user.createdAt
     ? user.createdAt.split?.("T")?.[0] ||
       new Date(user.createdAt).toLocaleDateString()
@@ -95,7 +95,7 @@ const Setting = () => {
     try {
       const res = await dispatch(updateUserDetailAction(body));
       if (res?.status === "success") {
-        await dispatch(getUserDetail());
+        await dispatch(getUserDetailAction());
         toast.success(res?.message || "Profile updated successfully");
         setShowEdit(false);
       } else {

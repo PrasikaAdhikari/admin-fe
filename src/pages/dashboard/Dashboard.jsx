@@ -3,7 +3,7 @@ import Sidebar from "../../components/layout/SideBar";
 import admin from "../../assets/admin.avif";
 import "./Dashboard.css";
 import { useDispatch, useSelector } from "react-redux";
-import { getUserDetail } from "../../features/users/userActions";
+import { getUserDetailAction } from "../../features/users/userActions";
 
 const AdminDashboard = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -12,7 +12,7 @@ const AdminDashboard = () => {
   const dispatch = useDispatch();
   const { user } = useSelector((store) => store.userStore);
   useEffect(() => {
-    dispatch(getUserDetail());
+    dispatch(getUserDetailAction());
   }, []);
 
   useEffect(() => {
