@@ -28,7 +28,7 @@ export const registerUserAction = (form) => async (dispatch) => {
   }
 };
 
-export const getUserDetail = () => async (dispatch) => {
+export const getUserDetailAction = () => async (dispatch) => {
   let data = await fetchUserDetail();
   if (data.status === "success") {
     // update the store

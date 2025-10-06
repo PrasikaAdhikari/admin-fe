@@ -12,13 +12,13 @@ import Category from "./pages/categories/Category";
 import Login from "./pages/login/Login";
 import { ToastContainer } from "react-toastify";
 import { useDispatch } from "react-redux";
-import { getUserDetail } from "./features/users/userActions";
+import { getUserDetailAction } from "./features/users/userActions";
 import { useEffect } from "react";
 
 const App = () => {
   const dispatch = useDispatch();
   const autoLogin = async () => {
-    let data = await dispatch(getUserDetail());
+    let data = await dispatch(getUserDetailAction());
   };
   useEffect(() => {
     autoLogin();
