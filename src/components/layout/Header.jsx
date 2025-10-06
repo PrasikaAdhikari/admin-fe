@@ -23,7 +23,7 @@ const Header = () => {
     <Navbar expand="lg" variant="dark" style={{ backgroundColor: "#2a3877ff" }}>
       <Container>
         <Navbar.Brand as={Link} to="/dashboard">
-          Electronic
+          Need hamburger icon here
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
