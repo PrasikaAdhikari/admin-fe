@@ -16,6 +16,15 @@ export const addProductApi = (form) => {
   });
 };
 
+export const updateProductApi = (id, form) => {
+  return apiProcessor({
+    method: "PATCH",
+    url: `${apiUrl}/products/${id}`,
+    data: form,
+    contentType: "multipart/form-data",
+  });
+};
+
 export const deleteProductApi = (id) => {
   return apiProcessor({
     method: "DELETE",
