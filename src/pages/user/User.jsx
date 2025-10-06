@@ -34,7 +34,7 @@ const User = () => {
       <div className="d-flex flex-wrap align-items-center justify-content-between gap-3 mb-4">
         <div className="d-flex align-items-center gap-3">
           <div className="rounded-circle bg-primary bg-opacity-10 p-3 d-flex align-items-center justify-content-center">
-            <FaUsers className="text-primary" size={30} />
+            <FaUsers size={28} className="text-primary" />
           </div>
           <div>
             <h2 className="mb-0">Users</h2>
@@ -59,7 +59,7 @@ const User = () => {
       {/* Content */}
       <Row className="g-4">
         <Col xs={12}>
-          <Card className="border-0 shadow-sm">
+          <Card className="border-0">
             <Card.Header className="bg-white border-0 d-flex align-items-center justify-content-between">
               <strong>All users</strong>
               <Badge bg="light" text="dark">

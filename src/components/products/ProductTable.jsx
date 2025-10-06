@@ -40,13 +40,12 @@ function ProductTable({ products }) {
                 {product?.images.map((url) => (
                   <img
                     className={styles.imageThumbnail}
-                    src={`${import.meta.env.VITE_APP_API_URL}/${url}`}
+                    src={url}
                     width="80px"
+                    height="60px"
                     onClick={() => {
                       setModalShow(true);
-                      setActiveImage(
-                        `${import.meta.env.VITE_APP_API_URL}/${url}`
-                      );
+                      setActiveImage(url);
                     }}
                   />
                 ))}
