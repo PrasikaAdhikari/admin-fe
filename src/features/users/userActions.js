@@ -47,7 +47,7 @@ export const loginUserAction = (form) => async (dispatch) => {
     // refreshToken
     storeToken(data.refreshToken, "refresh");
     // get user detail
-    dispatch(getUserDetail());
+    dispatch(getUserDetailAction());
   }
   return {
     status: data.status,

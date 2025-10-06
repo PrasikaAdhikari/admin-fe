@@ -1,6 +1,5 @@
 import React from "react";
 import Form from "react-bootstrap/Form";
-import styles from "./Product.module.css";
 import { Button } from "react-bootstrap";
 import useForm from "../../hooks/useForm";
 import { useDispatch } from "react-redux";

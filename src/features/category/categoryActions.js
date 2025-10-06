@@ -1,0 +1,20 @@
+import { toast } from "react-toastify";
+import { deleteCategoryApi, getCategoryApi } from "./categoryApi";
+import { setCategories } from "./CategorySlice";
+
+export const getCategoryAction = () => async (dispatch) => {
+  const categories = await getCategoryApi();
+  if (categories.status === "success") {
+    dispatch(setCategories(categories.categories));
+  }
+  return { status: categories.status, message: categories.message };
+};
+
+export const handleDeleteAction = (id) => async (dispatch) => {
+  const result = await deleteCategoryApi(id);
+  if (result.status === "success") {
+    dispatch(getCategoryAction());
+    toast[result.status](result.message);
+  }
+  return { status: result.status, message: result.message };
+};
