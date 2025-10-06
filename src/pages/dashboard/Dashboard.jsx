@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Container, Row, Col, Card } from "react-bootstrap";
 import Sidebar from "../../components/layout/SideBar";
 import { useDispatch, useSelector } from "react-redux";
-import { getUserDetail } from "../../features/users/userActions";
+import { getUserDetailAction } from "../../features/users/userActions";
 
 const AdminDashboard = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -12,8 +12,13 @@ const AdminDashboard = () => {
   const { user } = useSelector((store) => store.userStore);
 
   useEffect(() => {
+<<<<<<< HEAD
     dispatch(getUserDetail());
   }, [dispatch]);
+=======
+    dispatch(getUserDetailAction());
+  }, []);
+>>>>>>> dcaed5c0d2dc45eff080a71f18dcdc543b6fe7ce
 
   useEffect(() => {
     const checkScreenSize = () => {

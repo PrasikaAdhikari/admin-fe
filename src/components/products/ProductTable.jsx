@@ -5,8 +5,11 @@ import { useState } from "react";
 import ImageModal from "../../pages/products/ImageModal";
 import { useDispatch } from "react-redux";
 import { handleDeleteAction } from "../../features/products/productActions";
+import { CustomModal } from "../customModal/CustomModal";
+import EditProductForm from "./EditProductForm";
 
 function ProductTable({ products }) {
+  const [imageModalShow, setImageModalShow] = useState(false);
   const [modalShow, setModalShow] = useState(false);
   const dispatch = useDispatch();
   const [activeImage, setActiveImage] = useState("");
@@ -44,7 +47,7 @@ function ProductTable({ products }) {
                     width="80px"
                     height="60px"
                     onClick={() => {
-                      setModalShow(true);
+                      setImageModalShow(true);
                       setActiveImage(url);
                     }}
                   />
@@ -54,7 +57,12 @@ function ProductTable({ products }) {
             <td>{product.averageRating}</td>
             <td>
               <div className="d-flex gap-2 justify-content-center">
-                <Button className="btn-warning">Edit</Button>
+                <Button
+                  className="btn-warning"
+                  onClick={() => setModalShow(true)}
+                >
+                  Edit
+                </Button>
                 <Button
                   className="btn-danger"
                   onClick={() => {
@@ -63,13 +71,20 @@ function ProductTable({ products }) {
                 >
                   Delete
                 </Button>
+                <CustomModal
+                  show={modalShow}
+                  title="Edit Product"
+                  onHide={() => setModalShow(false)}
+                >
+                  <EditProductForm id={product._id} />
+                </CustomModal>
               </div>
             </td>
           </tr>
         ))}
         <ImageModal
-          show={modalShow}
-          onHide={() => setModalShow(false)}
+          show={imageModalShow}
+          onHide={() => setImageModalShow(false)}
           image={activeImage}
         />
       </tbody>
