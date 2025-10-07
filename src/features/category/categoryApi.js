@@ -14,3 +14,11 @@ export const deleteCategoryApi = (id) => {
     data: { id },
   });
 };
+
+export const addCategoryApi = (form) => {
+  return apiProcessor({
+    method: "POST",
+    url: `${apiUrl}/category`,
+    data: form,
+  });
+};
