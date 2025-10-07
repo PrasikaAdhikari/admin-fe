@@ -3,6 +3,7 @@ import {
   addCategoryApi,
   deleteCategoryApi,
   getCategoryApi,
+  updateCategoryApi,
 } from "./categoryApi";
 import { setCategories } from "./CategorySlice";
 
@@ -25,6 +26,15 @@ export const handleDeleteAction = (id) => async (dispatch) => {
 
 export const addCategoryAction = (form) => async (dispatch) => {
   const result = await addCategoryApi(form);
+  if (result.status === "success") {
+    dispatch(getCategoryAction());
+  }
+  toast[result.status](result.message);
+  return { status: result.status, message: result.message };
+};
+
+export const updateCategoryAction = (id, form) => async (dispatch) => {
+  const result = await updateCategoryApi(id, form);
   if (result.status === "success") {
     dispatch(getCategoryAction());
   }
