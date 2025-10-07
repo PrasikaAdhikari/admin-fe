@@ -46,7 +46,7 @@ const App = () => {
           <Route path="/setting" element={<Setting />} />
         </Route>
       </Routes>
-      <ToastContainer position="top-center" theme="light" />
+      <ToastContainer position="top-right" theme="light" />
     </>
   );
 };
