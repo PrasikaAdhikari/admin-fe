@@ -2,8 +2,8 @@ import React, { useEffect } from "react";
 import styles from "./Category.module.css";
 import { Button, Table } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { getCategoryAction } from "../../features/category/categoryActions";
-import { handleDeleteAction } from "../../features/category/categoryActions";
+import { getCategoryAction } from "../../features/category/CategoryActions";
+import { handleDeleteAction } from "../../features/category/CategoryActions";
 const CategoryTable = () => {
   const { categories } = useSelector((state) => state.categoryStore);
   const dispatch = useDispatch();
