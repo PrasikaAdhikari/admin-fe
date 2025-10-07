@@ -91,7 +91,7 @@ const products = [
   },
 ];
 
-const Category = () => {
+const CategoryLanding = () => {
   return (
     <Container className="py-4">
       <Row xs={1} sm={2} md={3} lg={4} className="g-4">
@@ -106,4 +106,4 @@ const Category = () => {
   );
 };
 
-export default Category;
+export default CategoryLanding;

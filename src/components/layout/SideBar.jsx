@@ -90,7 +90,7 @@ const Sidebar = ({ isOpen }) => {
               </Nav.Link>
               <Nav.Link
                 as={Link}
-                to="/category"
+                to="/categories"
                 className="text-white px-2 py-1 rounded hover-bg"
               >
                 Category Landing
