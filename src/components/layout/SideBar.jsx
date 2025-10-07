@@ -5,6 +5,7 @@ import { IoIosArrowDropdownCircle } from "react-icons/io";
 
 const Sidebar = ({ isOpen }) => {
   const [showProducts, setShowProducts] = useState(false);
+  const [showCategory, setShowCategory] = useState(false);
 
   return (
     <div
@@ -62,9 +63,43 @@ const Sidebar = ({ isOpen }) => {
             </Nav>
           )}
         </Nav.Item>
-
+        <Nav.Item className="mb-2">
+          <div
+            className="d-flex align-items-center justify-content-between text-white px-2 py-1 rounded hover-bg"
+            onClick={() => setShowCategory(!showCategory)}
+            style={{ cursor: "pointer" }}
+          >
+            Category
+            <IoIosArrowDropdownCircle />
+          </div>
+          {showCategory && (
+            <Nav className="flex-column ms-3 mt-1">
+              <Nav.Link
+                as={Link}
+                to="/editcategory"
+                className="text-white px-2 py-1 rounded hover-bg"
+              >
+                Edit Category
+              </Nav.Link>
+              <Nav.Link
+                as={Link}
+                to="/newcategory"
+                className="text-white px-2 py-1 rounded hover-bg"
+              >
+                New Category
+              </Nav.Link>
+              <Nav.Link
+                as={Link}
+                to="/category"
+                className="text-white px-2 py-1 rounded hover-bg"
+              >
+                Category Landing
+              </Nav.Link>
+            </Nav>
+          )}
+        </Nav.Item>
         {/* Other Links */}
-        {["User", "Category", "Orders", "Reviews", "Settings"].map((item) => (
+        {["User", "Orders", "Reviews", "Settings"].map((item) => (
           <Nav.Link
             as={Link}
             key={item}

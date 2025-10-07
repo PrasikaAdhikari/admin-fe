@@ -12,13 +12,8 @@ const AdminDashboard = () => {
   const { user } = useSelector((store) => store.userStore);
 
   useEffect(() => {
-<<<<<<< HEAD
-    dispatch(getUserDetail());
-  }, [dispatch]);
-=======
     dispatch(getUserDetailAction());
   }, []);
->>>>>>> dcaed5c0d2dc45eff080a71f18dcdc543b6fe7ce
 
   useEffect(() => {
     const checkScreenSize = () => {
