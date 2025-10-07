@@ -1,138 +1,89 @@
 import React, { useState } from "react";
+import { Nav } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import { AiOutlineDown, AiOutlineRight } from "react-icons/ai";
-import { GiHamburgerMenu } from "react-icons/gi";
+import { IoIosArrowDropdownCircle } from "react-icons/io";
 
-const Sidebar = ({ isOpen, toggleSidebar }) => {
+const Sidebar = ({ isOpen }) => {
   const [showProducts, setShowProducts] = useState(false);
 
   return (
     <div
+      className={`d-flex flex-column position-fixed ${
+        isOpen ? "px-3" : "px-1"
+      }`}
       style={{
-        width: isOpen ? "230px" : "50px", // keep small width when closed
-        height: "100vh",
-        background: "#2a3877",
-        color: "#fff",
-        padding: isOpen ? "20px" : "10px 5px",
-        overflowX: "hidden",
-        transition: "width 0.3s ease, padding 0.3s ease",
-        position: "fixed",
         top: 0,
         left: 0,
+        bottom: 0, // ensures full height
+        width: isOpen ? "230px" : "50px",
+        backgroundColor: "#2a3877",
+        transition: "width 0.3s ease, padding 0.3s ease",
         zIndex: 1000,
-        display: "flex",
-        flexDirection: "column",
-        alignItems: isOpen ? "flex-start" : "center",
+        overflowY: "auto",
       }}
     >
-      {/* Hamburger always visible to toggle sidebar */}
-      <GiHamburgerMenu
-        size={28}
-        style={{ cursor: "pointer", marginBottom: isOpen ? "15px" : "0" }}
-        onClick={toggleSidebar}
-      />
+      {/* Sidebar Links */}
+      <Nav className="flex-column mt-3">
+        <h1 className="text-white p-3">LOGO</h1>
 
-      {/* Sidebar menu items, only visible when open */}
-      {isOpen && (
-        <ul
-          style={{
-            listStyle: "none",
-            padding: 0,
-            marginTop: "10px",
-            display: "flex",
-            flexDirection: "column",
-            gap: "12px",
-          }}
-        >
-          <li>
-            <div
-              onClick={() => setShowProducts(!showProducts)}
-              style={{
-                cursor: "pointer",
-                display: "flex",
-                alignItems: "center",
-                gap: "5px",
-              }}
-            >
-              Products {showProducts ? <AiOutlineDown /> : <AiOutlineRight />}
-            </div>
-            {showProducts && (
-              <ul
-                style={{
-                  listStyle: "none",
-                  paddingLeft: "15px",
-                  marginTop: "5px",
-                }}
+        {/* Products with dropdown */}
+        <Nav.Item className="mb-2">
+          <div
+            className="d-flex align-items-center justify-content-between text-white px-2 py-1 rounded hover-bg"
+            onClick={() => setShowProducts(!showProducts)}
+            style={{ cursor: "pointer" }}
+          >
+            Products
+            <IoIosArrowDropdownCircle />
+          </div>
+          {showProducts && (
+            <Nav className="flex-column ms-3 mt-1">
+              <Nav.Link
+                as={Link}
+                to="/editproduct"
+                className="text-white px-2 py-1 rounded hover-bg"
               >
-                <li>
-                  <Link
-                    to="/editproduct"
-                    style={{ color: "inherit", textDecoration: "none" }}
-                  >
-                    Edit Products
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    to="/newproduct"
-                    style={{ color: "inherit", textDecoration: "none" }}
-                  >
-                    New Products
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    to="/product"
-                    style={{ color: "inherit", textDecoration: "none" }}
-                  >
-                    Product Landing
-                  </Link>
-                </li>
-              </ul>
-            )}
-          </li>
-          <li>
-            <Link
-              to="/user"
-              style={{ color: "inherit", textDecoration: "none" }}
-            >
-              User
-            </Link>
-          </li>
-          <li>
-            <Link
-              to="/categories"
-              style={{ color: "inherit", textDecoration: "none" }}
-            >
-              Category
-            </Link>
-          </li>
-          <li>
-            <Link
-              to="/orders"
-              style={{ color: "inherit", textDecoration: "none" }}
-            >
-              Orders
-            </Link>
-          </li>
-          <li>
-            <Link
-              to="/reviews"
-              style={{ color: "inherit", textDecoration: "none" }}
-            >
-              Reviews
-            </Link>
-          </li>
-          <li>
-            <Link
-              to="/setting"
-              style={{ color: "inherit", textDecoration: "none" }}
-            >
-              Settings
-            </Link>
-          </li>
-        </ul>
-      )}
+                Edit Products
+              </Nav.Link>
+              <Nav.Link
+                as={Link}
+                to="/newproduct"
+                className="text-white px-2 py-1 rounded hover-bg"
+              >
+                New Products
+              </Nav.Link>
+              <Nav.Link
+                as={Link}
+                to="/product"
+                className="text-white px-2 py-1 rounded hover-bg"
+              >
+                Product Landing
+              </Nav.Link>
+            </Nav>
+          )}
+        </Nav.Item>
+
+        {/* Other Links */}
+        {["User", "Category", "Orders", "Reviews", "Settings"].map((item) => (
+          <Nav.Link
+            as={Link}
+            key={item}
+            to={`/${item.toLowerCase()}`}
+            className="text-white px-2 py-1 rounded hover-bg mb-1"
+          >
+            {item}
+          </Nav.Link>
+        ))}
+      </Nav>
+
+      {/* Hover effect style */}
+      <style>
+        {`
+          .hover-bg:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+          }
+        `}
+      </style>
     </div>
   );
 };
