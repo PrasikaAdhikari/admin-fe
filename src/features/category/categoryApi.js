@@ -22,3 +22,11 @@ export const addCategoryApi = (form) => {
     data: form,
   });
 };
+
+export const updateCategoryApi = (id, form) => {
+  return apiProcessor({
+    method: "PATCH",
+    url: `${apiUrl}/category/${id}`,
+    data: form,
+  });
+};

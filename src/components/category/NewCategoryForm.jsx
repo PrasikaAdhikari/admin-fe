@@ -3,24 +3,15 @@ import { CustomInput } from "../custominput/CustomInput";
 import useForm from "../../hooks/useForm";
 import { Button, Form } from "react-bootstrap";
 import { useDispatch } from "react-redux";
-import { addCategoryAction } from "../../features/category/CategoryActions";
+import { addCategoryAction } from "../../features/category/categoryActions";
 
 const NewCategoryForm = () => {
-  const initialState = { category: "", options: "" };
+  const initialState = { category: "" };
   const dispatch = useDispatch();
-  const categoryOptions = [
-    { label: "electronic" },
-    { label: "mobile" },
-    { label: "camera" },
-    { label: "other" },
-  ];
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    let name = form.options;
-    if (form.options === "other") {
-      name = form.category;
-    }
+    let name = form.category;
     dispatch(addCategoryAction({ name }));
     setForm(initialState);
   };
@@ -31,21 +22,11 @@ const NewCategoryForm = () => {
     <Form onSubmit={handleSubmit}>
       <CustomInput
         label="Category"
-        value={form.options}
+        value={form.category}
         onChange={handleOnChange}
-        type="select"
-        options={categoryOptions}
-        name="options"
+        name="category"
+        placeholder="Specify category"
       />
-      {form.options === "other" && (
-        <CustomInput
-          label="Category"
-          value={form.category}
-          onChange={handleOnChange}
-          name="category"
-          placeholder="Specify category"
-        />
-      )}
 
       <Button className="btn-primary" type="submit">
         Add Category

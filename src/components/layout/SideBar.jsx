@@ -41,13 +41,6 @@ const Sidebar = ({ isOpen }) => {
             <Nav className="flex-column ms-3 mt-1">
               <Nav.Link
                 as={Link}
-                to="/editproduct"
-                className="text-white px-2 py-1 rounded hover-bg"
-              >
-                Edit Products
-              </Nav.Link>
-              <Nav.Link
-                as={Link}
                 to="/newproduct"
                 className="text-white px-2 py-1 rounded hover-bg"
               >
@@ -74,13 +67,6 @@ const Sidebar = ({ isOpen }) => {
           </div>
           {showCategory && (
             <Nav className="flex-column ms-3 mt-1">
-              <Nav.Link
-                as={Link}
-                to="/editcategory"
-                className="text-white px-2 py-1 rounded hover-bg"
-              >
-                Edit Category
-              </Nav.Link>
               <Nav.Link
                 as={Link}
                 to="/newcategory"

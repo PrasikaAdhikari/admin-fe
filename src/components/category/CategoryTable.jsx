@@ -1,11 +1,15 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./Category.module.css";
 import { Button, Table } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { getCategoryAction } from "../../features/category/categoryActions";
 import { handleDeleteAction } from "../../features/category/categoryActions";
+import { CustomModal } from "../customModal/CustomModal";
+import EditCategoryForm from "./EditCategoryForm";
 const CategoryTable = () => {
   const { categories } = useSelector((state) => state.categoryStore);
+  const [modalShow, setModalShow] = useState(false);
+  const [selectedCategoryId, setSelectedCategoryId] = useState("");
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -37,7 +41,15 @@ const CategoryTable = () => {
             <td>{item.name}</td>
             <td className="d-flex justify-content-center">
               <div className="d-flex gap-1">
-                <Button className="btn-warning">Edit</Button>
+                <Button
+                  className="btn-warning"
+                  onClick={() => {
+                    setModalShow(!modalShow);
+                    setSelectedCategoryId(item._id);
+                  }}
+                >
+                  Edit
+                </Button>
                 <Button
                   className="btn-danger"
                   onClick={() => {
@@ -50,6 +62,13 @@ const CategoryTable = () => {
             </td>
           </tr>
         ))}
+        <CustomModal
+          show={modalShow}
+          title="Edit Category"
+          onHide={() => setModalShow(!modalShow)}
+        >
+          <EditCategoryForm id={selectedCategoryId} />
+        </CustomModal>
       </tbody>
     </Table>
   );
