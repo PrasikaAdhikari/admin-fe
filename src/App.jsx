@@ -20,11 +20,8 @@ import NewCategory from "./pages/categories/NewCategory";
 
 const App = () => {
   const dispatch = useDispatch();
-  const autoLogin = async () => {
-    let data = await dispatch(getUserDetailAction());
-  };
   useEffect(() => {
-    autoLogin();
+    dispatch(getUserDetailAction());
   }, []);
   return (
     <>
