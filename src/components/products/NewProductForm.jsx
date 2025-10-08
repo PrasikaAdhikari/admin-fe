@@ -38,6 +38,7 @@ const NewProductForm = () => {
         formData.append(key, form[key]);
       }
     });
+    selected.forEach((cat) => formData.append("category", cat));
     dispatch(addProductAction(formData));
   };
 
