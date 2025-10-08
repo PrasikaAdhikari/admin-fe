@@ -52,11 +52,11 @@ const LoginForm = () => {
         <div className="text-center h4">
           <i className="bi bi-shop"></i>
         </div>
-        <div className="text-center">
-          <h2>Admin Login Page</h2>
+        <div className="text-center pb-5">
+          <h2>Admin Login Portal</h2>
           <p>Access your dashboard</p>
         </div>
-        <hr />
+
         <Form onSubmit={handleOnSubmit}>
           <Form.Group className="mb-3">
             <Form.Label>Email</Form.Label>
