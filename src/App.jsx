@@ -43,7 +43,7 @@ const App = () => {
 
           <Route path="/orders" element={<Order />} />
           <Route path="/reviews" element={<Review />} />
-          <Route path="/setting" element={<Setting />} />
+          <Route path="/settings" element={<Setting />} />
         </Route>
       </Routes>
       <ToastContainer position="top-right" theme="light" />
