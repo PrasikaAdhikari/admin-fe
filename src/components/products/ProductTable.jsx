@@ -1,4 +1,4 @@
-import { Button } from "react-bootstrap";
+import { Button, Form } from "react-bootstrap";
 import Table from "react-bootstrap/Table";
 import styles from "./Product.module.css";
 import { useState } from "react";
@@ -23,7 +23,9 @@ function ProductTable({ products }) {
       <thead>
         <tr>
           <th>#</th>
+          <th>Product</th>
           <th>Description</th>
+          <th>Status</th>
           <th>Price</th>
           <th>Stock</th>
           <th>Images</th>
@@ -36,6 +38,17 @@ function ProductTable({ products }) {
           <tr key={index}>
             <td>{index + 1}</td>
             <td>{product.name}</td>
+            <td>
+              {product.description.length > 40
+                ? product.description.slice(0, 40) + "..."
+                : product.description}
+            </td>
+            <td>
+              <Form.Check
+                type="switch"
+                checked={product.status === "active" ? true : false}
+              />
+            </td>
             <td>{product.price}</td>
             <td>{product.stock}</td>
             <td>
