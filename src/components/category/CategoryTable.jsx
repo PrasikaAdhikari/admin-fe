@@ -10,6 +10,8 @@ import SubCategoryForm from "./SubCategoryForm";
 
 const CategoryTable = () => {
   const { categories } = useSelector((state) => state.categoryStore);
+  const { subCategories } = useSelector((state) => state.categoryStore);
+
   const [modalShow, setModalShow] = useState(false);
   const [subCategoryModalShow, setSubCategoryModalShow] = useState(false);
   const [selectedCategory, setselectedCategory] = useState({});
@@ -34,6 +36,7 @@ const CategoryTable = () => {
         <tr>
           <th>#</th>
           <th>Category</th>
+          <th>Sub-Categories</th>
           <th>Action</th>
         </tr>
       </thead>
@@ -42,8 +45,19 @@ const CategoryTable = () => {
           <tr key={index}>
             <td>{index + 1}</td>
             <td>{item.name}</td>
-            <td className="d-flex justify-content-center">
-              <div className="d-flex gap-1">
+            <td>
+              {subCategories?.map((subCategory) =>
+                subCategory.parent === item._id ? (
+                  <span key={subCategory._id} style={{ display: "block" }}>
+                    {subCategory.name}
+                  </span>
+                ) : (
+                  ""
+                )
+              )}
+            </td>
+            <td className="align-middle">
+              <div className="d-flex gap-1 justify-content-center align-items-center h-100">
                 <Button
                   className="btn-secondary"
                   onClick={() => {
