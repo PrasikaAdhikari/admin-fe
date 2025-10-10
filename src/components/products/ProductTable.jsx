@@ -4,7 +4,10 @@ import styles from "./Product.module.css";
 import { useState } from "react";
 import ImageModal from "../../pages/products/ImageModal";
 import { useDispatch } from "react-redux";
-import { handleDeleteAction } from "../../features/products/productActions";
+import {
+  handleActiveStatusAction,
+  handleDeleteAction,
+} from "../../features/products/productActions";
 import { CustomModal } from "../customModal/CustomModal";
 import EditProductForm from "./EditProductForm";
 
@@ -16,6 +19,10 @@ function ProductTable({ products }) {
 
   const handleDelete = (id) => {
     dispatch(handleDeleteAction(id));
+  };
+
+  const handleSwitchChange = (id) => {
+    dispatch(handleActiveStatusAction(id));
   };
 
   return (
@@ -47,6 +54,9 @@ function ProductTable({ products }) {
               <Form.Check
                 type="switch"
                 checked={product.status === "active" ? true : false}
+                onClick={() => {
+                  handleSwitchChange(product._id);
+                }}
               />
             </td>
             <td>{product.price}</td>
