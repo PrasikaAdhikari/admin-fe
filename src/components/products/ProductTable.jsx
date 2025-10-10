@@ -16,6 +16,7 @@ function ProductTable({ products }) {
   const [modalShow, setModalShow] = useState(false);
   const dispatch = useDispatch();
   const [activeImage, setActiveImage] = useState("");
+  const [editProductId, setEditProductId] = useState("");
 
   const handleDelete = (id) => {
     dispatch(handleDeleteAction(id));
@@ -82,7 +83,10 @@ function ProductTable({ products }) {
               <div className="d-flex gap-2 justify-content-center">
                 <Button
                   className="btn-warning"
-                  onClick={() => setModalShow(true)}
+                  onClick={() => {
+                    setModalShow(true);
+                    setEditProductId(product._id);
+                  }}
                 >
                   Edit
                 </Button>
@@ -94,17 +98,17 @@ function ProductTable({ products }) {
                 >
                   Delete
                 </Button>
-                <CustomModal
-                  show={modalShow}
-                  title="Edit Product"
-                  onHide={() => setModalShow(false)}
-                >
-                  <EditProductForm id={product._id} />
-                </CustomModal>
               </div>
             </td>
           </tr>
         ))}
+        <CustomModal
+          show={modalShow}
+          title="Edit Product"
+          onHide={() => setModalShow(false)}
+        >
+          <EditProductForm id={editProductId} />
+        </CustomModal>
         <ImageModal
           show={imageModalShow}
           onHide={() => setImageModalShow(false)}

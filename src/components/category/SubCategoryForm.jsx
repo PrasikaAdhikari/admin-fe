@@ -5,14 +5,14 @@ import { Button, Form } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { addCategoryAction } from "../../features/category/categoryActions";
 
-const NewCategoryForm = () => {
-  const initialState = { category: "" };
+const SubCategoryForm = ({ id }) => {
+  const initialState = { subCategory: "" };
   const dispatch = useDispatch();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    let name = form.category;
-    dispatch(addCategoryAction({ name, parent: null }));
+    let name = form.subCategory;
+    dispatch(addCategoryAction({ name, parent: id }));
     setForm(initialState);
   };
 
@@ -21,11 +21,11 @@ const NewCategoryForm = () => {
   return (
     <Form onSubmit={handleSubmit}>
       <CustomInput
-        label="Category"
-        value={form.category}
+        label="Sub-Category"
+        value={form.subCategory}
         onChange={handleOnChange}
-        name="category"
-        placeholder="Specify category"
+        name="subCategory"
+        placeholder="Specify Sub-Category"
       />
 
       <Button className="btn-primary" type="submit">
@@ -35,4 +35,4 @@ const NewCategoryForm = () => {
   );
 };
 
-export default NewCategoryForm;
+export default SubCategoryForm;

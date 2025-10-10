@@ -22,6 +22,7 @@ export const addProductAction = (form) => async (dispatch) => {
     dispatch(getProdcutsAction());
   }
   toast[result.status](result.message);
+  return { status: result.status };
 };
 
 export const updateProductAction = (id, form) => async (dispatch) => {

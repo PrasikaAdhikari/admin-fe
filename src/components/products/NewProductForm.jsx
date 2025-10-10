@@ -27,7 +27,7 @@ const NewProductForm = () => {
 
   const { form, setForm, handleOnChange } = useForm(initialState);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData();
 
@@ -39,7 +39,10 @@ const NewProductForm = () => {
       }
     });
     selected.forEach((cat) => formData.append("category", cat));
-    dispatch(addProductAction(formData));
+    const result = dispatch(addProductAction(formData));
+    if (result.status === "success") {
+      setForm(initialState);
+    }
   };
 
   const handleImageChange = (e) => {
