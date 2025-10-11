@@ -6,7 +6,7 @@ import styles from "../../components/products/Product.module.css";
 const NewProduct = () => {
   return (
     <Container className={`mt-4 mb-4 ${styles.formContainer}`}>
-      <h1>Add new Product</h1>
+      <h1>Add New Product</h1>
       <NewProductForm />
     </Container>
   );
