@@ -1,6 +1,7 @@
 import { toast } from "react-toastify";
 import {
   addProductApi,
+  changeProductStatusApi,
   deleteProductApi,
   getProductsApi,
   updateProductApi,
@@ -21,6 +22,7 @@ export const addProductAction = (form) => async (dispatch) => {
     dispatch(getProdcutsAction());
   }
   toast[result.status](result.message);
+  return { status: result.status };
 };
 
 export const updateProductAction = (id, form) => async (dispatch) => {
@@ -33,9 +35,16 @@ export const updateProductAction = (id, form) => async (dispatch) => {
 
 export const handleDeleteAction = (id) => async (dispatch) => {
   const result = await deleteProductApi(id);
-  console.log(result);
   if (result.status === "success") {
     dispatch(getProdcutsAction());
   }
-  toast.success(result.message);
+  toast[result.status](result.message);
+};
+
+export const handleActiveStatusAction = (id) => async (dispatch) => {
+  const result = await changeProductStatusApi(id);
+  if (result.status === "success") {
+    dispatch(getProdcutsAction());
+  }
+  toast[result.status](result.message);
 };

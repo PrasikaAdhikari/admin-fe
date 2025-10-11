@@ -6,10 +6,17 @@ import { getCategoryAction } from "../../features/category/categoryActions";
 import { handleDeleteAction } from "../../features/category/categoryActions";
 import { CustomModal } from "../customModal/CustomModal";
 import EditCategoryForm from "./EditCategoryForm";
+import SubCategoryForm from "./SubCategoryForm";
+import { MdEdit } from "react-icons/md";
+import { MdDelete } from "react-icons/md";
+
 const CategoryTable = () => {
   const { categories } = useSelector((state) => state.categoryStore);
+  const { subCategories } = useSelector((state) => state.categoryStore);
+
   const [modalShow, setModalShow] = useState(false);
-  const [selectedCategoryId, setSelectedCategoryId] = useState("");
+  const [subCategoryModalShow, setSubCategoryModalShow] = useState(false);
+  const [selectedCategory, setselectedCategory] = useState({});
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -31,6 +38,7 @@ const CategoryTable = () => {
         <tr>
           <th>#</th>
           <th>Category</th>
+          <th>Sub-Categories</th>
           <th>Action</th>
         </tr>
       </thead>
@@ -39,13 +47,62 @@ const CategoryTable = () => {
           <tr key={index}>
             <td>{index + 1}</td>
             <td>{item.name}</td>
-            <td className="d-flex justify-content-center">
-              <div className="d-flex gap-1">
+            <td>
+              {subCategories?.map((subCategory) =>
+                subCategory.parent === item._id ? (
+                  <div className="d-flex justify-content-between gap-3 mt-2 mb-2">
+                    <span key={subCategory._id}>{subCategory.name}</span>
+                    <div className="d-flex gap-1">
+                      <Button
+                        className="rounded-circle btn-warning"
+                        onClick={() => {
+                          setselectedCategory({
+                            id: subCategory._id,
+                            name: subCategory.name,
+                            type: "subCategory",
+                          });
+                          setModalShow(!modalShow);
+                        }}
+                      >
+                        <MdEdit />
+                      </Button>
+                      <Button
+                        className="rounded-circle btn-danger"
+                        onClick={() => handleDelete(subCategory._id)}
+                      >
+                        <MdDelete />
+                      </Button>
+                    </div>
+                  </div>
+                ) : (
+                  ""
+                )
+              )}
+            </td>
+            <td>
+              <div className="d-flex gap-1 justify-content-center align-items-center h-100">
+                <Button
+                  className="btn-secondary"
+                  onClick={() => {
+                    setselectedCategory({
+                      id: item._id,
+                      name: item.name,
+                      type: "category",
+                    });
+                    setSubCategoryModalShow(!subCategoryModalShow);
+                  }}
+                >
+                  Add Sub-category
+                </Button>
                 <Button
                   className="btn-warning"
                   onClick={() => {
                     setModalShow(!modalShow);
-                    setSelectedCategoryId(item._id);
+                    setselectedCategory({
+                      id: item._id,
+                      name: item.name,
+                      type: "category",
+                    });
                   }}
                 >
                   Edit
@@ -64,10 +121,20 @@ const CategoryTable = () => {
         ))}
         <CustomModal
           show={modalShow}
-          title="Edit Category"
+          title={`Edit ${selectedCategory.type}`}
           onHide={() => setModalShow(!modalShow)}
         >
-          <EditCategoryForm id={selectedCategoryId} />
+          <EditCategoryForm
+            id={selectedCategory.id}
+            type={selectedCategory.type}
+          />
+        </CustomModal>
+        <CustomModal
+          show={subCategoryModalShow}
+          title={`Add Sub-Category to ${selectedCategory.name}`}
+          onHide={() => setSubCategoryModalShow(!subCategoryModalShow)}
+        >
+          <SubCategoryForm id={selectedCategory.id} />
         </CustomModal>
       </tbody>
     </Table>

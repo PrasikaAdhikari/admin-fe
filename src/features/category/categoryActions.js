@@ -5,12 +5,13 @@ import {
   getCategoryApi,
   updateCategoryApi,
 } from "./categoryApi";
-import { setCategories } from "./CategorySlice";
+import { setCategories, setSubCategories } from "./CategorySlice";
 
 export const getCategoryAction = () => async (dispatch) => {
   const categories = await getCategoryApi();
   if (categories.status === "success") {
     dispatch(setCategories(categories.categories));
+    dispatch(setSubCategories(categories.subCategories));
   }
   return { status: categories.status, message: categories.message };
 };

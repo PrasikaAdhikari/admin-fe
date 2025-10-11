@@ -1,17 +1,33 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Form from "react-bootstrap/Form";
 import { Button } from "react-bootstrap";
 import useForm from "../../hooks/useForm";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addProductAction } from "../../features/products/productActions";
+import { CustomDropdown } from "../custominput/CustomDropdown";
+import { getCategoryAction } from "../../features/category/categoryActions";
 
 const NewProductForm = () => {
   const initialState = {};
   const dispatch = useDispatch();
+  const { categories } = useSelector((state) => state.categoryStore);
+  const [category, setCategory] = useState([]);
+  const [selected, setSelected] = useState([]);
+
+  useEffect(() => {
+    dispatch(getCategoryAction());
+  }, []);
+
+  useEffect(() => {
+    const tempCategories = categories.map((category) => {
+      return { label: category.name, value: category.name };
+    });
+    setCategory(tempCategories);
+  }, [categories]);
 
   const { form, setForm, handleOnChange } = useForm(initialState);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData();
 
@@ -22,7 +38,11 @@ const NewProductForm = () => {
         formData.append(key, form[key]);
       }
     });
-    dispatch(addProductAction(formData));
+    selected.forEach((cat) => formData.append("category", cat));
+    const result = dispatch(addProductAction(formData));
+    if (result.status === "success") {
+      setForm(initialState);
+    }
   };
 
   const handleImageChange = (e) => {
@@ -69,6 +89,12 @@ const NewProductForm = () => {
           onChange={handleOnChange}
         />
       </Form.Group>
+      <CustomDropdown
+        options={category}
+        label="Select Category/Categories"
+        selected={selected}
+        setSelected={setSelected}
+      />
       <Form.Group controlId="formFileMultiple" className="mb-3">
         <Form.Label>Select product images</Form.Label>
         <Form.Control

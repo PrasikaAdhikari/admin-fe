@@ -32,3 +32,11 @@ export const deleteProductApi = (id) => {
     data: { id },
   });
 };
+
+export const changeProductStatusApi = (id) => {
+  return apiProcessor({
+    method: "POST",
+    url: `${apiUrl}/products/status`,
+    data: { id },
+  });
+};

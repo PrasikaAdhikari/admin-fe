@@ -1,10 +1,13 @@
-import { Button } from "react-bootstrap";
+import { Button, Form } from "react-bootstrap";
 import Table from "react-bootstrap/Table";
 import styles from "./Product.module.css";
 import { useState } from "react";
 import ImageModal from "../../pages/products/ImageModal";
 import { useDispatch } from "react-redux";
-import { handleDeleteAction } from "../../features/products/productActions";
+import {
+  handleActiveStatusAction,
+  handleDeleteAction,
+} from "../../features/products/productActions";
 import { CustomModal } from "../customModal/CustomModal";
 import EditProductForm from "./EditProductForm";
 
@@ -13,9 +16,14 @@ function ProductTable({ products }) {
   const [modalShow, setModalShow] = useState(false);
   const dispatch = useDispatch();
   const [activeImage, setActiveImage] = useState("");
+  const [editProductId, setEditProductId] = useState("");
 
   const handleDelete = (id) => {
     dispatch(handleDeleteAction(id));
+  };
+
+  const handleSwitchChange = (id) => {
+    dispatch(handleActiveStatusAction(id));
   };
 
   return (
@@ -23,7 +31,9 @@ function ProductTable({ products }) {
       <thead>
         <tr>
           <th>#</th>
+          <th>Product</th>
           <th>Description</th>
+          <th>Status</th>
           <th>Price</th>
           <th>Stock</th>
           <th>Images</th>
@@ -36,6 +46,20 @@ function ProductTable({ products }) {
           <tr key={index}>
             <td>{index + 1}</td>
             <td>{product.name}</td>
+            <td>
+              {product.description.length > 40
+                ? product.description.slice(0, 40) + "..."
+                : product.description}
+            </td>
+            <td>
+              <Form.Check
+                type="switch"
+                checked={product.status === "active" ? true : false}
+                onClick={() => {
+                  handleSwitchChange(product._id);
+                }}
+              />
+            </td>
             <td>{product.price}</td>
             <td>{product.stock}</td>
             <td>
@@ -59,7 +83,10 @@ function ProductTable({ products }) {
               <div className="d-flex gap-2 justify-content-center">
                 <Button
                   className="btn-warning"
-                  onClick={() => setModalShow(true)}
+                  onClick={() => {
+                    setModalShow(true);
+                    setEditProductId(product._id);
+                  }}
                 >
                   Edit
                 </Button>
@@ -71,17 +98,17 @@ function ProductTable({ products }) {
                 >
                   Delete
                 </Button>
-                <CustomModal
-                  show={modalShow}
-                  title="Edit Product"
-                  onHide={() => setModalShow(false)}
-                >
-                  <EditProductForm id={product._id} />
-                </CustomModal>
               </div>
             </td>
           </tr>
         ))}
+        <CustomModal
+          show={modalShow}
+          title="Edit Product"
+          onHide={() => setModalShow(false)}
+        >
+          <EditProductForm id={editProductId} />
+        </CustomModal>
         <ImageModal
           show={imageModalShow}
           onHide={() => setImageModalShow(false)}
