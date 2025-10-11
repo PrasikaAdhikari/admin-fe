@@ -19,7 +19,13 @@ function ProductTable({ products }) {
   const [editProductId, setEditProductId] = useState("");
 
   const handleDelete = (id) => {
-    dispatch(handleDeleteAction(id));
+    const confirmed = window.confirm(
+      "Are you sure you want to delete this item?"
+    );
+
+    if (confirmed) {
+      dispatch(handleDeleteAction(id));
+    }
   };
 
   const handleSwitchChange = (id) => {

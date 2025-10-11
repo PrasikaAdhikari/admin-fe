@@ -55,6 +55,7 @@ const NewProductForm = () => {
   return (
     <Form onSubmit={handleSubmit}>
       <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+        <Form.Label>Product Name</Form.Label>
         <Form.Control
           type="text"
           placeholder="Product Name"
@@ -89,12 +90,15 @@ const NewProductForm = () => {
           onChange={handleOnChange}
         />
       </Form.Group>
-      <CustomDropdown
-        options={category}
-        label="Select Category/Categories"
-        selected={selected}
-        setSelected={setSelected}
-      />
+      <Form.Group className="mb-3">
+        <Form.Label>Select Category / Categories</Form.Label>
+        <CustomDropdown
+          options={category}
+          label="Select categories"
+          selected={selected}
+          setSelected={setSelected}
+        />
+      </Form.Group>
       <Form.Group controlId="formFileMultiple" className="mb-3">
         <Form.Label>Select product images</Form.Label>
         <Form.Control
