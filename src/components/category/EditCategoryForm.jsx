@@ -5,14 +5,18 @@ import { Button, Form } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { updateCategoryAction } from "../../features/category/categoryActions";
 
-const EditCategoryForm = ({ id }) => {
+const EditCategoryForm = ({ id, type }) => {
   const dispatch = useDispatch();
   const { categories } = useSelector((state) => state.categoryStore);
+  const { subCategories } = useSelector((state) => state.categoryStore);
   const initialState = { category: "" };
   const { form, handleOnChange, setForm } = useForm(initialState);
 
   useEffect(() => {
-    const category = categories.find((category) => category._id === id);
+    const category =
+      type === "category"
+        ? categories.find((category) => category._id === id)
+        : subCategories.find((category) => category._id === id);
     setForm({ category: category.name } || initialState);
   }, [id, categories]);
 
@@ -34,7 +38,7 @@ const EditCategoryForm = ({ id }) => {
       />
 
       <Button className="btn-primary" type="submit">
-        Edit Category
+        Edit {type === "category" ? "Category" : "Sub-Category"}
       </Button>
     </Form>
   );

@@ -7,6 +7,8 @@ import { handleDeleteAction } from "../../features/category/categoryActions";
 import { CustomModal } from "../customModal/CustomModal";
 import EditCategoryForm from "./EditCategoryForm";
 import SubCategoryForm from "./SubCategoryForm";
+import { MdEdit } from "react-icons/md";
+import { MdDelete } from "react-icons/md";
 
 const CategoryTable = () => {
   const { categories } = useSelector((state) => state.categoryStore);
@@ -48,20 +50,45 @@ const CategoryTable = () => {
             <td>
               {subCategories?.map((subCategory) =>
                 subCategory.parent === item._id ? (
-                  <span key={subCategory._id} style={{ display: "block" }}>
-                    {subCategory.name}
-                  </span>
+                  <div className="d-flex justify-content-between gap-3 mt-2 mb-2">
+                    <span key={subCategory._id}>{subCategory.name}</span>
+                    <div className="d-flex gap-1">
+                      <Button
+                        className="rounded-circle btn-warning"
+                        onClick={() => {
+                          setselectedCategory({
+                            id: subCategory._id,
+                            name: subCategory.name,
+                            type: "subCategory",
+                          });
+                          setModalShow(!modalShow);
+                        }}
+                      >
+                        <MdEdit />
+                      </Button>
+                      <Button
+                        className="rounded-circle btn-danger"
+                        onClick={() => handleDelete(subCategory._id)}
+                      >
+                        <MdDelete />
+                      </Button>
+                    </div>
+                  </div>
                 ) : (
                   ""
                 )
               )}
             </td>
-            <td className="align-middle">
+            <td>
               <div className="d-flex gap-1 justify-content-center align-items-center h-100">
                 <Button
                   className="btn-secondary"
                   onClick={() => {
-                    setselectedCategory({ id: item._id, name: item.name });
+                    setselectedCategory({
+                      id: item._id,
+                      name: item.name,
+                      type: "category",
+                    });
                     setSubCategoryModalShow(!subCategoryModalShow);
                   }}
                 >
@@ -71,7 +98,11 @@ const CategoryTable = () => {
                   className="btn-warning"
                   onClick={() => {
                     setModalShow(!modalShow);
-                    setselectedCategory({ id: item._id, name: item.name });
+                    setselectedCategory({
+                      id: item._id,
+                      name: item.name,
+                      type: "category",
+                    });
                   }}
                 >
                   Edit
@@ -90,10 +121,13 @@ const CategoryTable = () => {
         ))}
         <CustomModal
           show={modalShow}
-          title="Edit Category"
+          title={`Edit ${selectedCategory.type}`}
           onHide={() => setModalShow(!modalShow)}
         >
-          <EditCategoryForm id={selectedCategory.id} />
+          <EditCategoryForm
+            id={selectedCategory.id}
+            type={selectedCategory.type}
+          />
         </CustomModal>
         <CustomModal
           show={subCategoryModalShow}
