@@ -4,7 +4,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { toast } from "react-toastify";
 import { Button, Form } from "react-bootstrap";
 // import "bootstrap-icons/font/bootstrap-icons.css";
-import { loginUserAction } from "../features/users/userActions";
+import { loginUserAction } from "../../features/users/userActions";
 
 const LoginForm = () => {
   // --- Redux + Navigation ---
@@ -52,11 +52,11 @@ const LoginForm = () => {
         <div className="text-center h4">
           <i className="bi bi-shop"></i>
         </div>
-        <div className="text-center">
-          <h2>Admin Login Page</h2>
+        <div className="text-center pb-5">
+          <h2>Admin Login Portal</h2>
           <p>Access your dashboard</p>
         </div>
-        <hr />
+
         <Form onSubmit={handleOnSubmit}>
           <Form.Group className="mb-3">
             <Form.Label>Email</Form.Label>

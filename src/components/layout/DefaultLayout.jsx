@@ -1,47 +1,57 @@
 import React, { useState, useEffect } from "react";
 import Header from "./Header";
 import Footer from "./Footer";
+import SideBar from "./SideBar";
 import { Outlet } from "react-router-dom";
 import Auth from "../../auth/Auth";
-import Sidebar from "./SideBar";
 
 const DefaultLayout = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 992);
 
-  const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
+  useEffect(() => {
+    const handleResize = () => {
+      const mobile = window.innerWidth < 992;
+      setIsMobile(mobile);
+      setIsSidebarOpen(!mobile);
+    };
+
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  const toggleSidebar = () => setIsSidebarOpen((prev) => !prev);
 
   return (
     <Auth>
-      <div className="d-flex flex-column" style={{ height: "100vh" }}>
-        {/* Header with dynamic margin */}
-        <div
+      <div
+        className="d-flex flex-column"
+        style={{ height: "100vh", overflow: "hidden" }}
+      >
+        <Header toggleSidebar={toggleSidebar} />
+
+        {/* Sidebar */}
+        <SideBar
+          isOpen={isSidebarOpen}
+          toggleSidebar={toggleSidebar}
+          isMobile={isMobile}
+        />
+
+        {/* Main Content */}
+        <main
+          className="flex-grow-1 p-3 mt-5"
           style={{
-            marginLeft: isSidebarOpen ? 230 : 50, // match sidebar width
-            transition: "margin-left 0.3s ease",
-            zIndex: 1000,
+            overflowY: "auto",
+            transition: "all 0.3s ease",
+            paddingTop: "56px",
+            marginLeft: !isMobile && isSidebarOpen ? "230px" : "0px",
           }}
         >
-          <Header />
-        </div>
-
-        {/* Main layout */}
-        <div className="d-flex flex-grow-1" style={{ overflow: "hidden" }}>
-          <Sidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
-
-          <main
-            className="flex-grow-1 d-flex justify-content-center align-items-start p-3"
-            style={{
-              overflowY: "auto",
-              marginLeft: isSidebarOpen ? 230 : 50,
-              transition: "margin-left 0.3s ease",
-            }}
-          >
-            {/* Centered container for Outlet */}
-            <div style={{ width: "100%", maxWidth: "1200px" }}>
-              <Outlet />
-            </div>
-          </main>
-        </div>
+          <div style={{ width: "100%", maxWidth: "1200px", margin: "0 auto" }}>
+            <Outlet />
+          </div>
+        </main>
 
         <Footer />
       </div>

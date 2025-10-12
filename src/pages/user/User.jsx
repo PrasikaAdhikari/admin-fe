@@ -12,7 +12,7 @@ import { useDispatch, useSelector } from "react-redux";
 // import AddNewUserForm from "../components/forms/AddNewUserForm";
 import { CustomModal } from "../../components/customModal/CustomModal";
 import { getAllUserAction } from "../../features/users/userActions";
-import RegisterUserForm from "../../components/RegisterForm";
+import RegisterUserForm from "../../components/auth/RegisterForm";
 import { isSuperAdmin } from "../../hooks/isSuperAdmin";
 import { FaUsers, FaUserPlus } from "react-icons/fa";
 

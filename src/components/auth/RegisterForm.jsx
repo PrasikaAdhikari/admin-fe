@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import { useDispatch } from "react-redux";
-import { registerUserAction } from "../features/users/userActions";
+import { registerUserAction } from "../../features/users/userActions";
 import { toast } from "react-toastify";
 
 const RegisterUserForm = ({ onHide }) => {

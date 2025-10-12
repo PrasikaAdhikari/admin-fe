@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
-import Sidebar from "../../components/layout/SideBar";
-import admin from "../../assets/admin.avif";
-import "./Dashboard.css";
+import { Container, Row, Col, Card } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { getUserDetailAction } from "../../features/users/userActions";
 
@@ -11,6 +9,7 @@ const AdminDashboard = () => {
 
   const dispatch = useDispatch();
   const { user } = useSelector((store) => store.userStore);
+
   useEffect(() => {
     dispatch(getUserDetailAction());
   }, []);
@@ -29,56 +28,48 @@ const AdminDashboard = () => {
 
   const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
 
-  const sidebarWrapperStyle = {
-    transform:
-      isMobile && !isSidebarOpen ? "translateX(-100%)" : "translateX(0)",
-    transition: "transform 0.3s ease-in-out",
-  };
-
-  const overlayStyle = {
-    display: isMobile && isSidebarOpen ? "block" : "none",
-  };
-
   return (
-    <div className="dashboard-container">
-      {/* Overlay for mobile */}
-      <div
-        className="dashboard-overlay"
-        style={overlayStyle}
-        onClick={toggleSidebar}
-      />
+    <Container
+      fluid
+      className="p-4"
+      style={{
+        transition: "margin-left 0.3s",
+      }}
+    >
+      <h2 className="mb-3">Dashboard Overview</h2>
+      <p>
+        An admin dashboard with all the ins and outs of the e-commerce business.
+      </p>
 
-      {/* Main content */}
-      <div
-        className="dashboard-main"
-        style={{ marginLeft: !isMobile ? "200px" : 0 }}
-      >
-        <main>
-          <div className="dashboard-content">
-            <h2>Dashboard Overview</h2>
-            <p>
-              An admin dashboard with all the ins and outs of the e-commerce
-              business.
-            </p>
+      <Row className="mt-4 g-4">
+        <Col xs={12} md={6} lg={4}>
+          <Card className="shadow-lg h-100">
+            <Card.Body>
+              <Card.Title>Users</Card.Title>
+              <Card.Text>1,234 active</Card.Text>
+            </Card.Body>
+          </Card>
+        </Col>
 
-            <div className="dashboard-grid">
-              <div className="dashboard-card">
-                <h3>Users</h3>
-                <p>1,234 active</p>
-              </div>
-              <div className="dashboard-card">
-                <h3>Revenue</h3>
-                <p>$12,345</p>
-              </div>
-              <div className="dashboard-card">
-                <h3>Orders</h3>
-                <p>567</p>
-              </div>
-            </div>
-          </div>
-        </main>
-      </div>
-    </div>
+        <Col xs={12} md={6} lg={4}>
+          <Card className="shadow-lg h-100">
+            <Card.Body>
+              <Card.Title>Revenue</Card.Title>
+              <Card.Text>$12,345</Card.Text>
+            </Card.Body>
+          </Card>
+        </Col>
+
+        <Col xs={12} md={6} lg={4}>
+          <Card className="shadow-lg h-100">
+            <Card.Body>
+              <Card.Title>Orders</Card.Title>
+              <Card.Text>567</Card.Text>
+            </Card.Body>
+          </Card>
+        </Col>
+      </Row>
+    </Container>
   );
 };
 
