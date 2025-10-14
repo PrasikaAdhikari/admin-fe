@@ -17,3 +17,16 @@
   transform: scale(1.02);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
+
+.imageDeleteIcon {
+  color: red;
+  position: absolute;
+  transition: transform 0.2s ease;
+  right: -5px;
+  top: -5px;
+}
+
+.imageDeleteIcon:hover {
+  cursor: pointer;
+  transform: scale(1.05);
+}
