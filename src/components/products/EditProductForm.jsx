@@ -6,19 +6,43 @@ import { useDispatch, useSelector } from "react-redux";
 import { updateProductAction } from "../../features/products/productActions";
 import { ImCross } from "react-icons/im";
 import styles from "./Product.module.css";
+import { getCategoryAction } from "../../features/category/categoryActions";
 
 const EditProductForm = ({ id }) => {
   const dispatch = useDispatch();
   const { products } = useSelector((state) => state.productStore);
+  const { categories } = useSelector((state) => state.categoryStore);
+
+  const [categoryOptions, setCategoryOptions] = useState([]);
+  const [selectedCategories, setSelectedCategories] = useState([]);
+
   const { form, setForm, handleOnChange } = useForm({
     name: "",
     description: "",
     price: "",
     stock: "",
+    category: [],
     images: [],
   });
   const [imagesToDelete, setImagesToDelete] = useState([]);
 
+  // Load categories
+  useEffect(() => {
+    dispatch(getCategoryAction());
+  }, [dispatch]);
+
+  // Prepare dropdown options: use both label and ID value
+  useEffect(() => {
+    if (categories.length) {
+      const temp = categories.map((cat) => ({
+        label: cat.name,
+        value: cat._id, // Use ID for backend consistency
+      }));
+      setCategoryOptions(temp);
+    }
+  }, [categories]);
+
+  // Prefill product data
   useEffect(() => {
     const foundProduct = products.find((product) => product._id === id);
     if (foundProduct) {
@@ -28,9 +52,17 @@ const EditProductForm = ({ id }) => {
         price: foundProduct.price || "",
         stock: foundProduct.stock || "",
         images: foundProduct.images || [],
+        category: foundProduct.category || [],
       });
+
+      // Convert category IDs to readable names
+      const selectedNames = categories
+        .filter((cat) => foundProduct.category?.includes(cat._id))
+        .map((cat) => cat._id); // still use ID as value
+
+      setSelectedCategories(selectedNames);
     }
-  }, [id, products]);
+  }, [id, products, categories, setForm]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -48,6 +80,10 @@ const EditProductForm = ({ id }) => {
       }
     });
     imagesToDelete.forEach((image) => formData.append("imagesToDelete", image));
+
+    // Send category IDs
+    selectedCategories.forEach((catId) => formData.append("category", catId));
+
     dispatch(updateProductAction(id, formData));
   };
 
@@ -67,7 +103,8 @@ const EditProductForm = ({ id }) => {
 
   return (
     <Form onSubmit={handleSubmit}>
-      <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+      <Form.Group className="mb-3">
+        <Form.Label>Product Name</Form.Label>
         <Form.Control
           type="text"
           placeholder="Product Name"
@@ -76,7 +113,8 @@ const EditProductForm = ({ id }) => {
           value={form.name}
         />
       </Form.Group>
-      <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+
+      <Form.Group className="mb-3">
         <Form.Label>Description</Form.Label>
         <Form.Control
           as="textarea"
@@ -86,7 +124,8 @@ const EditProductForm = ({ id }) => {
           value={form.description}
         />
       </Form.Group>
-      <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+
+      <Form.Group className="mb-3">
         <Form.Label>Price</Form.Label>
         <Form.Control
           name="price"
@@ -96,7 +135,8 @@ const EditProductForm = ({ id }) => {
           value={form.price}
         />
       </Form.Group>
-      <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+
+      <Form.Group className="mb-3">
         <Form.Label>Stock</Form.Label>
         <Form.Control
           name="stock"
@@ -137,8 +177,9 @@ const EditProductForm = ({ id }) => {
           </>
         )}
       </Form.Group>
+
       <Button className="btn-primary" type="submit">
-        Edit Product
+        Save Changes
       </Button>
     </Form>
   );
