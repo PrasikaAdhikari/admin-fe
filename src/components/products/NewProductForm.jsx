@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Form from "react-bootstrap/Form";
 import { Button } from "react-bootstrap";
 import useForm from "../../hooks/useForm";
@@ -8,11 +8,19 @@ import { CustomDropdown } from "../custominput/CustomDropdown";
 import { getCategoryAction } from "../../features/category/categoryActions";
 
 const NewProductForm = () => {
-  const initialState = {};
+  const initialState = {
+    name: "",
+    description: "",
+    price: "",
+    stock: "",
+    images: [],
+  };
+  const fileInputRef = useRef(null);
   const dispatch = useDispatch();
   const { categories } = useSelector((state) => state.categoryStore);
   const [category, setCategory] = useState([]);
   const [selected, setSelected] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     dispatch(getCategoryAction());
@@ -25,10 +33,11 @@ const NewProductForm = () => {
     setCategory(tempCategories);
   }, [categories]);
 
-  const { form, setForm, handleOnChange } = useForm(initialState);
+  const { form, setForm, handleOnChange, resetForm } = useForm(initialState);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
     const formData = new FormData();
 
     Object.keys(form).forEach((key) => {
@@ -39,9 +48,18 @@ const NewProductForm = () => {
       }
     });
     selected.forEach((cat) => formData.append("category", cat));
-    const result = dispatch(addProductAction(formData));
-    if (result.status === "success") {
-      setForm(initialState);
+
+    try {
+      const result = await dispatch(addProductAction(formData));
+      if (result.status === "success") {
+        resetForm();
+        setSelected([]);
+        if (fileInputRef.current) {
+          fileInputRef.current.value = null;
+        }
+      }
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -61,6 +79,7 @@ const NewProductForm = () => {
           placeholder="Product Name"
           onChange={handleOnChange}
           name="name"
+          value={form.name}
         />
       </Form.Group>
       <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
@@ -70,6 +89,7 @@ const NewProductForm = () => {
           rows={3}
           onChange={handleOnChange}
           name="description"
+          value={form.description}
         />
       </Form.Group>
       <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
@@ -79,6 +99,7 @@ const NewProductForm = () => {
           type="number"
           placeholder="Price"
           onChange={handleOnChange}
+          value={form.price}
         />
       </Form.Group>
       <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
@@ -88,6 +109,7 @@ const NewProductForm = () => {
           type="number"
           placeholder="Stock"
           onChange={handleOnChange}
+          value={form.stock}
         />
       </Form.Group>
       <Form.Group className="mb-3">
@@ -107,10 +129,11 @@ const NewProductForm = () => {
           name="images"
           accept="image/*"
           onChange={handleImageChange}
+          ref={fileInputRef}
         />
       </Form.Group>
-      <Button className="btn-primary" type="submit">
-        Add Product
+      <Button className="btn-primary" type="submit" disabled={loading}>
+        {loading ? "Adding new product...." : "Add Product"}
       </Button>
     </Form>
   );
