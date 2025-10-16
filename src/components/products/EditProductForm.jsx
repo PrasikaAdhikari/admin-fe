@@ -4,8 +4,9 @@ import { Button } from "react-bootstrap";
 import useForm from "../../hooks/useForm";
 import { useDispatch, useSelector } from "react-redux";
 import { updateProductAction } from "../../features/products/productActions";
+import { ImCross } from "react-icons/im";
+import styles from "./Product.module.css";
 import { getCategoryAction } from "../../features/category/categoryActions";
-import { CustomDropdown } from "../custominput/CustomDropdown";
 
 const EditProductForm = ({ id }) => {
   const dispatch = useDispatch();
@@ -23,6 +24,7 @@ const EditProductForm = ({ id }) => {
     category: [],
     images: [],
   });
+  const [imagesToDelete, setImagesToDelete] = useState([]);
 
   // Load categories
   useEffect(() => {
@@ -49,8 +51,8 @@ const EditProductForm = ({ id }) => {
         description: foundProduct.description || "",
         price: foundProduct.price || "",
         stock: foundProduct.stock || "",
+        images: foundProduct.images || [],
         category: foundProduct.category || [],
-        images: [],
       });
 
       // Convert category IDs to readable names
@@ -68,11 +70,16 @@ const EditProductForm = ({ id }) => {
 
     Object.keys(form).forEach((key) => {
       if (key === "images") {
-        form[key].forEach((file) => formData.append("images", file));
+        form.images.forEach((item) => {
+          if (typeof item !== "string") {
+            item.forEach((image) => formData.append("images", image));
+          }
+        });
       } else {
         formData.append(key, form[key]);
       }
     });
+    imagesToDelete.forEach((image) => formData.append("imagesToDelete", image));
 
     // Send category IDs
     selectedCategories.forEach((catId) => formData.append("category", catId));
@@ -81,8 +88,17 @@ const EditProductForm = ({ id }) => {
   };
 
   const handleImageChange = (e) => {
-    const images = Array.from(e.target.files);
-    setForm((prev) => ({ ...prev, images }));
+    const fileList = e.target.files;
+    const images = Array.from(fileList);
+    setForm((prev) => ({ ...prev, images: [...prev.images, images] }));
+  };
+
+  const handleImageDelete = (imageToDelete) => {
+    const newImageArray = form.images.filter(
+      (image) => image !== imageToDelete
+    );
+    setForm((prev) => ({ ...prev, images: newImageArray }));
+    setImagesToDelete((prev) => [...prev, imageToDelete]);
   };
 
   return (
@@ -130,26 +146,36 @@ const EditProductForm = ({ id }) => {
           value={form.stock}
         />
       </Form.Group>
-
-      <Form.Group className="mb-3">
-        <Form.Label>Categories</Form.Label>
-        <CustomDropdown
-          options={categoryOptions}
-          selected={selectedCategories}
-          setSelected={setSelectedCategories}
-          label="Update categories"
-        />
-      </Form.Group>
-
-      <Form.Group controlId="formFileMultiple" className="mb-3">
-        <Form.Label>Select product images</Form.Label>
-        <Form.Control
-          type="file"
-          multiple
-          name="images"
-          accept="image/*"
-          onChange={handleImageChange}
-        />
+      <Form.Group
+        controlId="formFileMultiple"
+        className="mb-3 d-flex flex-column"
+      >
+        <div className="d-flex gap-3">
+          {form.images.map((image) => (
+            <div style={{ position: "relative", display: "inline-block" }}>
+              <img width="80px" src={image} />
+              <ImCross
+                className={styles.imageDeleteIcon}
+                onClick={() => {
+                  handleImageDelete(image);
+                }}
+                size={15}
+              />
+            </div>
+          ))}
+        </div>
+        {form.images.length < 3 && (
+          <>
+            <Form.Label>Select product image/images</Form.Label>
+            <Form.Control
+              type="file"
+              multiple
+              name="images"
+              accept="image/*"
+              onChange={handleImageChange}
+            />
+          </>
+        )}
       </Form.Group>
 
       <Button className="btn-primary" type="submit">

@@ -1,12 +1,12 @@
 import { apiProcessor } from "../../utils/axiosHelper";
 const apiUrl = import.meta.env.VITE_APP_API_URL + "/api/v1";
 
-export const registerUser = (form) => {
+export const registerUser = async (form) => {
   return apiProcessor({
     method: "POST",
     url: `${apiUrl}/user/setting`,
     data: form,
-    isPrivate: true,
+    isPrivate: false,
   });
 };
 
