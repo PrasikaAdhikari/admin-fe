@@ -44,7 +44,7 @@ export const apiProcessor = async ({
           method,
           data,
           url,
-          isPrivate,
+          // isPrivate,
           isRefresh,
         });
       }

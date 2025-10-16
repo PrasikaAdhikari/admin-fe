@@ -137,7 +137,7 @@ const EditProductForm = ({ id }) => {
           options={categoryOptions}
           selected={selectedCategories}
           setSelected={setSelectedCategories}
-          label="Select categories"
+          label="Update categories"
         />
       </Form.Group>
 

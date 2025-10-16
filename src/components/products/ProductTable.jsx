@@ -48,7 +48,7 @@ function ProductTable({ products }) {
         </tr>
       </thead>
       <tbody>
-        {products.map((product, index) => (
+        {[...products].reverse().map((product, index) => (
           <tr key={index}>
             <td>{index + 1}</td>
             <td>{product.name}</td>
