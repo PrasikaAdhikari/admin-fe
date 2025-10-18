@@ -16,11 +16,11 @@ export const registerUserAction = (form) => async (dispatch) => {
       dispatch(getAllUserAction());
       toast[data.status](data.message);
     } else {
-      toast[data.status](data.message || "Something went wrong");
+      toast[data.status](data.message || "Registration failed");
     }
     return data;
   } catch (error) {
-    toast[data.status](data?.message || "Something went wrong");
+    toast.error(error?.message || "Something went wrong")
     return {
       status: "error",
       message: error?.message || "Something went wrong",

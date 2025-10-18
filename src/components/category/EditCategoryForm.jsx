@@ -38,7 +38,7 @@ const EditCategoryForm = ({ id, type }) => {
       />
 
       <Button className="btn-primary" type="submit">
-        Edit {type === "category" ? "Category" : "Sub-Category"}
+        Save {type === "category" ? "Category" : "Sub-Category"}
       </Button>
     </Form>
   );
