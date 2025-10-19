@@ -7,3 +7,12 @@ export const getOrdersApi = () => {
     url: `${apiUrl}/orders`,
   });
 };
+
+export const changeStatusApi = (id, status) => {
+  return apiProcessor({
+    method: "patch",
+    isPrivate: true,
+    url: `${apiUrl}/orders`,
+    data: { id, status },
+  });
+};
