@@ -112,16 +112,18 @@ const SideBar = ({ isOpen, toggleSidebar, isMobile }) => {
               </Nav.Item>
 
               {/* Static Links */}
-              {["User", "Orders", "Reviews", "Settings"].map((item) => (
-                <Nav.Link
-                  as={Link}
-                  key={item}
-                  to={`/${item.toLowerCase()}`}
-                  className="text-white px-2 py-1 mb-1"
-                >
-                  {item}
-                </Nav.Link>
-              ))}
+              {["User", "Orders", "Customer", "Reviews", "Settings"].map(
+                (item) => (
+                  <Nav.Link
+                    as={Link}
+                    key={item}
+                    to={`/${item.toLowerCase()}`}
+                    className="text-white px-2 py-1 mb-1"
+                  >
+                    {item}
+                  </Nav.Link>
+                )
+              )}
             </Nav>
           </>
         )}
