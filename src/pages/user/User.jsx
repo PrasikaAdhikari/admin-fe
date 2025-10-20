@@ -9,12 +9,11 @@ import {
   Table,
 } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-// import AddNewUserForm from "../components/forms/AddNewUserForm";
 import { CustomModal } from "../../components/customModal/CustomModal";
 import { getAllUserAction } from "../../features/users/userActions";
 import RegisterUserForm from "../../components/auth/RegisterForm";
 import { isSuperAdmin } from "../../hooks/isSuperAdmin";
-import { FaUsers, FaUserPlus } from "react-icons/fa";
+import { FaUserPlus, FaUsersCog } from "react-icons/fa";
 
 const User = () => {
   const { users } = useSelector((store) => store.userStore);
@@ -34,7 +33,7 @@ const User = () => {
       <div className="d-flex flex-wrap align-items-center justify-content-between gap-3 mb-4">
         <div className="d-flex align-items-center gap-3">
           <div className="rounded-circle bg-primary bg-opacity-10 p-3 d-flex align-items-center justify-content-center">
-            <FaUsers size={28} className="text-primary" />
+            <FaUsersCog size={28} className="text-primary" />
           </div>
           <div>
             <h2 className="mb-0">Users</h2>
