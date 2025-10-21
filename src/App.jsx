@@ -17,6 +17,7 @@ import { useEffect } from "react";
 import CategoryLanding from "./pages/categories/CategoryLanding";
 import EditCategory from "./pages/categories/EditCategory";
 import NewCategory from "./pages/categories/NewCategory";
+import Customer from "./pages/customer/Customer";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -42,6 +43,7 @@ const App = () => {
           <Route path="/newcategory" element={<NewCategory />} />
 
           <Route path="/orders" element={<Order />} />
+          <Route path="/customer" element={<Customer />} />
           <Route path="/reviews" element={<Review />} />
           <Route path="/settings" element={<Setting />} />
         </Route>
