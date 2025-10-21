@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { getProdcutsAction } from "../../features/products/productActions";
 import { useDispatch, useSelector } from "react-redux";
 import ProductTable from "../../components/products/ProductTable";
+import { CgShoppingBag } from "react-icons/cg";
+import { Container } from "react-bootstrap";
 
 const ProductLanding = () => {
   const dispatch = useDispatch();
@@ -17,10 +19,20 @@ const ProductLanding = () => {
   }, [products]);
 
   return (
-    <div className="m-4 d-flex flex-column gap-4">
-      <h1>Manage Products</h1>
-      <ProductTable products={allProducts} />
-    </div>
+    <Container fluid className="p-4 p-md-5">
+      <div className="d-flex flex-wrap align-items-center justify-content-between gap-3 mb-4">
+        <div className="d-flex align-items-center gap-3">
+          <span className="rounded-circle bg-primary bg-opacity-10 p-3">
+            <CgShoppingBag size={28} className="text-primary" />
+          </span>
+          <div>
+            <h2 className="mb-0">Products</h2>
+            <small className="text-muted">Manage your product listings</small>
+          </div>
+        </div>
+        <ProductTable products={allProducts} />
+      </div>
+    </Container>
   );
 };
 
