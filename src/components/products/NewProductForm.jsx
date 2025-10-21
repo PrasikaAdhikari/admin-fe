@@ -17,9 +17,19 @@ const NewProductForm = () => {
   };
   const fileInputRef = useRef(null);
   const dispatch = useDispatch();
-  const { categories } = useSelector((state) => state.categoryStore);
+  const { categories, subCategories } = useSelector(
+    (state) => state.categoryStore
+  );
   const [category, setCategory] = useState([]);
-  const [selected, setSelected] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState({
+    label: "category",
+    value: "Select category",
+  });
+  const [selectedSubCategory, setSelectedSubCategory] = useState({
+    label: "Sub category",
+    value: "Select SubCategory",
+  });
+  const [filteredSubCategory, setFilteredSubCategory] = useState([]);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -27,8 +37,19 @@ const NewProductForm = () => {
   }, []);
 
   useEffect(() => {
+    let tempsubcat = subCategories.filter(
+      (item) => item.parent == selectedCategory.id
+    );
+
+    tempsubcat = tempsubcat.map((item) => {
+      return { label: item.name, value: item.name, id: item._id };
+    });
+    setFilteredSubCategory(tempsubcat);
+  }, [selectedCategory]);
+
+  useEffect(() => {
     const tempCategories = categories.map((category) => {
-      return { label: category.name, value: category.name };
+      return { label: category.name, value: category.name, id: category._id };
     });
     setCategory(tempCategories);
   }, [categories]);
@@ -47,13 +68,16 @@ const NewProductForm = () => {
         formData.append(key, form[key]);
       }
     });
-    selected.forEach((cat) => formData.append("category", cat));
+
+    formData.append("category", selectedCategory.value);
+
+    formData.append("subCategory", selectedSubCategory.value);
 
     try {
       const result = await dispatch(addProductAction(formData));
       if (result.status === "success") {
         resetForm();
-        setSelected([]);
+        setSelectedCategory({});
         if (fileInputRef.current) {
           fileInputRef.current.value = null;
         }
@@ -117,10 +141,22 @@ const NewProductForm = () => {
         <CustomDropdown
           options={category}
           label="Select categories"
-          selected={selected}
-          setSelected={setSelected}
+          selected={selectedCategory}
+          setSelected={setSelectedCategory}
         />
       </Form.Group>
+      {filteredSubCategory.length > 0 && (
+        <Form.Group className="mb-3">
+          <Form.Label>Select Sub-Category / Sub-Categories</Form.Label>
+          <CustomDropdown
+            options={filteredSubCategory}
+            label="Select sub categories"
+            selected={selectedSubCategory}
+            setSelected={setSelectedSubCategory}
+          />
+        </Form.Group>
+      )}
+
       <Form.Group controlId="formFileMultiple" className="mb-3">
         <Form.Label>Select product images</Form.Label>
         <Form.Control
