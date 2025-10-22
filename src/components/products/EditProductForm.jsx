@@ -97,7 +97,7 @@ const EditProductForm = ({ id }) => {
     );
     setSubCategoryOptions(
       filteredSubCategory.map((item) => {
-        return { label: item.name, value: item.name, id: item.id };
+        return { label: item.name, value: item.name, id: item._id };
       })
     );
   }, [selectedCategory]);
