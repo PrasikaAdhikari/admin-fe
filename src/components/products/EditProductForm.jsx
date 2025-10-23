@@ -3,66 +3,104 @@ import Form from "react-bootstrap/Form";
 import { Button } from "react-bootstrap";
 import useForm from "../../hooks/useForm";
 import { useDispatch, useSelector } from "react-redux";
-import { updateProductAction } from "../../features/products/productActions";
+import {
+  getProdcutsAction,
+  updateProductAction,
+} from "../../features/products/productActions";
 import { ImCross } from "react-icons/im";
 import styles from "./Product.module.css";
 import { getCategoryAction } from "../../features/category/categoryActions";
+import { CustomDropdown } from "../custominput/CustomDropdown";
 
 const EditProductForm = ({ id }) => {
   const dispatch = useDispatch();
   const { products } = useSelector((state) => state.productStore);
-  const { categories } = useSelector((state) => state.categoryStore);
+  const { categories, subCategories } = useSelector(
+    (state) => state.categoryStore
+  );
 
   const [categoryOptions, setCategoryOptions] = useState([]);
-  const [selectedCategories, setSelectedCategories] = useState([]);
+
+  const [selectedCategory, setSelectedCategory] = useState("");
+
+  const [subCategoryOptions, setSubCategoryOptions] = useState([]);
+
+  const [selectedSubCategory, setSelectedSubCategory] = useState("");
+
+  const [imagesToDelete, setImagesToDelete] = useState([]);
 
   const { form, setForm, handleOnChange } = useForm({
     name: "",
     description: "",
     price: "",
     stock: "",
-    category: [],
     images: [],
+    category: "",
+    subCategory: "",
   });
-  const [imagesToDelete, setImagesToDelete] = useState([]);
 
-  // Load categories
   useEffect(() => {
     dispatch(getCategoryAction());
+    dispatch(getProdcutsAction());
   }, [dispatch]);
 
-  // Prepare dropdown options: use both label and ID value
+  //initially prepopulate the form with product data
   useEffect(() => {
-    if (categories.length) {
-      const temp = categories.map((cat) => ({
-        label: cat.name,
-        value: cat._id, // Use ID for backend consistency
-      }));
-      setCategoryOptions(temp);
-    }
-  }, [categories]);
+    const foundProduct = products?.find((product) => product._id === id);
 
-  // Prefill product data
-  useEffect(() => {
-    const foundProduct = products.find((product) => product._id === id);
+    if (!foundProduct) return;
+
     if (foundProduct) {
       setForm({
-        name: foundProduct.name || "",
-        description: foundProduct.description || "",
-        price: foundProduct.price || "",
-        stock: foundProduct.stock || "",
-        images: foundProduct.images || [],
-        category: foundProduct.category || [],
+        name: foundProduct?.name || "",
+        description: foundProduct?.description || "",
+        price: foundProduct?.price || "",
+        stock: foundProduct?.stock || "",
+        images: foundProduct?.images || [],
+        prevCategory: foundProduct?.subCategory || "",
       });
 
       // Convert category IDs to readable names
-      const selectedNames = categories
-        .filter((cat) => foundProduct.category?.includes(cat._id))
-        .map((cat) => cat._id); // still use ID as value
+      const foundCategory = categories.find(
+        (category) => category._id === foundProduct?.category
+      );
+      setSelectedCategory({
+        label: foundCategory?.name,
+        value: foundCategory?.name,
+        id: foundCategory?._id,
+      });
 
-      setSelectedCategories(selectedNames);
+      const foundSubCategory = subCategories.find(
+        (subCat) => subCat._id === foundProduct?.subCategory
+      );
+      setSelectedSubCategory({
+        label: foundSubCategory?.name,
+        value: foundSubCategory?.name,
+        id: foundSubCategory?._id,
+      });
     }
-  }, [id, products, categories, setForm]);
+  }, [id, products, categories, subCategories, setForm]);
+
+  //set category options first
+  useEffect(() => {
+    setCategoryOptions(
+      categories.map((item) => {
+        return { label: item.name, value: item.name, id: item._id };
+      })
+    );
+  }, [categories]);
+
+  //set subCategoryOptions depending on selected category
+  useEffect(() => {
+    const filteredSubCategory = subCategories.filter(
+      (item) => item.parent === selectedCategory.id
+    );
+    setSubCategoryOptions(
+      filteredSubCategory.map((item) => {
+        return { label: item.name, value: item.name, id: item._id };
+      })
+    );
+  }, [selectedCategory]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -81,8 +119,9 @@ const EditProductForm = ({ id }) => {
     });
     imagesToDelete.forEach((image) => formData.append("imagesToDelete", image));
 
-    // Send category IDs
-    selectedCategories.forEach((catId) => formData.append("category", catId));
+    // Send category ID
+    formData.append("category", selectedCategory.id);
+    formData.append("subCategory", selectedSubCategory.id);
 
     dispatch(updateProductAction(id, formData));
   };
@@ -144,6 +183,25 @@ const EditProductForm = ({ id }) => {
           placeholder="Stock"
           onChange={handleOnChange}
           value={form.stock}
+        />
+      </Form.Group>
+      <Form.Group className="mb-3">
+        <Form.Label>Select Category / Categories</Form.Label>
+        <CustomDropdown
+          options={categoryOptions}
+          label="Select categories"
+          selected={selectedCategory}
+          setSelected={setSelectedCategory}
+        />
+      </Form.Group>
+
+      <Form.Group className="mb-3">
+        <Form.Label>Select Sub-Category / Sub-Categories</Form.Label>
+        <CustomDropdown
+          options={subCategoryOptions}
+          label="Select sub categories"
+          selected={selectedSubCategory}
+          setSelected={setSelectedSubCategory}
         />
       </Form.Group>
       <Form.Group
