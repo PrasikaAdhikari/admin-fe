@@ -15,11 +15,11 @@ export const deleteCategoryApi = (id) => {
   });
 };
 
-export const addCategoryApi = (form) => {
+export const addCategoryApi = (data) => {
   return apiProcessor({
     method: "POST",
     url: `${apiUrl}/category`,
-    data: form,
+    data: data,
   });
 };
 
