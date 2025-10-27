@@ -10,11 +10,10 @@ export const getReviewsApi = () => {
 };
 
 // ===== Change review status (active/inactive) =====
-export const updateReviewStatusApi = (id, status) => {
+export const changeReviewStatusApi = (id) => {
   return apiProcessor({
     method: "patch",
     isPrivate: true,
     url: `${apiUrl}/reviews/${id}`,
-    data: { status },
   });
 };

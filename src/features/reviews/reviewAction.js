@@ -1,5 +1,5 @@
 import { toast } from "react-toastify";
-import { getReviewsApi, updateReviewStatusApi } from "./reviewApi.js";
+import { getReviewsApi, changeReviewStatusApi } from "./reviewApi.js";
 
 // ===== Fetch all reviews =====
 export const fetchReviewsAction = async () => {
@@ -9,7 +9,9 @@ export const fetchReviewsAction = async () => {
     return {
       status: result.status,
       message: result.message,
-      reviews: result.data, // reviews come in result.data from backend
+      reviews: result.data,
+      products: result.products,
+      // reviews come in result.data from backend
     };
   } else {
     toast.error(result.message || "Failed to fetch reviews");
@@ -17,14 +19,13 @@ export const fetchReviewsAction = async () => {
 };
 
 // ===== Update review status =====
-export const updateReviewStatusAction = async (id, status) => {
-  const result = await updateReviewStatusApi(id, status);
+export const handleReviewStatusAction = (id) => async (dispatch) => {
+  const result = await changeReviewStatusApi(id);
+
   toast[result.status](result.message);
 
   if (result.status === "success") {
-    return {
-      status: result.status,
-      message: result.message,
-    };
+    // Re-fetch reviews to refresh table (like getProductsAction)
+    dispatch(fetchReviewsAction());
   }
 };
