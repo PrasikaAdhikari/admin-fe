@@ -6,7 +6,6 @@ import { getCategoryAction } from "../../features/category/categoryActions";
 import { handleDeleteAction } from "../../features/category/categoryActions";
 import { CustomModal } from "../customModal/CustomModal";
 import EditCategoryForm from "./EditCategoryForm";
-import SubCategoryForm from "./SubCategoryForm";
 import { MdEdit } from "react-icons/md";
 import { MdDelete } from "react-icons/md";
 import NewCategoryForm from "./NewCategoryForm";
