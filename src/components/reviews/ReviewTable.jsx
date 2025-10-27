@@ -63,7 +63,7 @@ function ReviewTable() {
         {[...reviews].map((review, index) => (
           <tr key={review._id}>
             <td>{index + 1}</td>
-            <td>{review.productId?.productName || "—"}</td>
+            <td>{review.productId?.name || "—"}</td>
             <td>
               {review.productId?.images?.length ? (
                 <img
