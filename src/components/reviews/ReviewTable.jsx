@@ -27,10 +27,23 @@ function ReviewTable() {
     setLoading(false);
   };
 
-  const handleStatusToggle = (id) => {
-    dispatch(handleReviewStatusAction(id));
-  };
+  // const handleStatusToggle = (id) => {
+  //   dispatch(handleReviewStatusAction(id));
+  // };
 
+  const handleStatusToggle = (id, currentStatus) => {
+    // 🔹 Immediately flip the status in UI
+    setReviews((prev) =>
+      prev.map((r) =>
+        r._id === id
+          ? { ...r, status: currentStatus === "active" ? "inactive" : "active" }
+          : r
+      )
+    );
+
+    // 🔹 Dispatch Redux action to update backend and refresh data
+    dispatch(handleReviewStatusAction(id, currentStatus));
+  };
   useEffect(() => {
     loadReviews();
   }, []);
