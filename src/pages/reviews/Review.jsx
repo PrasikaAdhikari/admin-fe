@@ -20,7 +20,7 @@ const Review = () => {
         </div>
       </div>
 
-      <Row className="g-4">
+      <Row className="g-5">
         <ReviewTable />
       </Row>
     </Container>
