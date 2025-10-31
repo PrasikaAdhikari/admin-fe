@@ -27,7 +27,6 @@ const ProductLanding = () => {
 
   return (
     <Container fluid className="p-4 p-md-5">
-      <HeaderSearch onSearchChange={handleSearchChange}></HeaderSearch>
       <div className="d-flex flex-wrap align-items-center justify-content-between gap-3 mb-4">
         <div className="d-flex align-items-center gap-3">
           <span className="rounded-circle bg-primary bg-opacity-10 p-3">
@@ -38,6 +37,7 @@ const ProductLanding = () => {
             <small className="text-muted">Manage your product listings</small>
           </div>
         </div>
+        <HeaderSearch onSearchChange={handleSearchChange}></HeaderSearch>
         <ProductTable products={allProducts} />
       </div>
     </Container>

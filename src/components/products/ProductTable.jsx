@@ -107,7 +107,7 @@ function ProductTable({ products }) {
                 ))}
               </div>
             </td>
-            <td>{product.averageRating}</td>
+            <td>{(Math.round(product.averageRating * 10) / 10).toFixed(2)}</td>
             <td>
               <div className="d-flex gap-2 justify-content-center">
                 <Button
