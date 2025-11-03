@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { getProdcutsAction } from "../../features/products/productActions";
+import { getProductsAction } from "../../features/products/productActions";
 import { useDispatch, useSelector } from "react-redux";
 import ProductTable from "../../components/products/ProductTable";
 import { CgShoppingBag } from "react-icons/cg";
@@ -11,7 +11,7 @@ const ProductLanding = () => {
   const [allProducts, setAllProducts] = useState([]);
 
   useEffect(() => {
-    dispatch(getProdcutsAction());
+    dispatch(getProductsAction());
   }, []);
 
   useEffect(() => {
