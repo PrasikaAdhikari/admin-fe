@@ -1,4 +1,4 @@
-import { Button, Form } from "react-bootstrap";
+import { Button, Form, Pagination } from "react-bootstrap";
 import Table from "react-bootstrap/Table";
 import styles from "./Product.module.css";
 import { useState } from "react";
@@ -17,6 +17,29 @@ function ProductTable({ products }) {
   const dispatch = useDispatch();
   const [activeImage, setActiveImage] = useState("");
   const [editProductId, setEditProductId] = useState("");
+
+  // Pagination
+  const [activePage, setActivePage] = useState(1);
+  const productsPerPage = 7;
+  const totalPage = Math.ceil(products.length / productsPerPage);
+  //Core pagination logic
+  const currentProducts = products.slice(
+    (activePage - 1) * productsPerPage,
+    activePage * productsPerPage
+  );
+  //For the pagination
+  const paginationItems = [];
+  for (let number = 1; number <= totalPage; number++) {
+    paginationItems.push(
+      <Pagination.Item
+        key={number}
+        active={number === activePage}
+        onClick={() => setActivePage(number)}
+      >
+        {number}
+      </Pagination.Item>
+    );
+  }
 
   const handleDelete = (id) => {
     const confirmed = window.confirm(
@@ -48,9 +71,9 @@ function ProductTable({ products }) {
         </tr>
       </thead>
       <tbody>
-        {[...products].reverse().map((product, index) => (
-          <tr key={index}>
-            <td>{index + 1}</td>
+        {currentProducts.map((product, index) => (
+          <tr key={product._id}>
+            <td>{(activePage - 1) * productsPerPage + index + 1}</td>
             <td>{product.name}</td>
             <td>
               {product.description.length > 40
@@ -60,22 +83,22 @@ function ProductTable({ products }) {
             <td>
               <Form.Check
                 type="switch"
-                checked={product.status === "active" ? true : false}
-                onClick={() => {
-                  handleSwitchChange(product._id);
-                }}
+                checked={product.status === "active"}
+                onChange={() => handleSwitchChange(product._id)}
               />
             </td>
             <td>{product.price}</td>
             <td>{product.stock}</td>
             <td>
               <div className="d-flex gap-1">
-                {product?.images.map((url) => (
+                {product.images.map((url, i) => (
                   <img
+                    key={i}
                     className={styles.imageThumbnail}
                     src={url}
-                    width="80px"
-                    height="60px"
+                    width="80"
+                    height="60"
+                    alt="product"
                     onClick={() => {
                       setImageModalShow(true);
                       setActiveImage(url);
@@ -84,11 +107,11 @@ function ProductTable({ products }) {
                 ))}
               </div>
             </td>
-            <td>{product.averageRating}</td>
+            <td>{(Math.round(product.averageRating * 10) / 10).toFixed(2)}</td>
             <td>
               <div className="d-flex gap-2 justify-content-center">
                 <Button
-                  className="btn-warning"
+                  variant="warning"
                   onClick={() => {
                     setModalShow(true);
                     setEditProductId(product._id);
@@ -97,10 +120,8 @@ function ProductTable({ products }) {
                   Edit
                 </Button>
                 <Button
-                  className="btn-danger"
-                  onClick={() => {
-                    handleDelete(product._id);
-                  }}
+                  variant="danger"
+                  onClick={() => handleDelete(product._id)}
                 >
                   Delete
                 </Button>
@@ -108,6 +129,8 @@ function ProductTable({ products }) {
             </td>
           </tr>
         ))}
+
+        {/* Modals and pagination below table rows */}
         <CustomModal
           show={modalShow}
           title="Edit Product"
@@ -115,11 +138,20 @@ function ProductTable({ products }) {
         >
           <EditProductForm id={editProductId} />
         </CustomModal>
+
         <ImageModal
           show={imageModalShow}
           onHide={() => setImageModalShow(false)}
           image={activeImage}
         />
+
+        <tr>
+          <td colSpan="9" className="text-center">
+            <Pagination className="justify-content-center mt-3">
+              {paginationItems}
+            </Pagination>
+          </td>
+        </tr>
       </tbody>
     </Table>
   );

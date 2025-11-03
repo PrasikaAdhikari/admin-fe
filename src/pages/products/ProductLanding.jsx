@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import ProductTable from "../../components/products/ProductTable";
 import { CgShoppingBag } from "react-icons/cg";
 import { Container } from "react-bootstrap";
+import HeaderSearch from "../../components/layout/HeaderSearch";
 
 const ProductLanding = () => {
   const dispatch = useDispatch();
@@ -18,6 +19,12 @@ const ProductLanding = () => {
     setAllProducts(products);
   }, [products]);
 
+  // Callback for HeaderSearch
+  const handleSearchChange = (filteredProducts) => {
+    // If search input is empty, show all products
+    setAllProducts(filteredProducts.length > 0 ? filteredProducts : products);
+  };
+
   return (
     <Container fluid className="p-4 p-md-5">
       <div className="d-flex flex-wrap align-items-center justify-content-between gap-3 mb-4">
@@ -30,6 +37,7 @@ const ProductLanding = () => {
             <small className="text-muted">Manage your product listings</small>
           </div>
         </div>
+        <HeaderSearch onSearchChange={handleSearchChange}></HeaderSearch>
         <ProductTable products={allProducts} />
       </div>
     </Container>

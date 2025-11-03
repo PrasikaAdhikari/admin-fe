@@ -25,8 +25,8 @@ export const handleDeleteAction = (id) => async (dispatch) => {
   return { status: result.status, message: result.message };
 };
 
-export const addCategoryAction = (form) => async (dispatch) => {
-  const result = await addCategoryApi(form);
+export const addCategoryAction = (formData) => async (dispatch) => {
+  const result = await addCategoryApi(formData);
   if (result.status === "success") {
     dispatch(getCategoryAction());
   }

@@ -1,6 +1,7 @@
 import React from "react";
 import { Container, Row } from "react-bootstrap";
 import { BsStars } from "react-icons/bs";
+import ReviewTable from "../../components/reviews/ReviewTable";
 
 const Review = () => {
   return (
@@ -19,10 +20,8 @@ const Review = () => {
         </div>
       </div>
 
-      <Row className="g-4">
-        <div className="card-neo rounded-4 p-4">
-          <div className="text-center py-5">No reviews to display yet.</div>
-        </div>
+      <Row className="g-5">
+        <ReviewTable />
       </Row>
     </Container>
   );

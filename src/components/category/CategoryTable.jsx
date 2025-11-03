@@ -6,9 +6,9 @@ import { getCategoryAction } from "../../features/category/categoryActions";
 import { handleDeleteAction } from "../../features/category/categoryActions";
 import { CustomModal } from "../customModal/CustomModal";
 import EditCategoryForm from "./EditCategoryForm";
-import SubCategoryForm from "./SubCategoryForm";
 import { MdEdit } from "react-icons/md";
 import { MdDelete } from "react-icons/md";
+import NewCategoryForm from "./NewCategoryForm";
 
 const CategoryTable = () => {
   const { categories } = useSelector((state) => state.categoryStore);
@@ -134,7 +134,7 @@ const CategoryTable = () => {
           title={`Add Sub-Category to ${selectedCategory.name}`}
           onHide={() => setSubCategoryModalShow(!subCategoryModalShow)}
         >
-          <SubCategoryForm id={selectedCategory.id} />
+          <NewCategoryForm id={selectedCategory.id} />
         </CustomModal>
       </tbody>
     </Table>

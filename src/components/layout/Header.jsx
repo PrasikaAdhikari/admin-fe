@@ -5,6 +5,7 @@ import { LuLogOut } from "react-icons/lu";
 import { useSelector, useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { setUser } from "../../features/users/userSlice";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 const Header = ({ toggleSidebar }) => {
   const dispatch = useDispatch();
@@ -77,7 +78,13 @@ const Header = ({ toggleSidebar }) => {
             </>
           ) : (
             <Nav.Link as={Link} to="/">
-              <FaHouseUser className="me-1" /> Login
+              <Button
+                size="lg"
+                bsPrefix="neo"
+                className="btn-neo rounded-4 px-4 d-inline-flex align-items-center gap-2"
+              >
+                Login
+              </Button>
             </Nav.Link>
           )}
         </Nav>
