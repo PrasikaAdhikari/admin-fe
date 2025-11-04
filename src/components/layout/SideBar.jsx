@@ -51,6 +51,11 @@ const SideBar = ({ isOpen, toggleSidebar, isMobile }) => {
             </Navbar.Brand>
 
             <Nav className="flex-column mt-4 px-2">
+              <Nav.Item className="mb-2">
+                <Nav.Link as={Link} to="/" className="text-white px-2 py-1">
+                  Dashboard
+                </Nav.Link>
+              </Nav.Item>
               {/* Products Section */}
               <Nav.Item className="mb-2">
                 <div
@@ -80,7 +85,6 @@ const SideBar = ({ isOpen, toggleSidebar, isMobile }) => {
                   </Nav>
                 )}
               </Nav.Item>
-
               {/* Category Section */}
               <Nav.Item className="mb-2">
                 <div
@@ -110,18 +114,19 @@ const SideBar = ({ isOpen, toggleSidebar, isMobile }) => {
                   </Nav>
                 )}
               </Nav.Item>
-
               {/* Static Links */}
               {["User", "Orders", "Customer", "Reviews", "Settings"].map(
                 (item) => (
-                  <Nav.Link
-                    as={Link}
-                    key={item}
-                    to={`/${item.toLowerCase()}`}
-                    className="text-white px-2 py-1 mb-1"
-                  >
-                    {item}
-                  </Nav.Link>
+                  <Nav.Item className="mb-2">
+                    <Nav.Link
+                      as={Link}
+                      key={item}
+                      to={`/${item.toLowerCase()}`}
+                      className="text-white px-2 py-1"
+                    >
+                      {item}
+                    </Nav.Link>
+                  </Nav.Item>
                 )
               )}
             </Nav>

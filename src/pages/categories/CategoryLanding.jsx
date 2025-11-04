@@ -18,8 +18,8 @@ const CategoryLanding = () => {
             </small>
           </div>
         </div>
-        <CategoryTable />
       </div>
+      <CategoryTable />
     </Container>
   );
 };

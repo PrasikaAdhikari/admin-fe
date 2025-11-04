@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { getAllUserAction } from "../../features/users/userActions";
-import { getProductsAction } from "../../features/products/productActions";
+import { BsSpeedometer2 } from "react-icons/bs";
 
 // Charts
 import {
@@ -19,7 +19,10 @@ import {
   TimeScale,
 } from "chart.js";
 import { Line, Bar, Doughnut } from "react-chartjs-2";
+import { getProductsAction } from "../../features/products/productActions";
 import { apiProcessor } from "../../utils/axiosHelper";
+
+export const apiUrl = import.meta.env.VITE_APP_API_URL + "/api/v1";
 
 ChartJS.register(
   CategoryScale,
@@ -34,8 +37,22 @@ ChartJS.register(
   TimeScale
 );
 
+// 🎨 Dashboard color palette
+const PALETTE = {
+  primary: "#3b82f6", // blue-500
+  primarySoft: "rgba(59, 130, 246, 0.25)",
+  success: "#22c55e", // green-500
+  successSoft: "rgba(34, 197, 94, 0.25)",
+  warning: "#f59e0b", // amber-500
+  warningSoft: "rgba(245, 158, 11, 0.25)",
+  info: "#06b6d4", // cyan-500
+  infoSoft: "rgba(6, 182, 212, 0.25)",
+  purple: "#8b5cf6",
+  pink: "#ec4899",
+  slate: "#64748b",
+};
+
 // Small helpers --------------------------------------------------------------
-const apiUrl = import.meta.env.VITE_APP_API_URL + "/api/v1";
 const currency = (n) =>
   new Intl.NumberFormat(undefined, {
     style: "currency",
@@ -76,23 +93,11 @@ export default function AdminDashboard() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
-  // Fetchers -----------------------------------------------------------------
   const fetchOrders = async () => {
-    try {
-      const {
-        status,
-        orders = [],
-        message,
-      } = await apiProcessor({
-        method: "GET",
-        url: `${apiUrl}/orders`,
-        isPrivate: true,
-      });
-      if (status === "success") return orders;
-      throw new Error(message || "Failed to load orders");
-    } catch (e) {
-      throw e;
-    }
+    const res = await apiProcessor({ method: "GET", url: `${apiUrl}/orders` });
+    const { status, orders = [], message } = res || {};
+    if (status === "success") return orders;
+    throw new Error(message || "Failed to load orders");
   };
 
   useEffect(() => {
@@ -111,10 +116,8 @@ export default function AdminDashboard() {
         setLoading(false);
       }
     })();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch]);
 
-  // Derived metrics ----------------------------------------------------------
   const metrics = useMemo(() => {
     const totalUsers = users.length;
     const totalProducts = products.length;
@@ -124,7 +127,6 @@ export default function AdminDashboard() {
 
     const totalOrders = orders.length;
     const revenue = orders.reduce((sum, o) => {
-      // Try a few common total fields
       const v = o?.total ?? o?.grandTotal ?? o?.amount ?? o?.totalAmount ?? 0;
       return sum + Number(v || 0);
     }, 0);
@@ -194,8 +196,11 @@ export default function AdminDashboard() {
           label: "Orders (last 30 days)",
           data: metrics.ordersByDay,
           borderWidth: 2,
+          borderColor: PALETTE.primary,
+          backgroundColor: PALETTE.primarySoft,
           fill: true,
           tension: 0.35,
+          pointRadius: 2.5,
         },
       ],
     }),
@@ -211,6 +216,7 @@ export default function AdminDashboard() {
         {
           label: "New users (6 mo)",
           data: metrics.usersByMonth,
+          backgroundColor: PALETTE.success,
         },
       ],
     }),
@@ -219,12 +225,14 @@ export default function AdminDashboard() {
 
   const ordersByStatusData = useMemo(() => {
     const labels = Object.keys(metrics.byStatus);
+    const bg = [PALETTE.info, PALETTE.warning, PALETTE.success];
     return {
       labels,
       datasets: [
         {
           label: "Orders by status",
           data: labels.map((k) => metrics.byStatus[k]),
+          backgroundColor: labels.map((_, i) => bg[i % bg.length]),
         },
       ],
     };
@@ -238,12 +246,12 @@ export default function AdminDashboard() {
         {
           label: "Products",
           data: [metrics.activeProducts, inactive],
+          backgroundColor: [PALETTE.success, PALETTE.pink],
         },
       ],
     };
   }, [metrics.activeProducts, metrics.totalProducts]);
 
-  // Layout -------------------------------------------------------------------
   if (loading) {
     return (
       <div className="container py-5">
@@ -261,23 +269,28 @@ export default function AdminDashboard() {
   }
 
   return (
-    <div className="container-fluid py-4">
+    <div className="container-fluid p-4 p-md-5">
       {/* Header */}
       <div className="d-flex align-items-center justify-content-between mb-4">
-        <div>
-          <h1 className="h3 fw-bold mb-1">Admin Dashboard</h1>
-          <div className="text-muted">
-            Overview of users, products, and orders
+        <div className="d-flex align-items-center gap-3">
+          <span className="rounded-circle bg-primary bg-opacity-10 p-3 d-flex align-items-center justify-content-center">
+            <BsSpeedometer2 size={28} className="text-primary" />
+          </span>
+          <div>
+            <h2 className="mb-0">Dashboard</h2>
+            <small className="text-muted">
+              Overview of users, products & orders
+            </small>
           </div>
         </div>
         <div className="d-flex gap-2">
-          <Link to="/admin/products" className="btn btn-primary">
+          <Link to="/product" className="btn btn-primary">
             Manage Products
           </Link>
-          <Link to="/admin/category" className="btn btn-outline-secondary">
+          <Link to="/categories" className="btn btn-outline-secondary">
             Manage Categories
           </Link>
-          <Link to="/admin/users" className="btn btn-outline-secondary">
+          <Link to="/user" className="btn btn-outline-secondary">
             Manage Users
           </Link>
         </div>
@@ -330,8 +343,11 @@ export default function AdminDashboard() {
                   maintainAspectRatio: false,
                   plugins: { legend: { display: true, position: "top" } },
                   scales: {
-                    x: { grid: { display: false } },
-                    y: { beginAtZero: true },
+                    x: { grid: { color: "rgba(0,0,0,0.06)" } },
+                    y: {
+                      beginAtZero: true,
+                      grid: { color: "rgba(0,0,0,0.06)" },
+                    },
                   },
                 }}
                 height={280}
@@ -352,7 +368,13 @@ export default function AdminDashboard() {
                   responsive: true,
                   indexAxis: "y",
                   plugins: { legend: { display: false } },
-                  scales: { x: { beginAtZero: true } },
+                  scales: {
+                    x: {
+                      beginAtZero: true,
+                      grid: { color: "rgba(0,0,0,0.06)" },
+                    },
+                    y: { grid: { color: "rgba(0,0,0,0.06)" } },
+                  },
                 }}
                 height={280}
               />
@@ -371,7 +393,13 @@ export default function AdminDashboard() {
                 options={{
                   responsive: true,
                   plugins: { legend: { display: false } },
-                  scales: { y: { beginAtZero: true } },
+                  scales: {
+                    y: {
+                      beginAtZero: true,
+                      grid: { color: "rgba(0,0,0,0.06)" },
+                    },
+                    x: { grid: { color: "rgba(0,0,0,0.06)" } },
+                  },
                 }}
                 height={280}
               />
@@ -403,10 +431,7 @@ export default function AdminDashboard() {
           <div className="card border-0 shadow-sm">
             <div className="card-header bg-white border-0 pb-0 d-flex align-items-center justify-content-between">
               <h6 className="card-title mb-0">Recent orders</h6>
-              <Link
-                to="/admin/orders"
-                className="btn btn-sm btn-outline-secondary"
-              >
+              <Link to="/orders" className="btn btn-sm btn-outline-secondary">
                 View all
               </Link>
             </div>
@@ -429,9 +454,17 @@ export default function AdminDashboard() {
                       </td>
                       <td>{o?.customerName || o?.customer?.name || "-"}</td>
                       <td>
-                        <span className="badge bg-secondary-subtle border text-secondary fw-semibold">
-                          {o?.status || "Unknown"}
-                        </span>
+                        {o?.status === "Delivered" ? (
+                          <span className="badge bg-success">Delivered</span>
+                        ) : o?.status === "Shipped" ? (
+                          <span className="badge bg-warning text-dark">
+                            Shipped
+                          </span>
+                        ) : (
+                          <span className="badge bg-info text-dark">
+                            Order received
+                          </span>
+                        )}
                       </td>
                       <td>
                         {currency(o?.total ?? o?.grandTotal ?? o?.amount ?? 0)}

@@ -26,7 +26,7 @@ const OrderStatusDropdown = ({ orderStatus, orderId }) => {
             ? "success"
             : status === "Shipped"
             ? "warning"
-            : "primary"
+            : "info"
         }
         id="dropdown-basic"
       >

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Container, Table } from "react-bootstrap";
+import { Badge, Card, Col, Container, Row, Table } from "react-bootstrap";
 import { fetchOrdersAction } from "../../features/orders/orderActions";
 import OrderStatusDropdown from "../../components/orders/OrderStatusDropdown";
 import { BsReceipt } from "react-icons/bs";
@@ -29,65 +29,82 @@ const Order = () => {
             </small>
           </div>
         </div>
-        <Table hover bordered striped>
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>OrderId</th>
-              <th>Order Item</th>
-              <th>Quantity</th>
-              <th>Price</th>
-              <th>Status</th>
-            </tr>
-          </thead>
-          <tbody>
-            {orders?.map((order, index) => (
-              <React.Fragment key={order._id}>
-                {order.items.map((item, itemIndex) => (
-                  <tr key={`${order._id}-${item.productId}`}>
-                    {itemIndex === 0 && (
-                      <>
-                        <td
-                          rowSpan={order.items.length}
-                          className="align-middle"
-                        >
-                          {index + 1}
-                        </td>
-                        <td
-                          rowSpan={order.items.length}
-                          className="align-middle"
-                        >
-                          {order._id}
-                        </td>
-                      </>
-                    )}
-                    <td>{item.productName}</td>
-                    <td className="text-center">{item.quantity} x </td>
-                    <td>${item.price}</td>
-                    {itemIndex === 0 && (
-                      <td
-                        rowSpan={order.items.length + 1}
-                        className="align-middle"
-                      >
-                        <OrderStatusDropdown
-                          orderStatus={order.status}
-                          orderId={order._id}
-                        />
-                      </td>
-                    )}
-                  </tr>
-                ))}
-                <tr>
-                  <td colSpan={4} className="text-end">
-                    Total:
-                  </td>
-                  <td>${order.total.toFixed(2)}</td>
-                </tr>
-              </React.Fragment>
-            ))}
-          </tbody>
-        </Table>
       </div>
+
+      <Row className="g-4">
+        <Col xs={12}>
+          <Card className="border-0 shadow-sm">
+            <Card.Header className="bg-white border-0 d-flex align-items-center justify-content-between">
+              <strong>All Orders</strong>
+              <Badge bg="light" text="dark">
+                {orders.length}
+              </Badge>
+            </Card.Header>
+            <Card.Body className="pt-0">
+              <div className="table-responsive">
+                <Table hover bordered striped>
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>OrderId</th>
+                      <th>Order Item</th>
+                      <th>Quantity</th>
+                      <th>Price</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {orders?.map((order, index) => (
+                      <React.Fragment key={order._id}>
+                        {order.items.map((item, itemIndex) => (
+                          <tr key={`${order._id}-${item.productId}`}>
+                            {itemIndex === 0 && (
+                              <>
+                                <td
+                                  rowSpan={order.items.length}
+                                  className="align-middle"
+                                >
+                                  {index + 1}
+                                </td>
+                                <td
+                                  rowSpan={order.items.length}
+                                  className="align-middle"
+                                >
+                                  {order._id}
+                                </td>
+                              </>
+                            )}
+                            <td>{item.productName}</td>
+                            <td className="text-center">{item.quantity} x </td>
+                            <td>${item.price}</td>
+                            {itemIndex === 0 && (
+                              <td
+                                rowSpan={order.items.length + 1}
+                                className="align-middle"
+                              >
+                                <OrderStatusDropdown
+                                  orderStatus={order.status}
+                                  orderId={order._id}
+                                />
+                              </td>
+                            )}
+                          </tr>
+                        ))}
+                        <tr>
+                          <td colSpan={4} className="text-end">
+                            Total:
+                          </td>
+                          <td>${order.total.toFixed(2)}</td>
+                        </tr>
+                      </React.Fragment>
+                    ))}
+                  </tbody>
+                </Table>
+              </div>
+            </Card.Body>
+          </Card>
+        </Col>
+      </Row>
     </Container>
   );
 };
