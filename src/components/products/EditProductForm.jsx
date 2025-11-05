@@ -4,7 +4,7 @@ import { Button } from "react-bootstrap";
 import useForm from "../../hooks/useForm";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  getProdcutsAction,
+  getProductsAction,
   updateProductAction,
 } from "../../features/products/productActions";
 import { ImCross } from "react-icons/im";
@@ -41,7 +41,7 @@ const EditProductForm = ({ id }) => {
 
   useEffect(() => {
     dispatch(getCategoryAction());
-    dispatch(getProdcutsAction());
+    dispatch(getProductsAction());
   }, [dispatch]);
 
   //initially prepopulate the form with product data
