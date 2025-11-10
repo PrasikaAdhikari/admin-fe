@@ -8,7 +8,7 @@ import {
 } from "./productApi";
 import { setProducts } from "./productSlice";
 
-export const getProdcutsAction = () => async (dispatch) => {
+export const getProductsAction = () => async (dispatch) => {
   const products = await getProductsApi();
   if (products.status === "success") {
     dispatch(setProducts(products.products));
@@ -19,7 +19,7 @@ export const getProdcutsAction = () => async (dispatch) => {
 export const addProductAction = (form) => async (dispatch) => {
   const result = await addProductApi(form);
   if (result.status === "success") {
-    dispatch(getProdcutsAction());
+    dispatch(getProductsAction());
   }
   toast[result.status](result.message);
   return { status: result.status };
@@ -28,7 +28,7 @@ export const addProductAction = (form) => async (dispatch) => {
 export const updateProductAction = (id, form) => async (dispatch) => {
   const result = await updateProductApi(id, form);
   if (result.status === "success") {
-    dispatch(getProdcutsAction());
+    dispatch(getProductsAction());
   }
   toast[result.status](result.message);
 };
@@ -36,7 +36,7 @@ export const updateProductAction = (id, form) => async (dispatch) => {
 export const handleDeleteAction = (id) => async (dispatch) => {
   const result = await deleteProductApi(id);
   if (result.status === "success") {
-    dispatch(getProdcutsAction());
+    dispatch(getProductsAction());
   }
   toast[result.status](result.message);
 };
@@ -44,7 +44,7 @@ export const handleDeleteAction = (id) => async (dispatch) => {
 export const handleActiveStatusAction = (id) => async (dispatch) => {
   const result = await changeProductStatusApi(id);
   if (result.status === "success") {
-    dispatch(getProdcutsAction());
+    dispatch(getProductsAction());
   }
   toast[result.status](result.message);
 };

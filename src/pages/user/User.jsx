@@ -58,7 +58,7 @@ const User = () => {
       {/* Content */}
       <Row className="g-4">
         <Col xs={12}>
-          <Card className="border-0">
+          <Card className="border-0 shadow-sm">
             <Card.Header className="bg-white border-0 d-flex align-items-center justify-content-between">
               <strong>All users</strong>
               <Badge bg="light" text="dark">

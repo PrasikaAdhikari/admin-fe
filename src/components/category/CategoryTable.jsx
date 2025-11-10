@@ -33,7 +33,7 @@ const CategoryTable = () => {
   };
 
   return (
-    <Table hover className={styles.tableItem}>
+    <Table hover bordered striped>
       <thead>
         <tr>
           <th>#</th>

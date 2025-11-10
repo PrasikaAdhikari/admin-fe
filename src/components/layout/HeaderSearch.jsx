@@ -44,7 +44,7 @@ export default function HeaderSearch({
         placeholder={placeholder}
         value={q}
         onChange={(e) => setQ(e.target.value)}
-        className="rounded-start-4"
+        className="rounded-4"
       />
     </InputGroup>
   );
