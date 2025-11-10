@@ -35,6 +35,7 @@ const Order = () => {
               <th>#</th>
               <th>OrderId</th>
               <th>Order Item</th>
+              <th>Address</th>
               <th>Quantity</th>
               <th>Price</th>
               <th>Status</th>
@@ -62,6 +63,7 @@ const Order = () => {
                       </>
                     )}
                     <td>{item.productName}</td>
+                    <td>{item.address}</td>
                     <td className="text-center">{item.quantity} x </td>
                     <td>${item.price}</td>
                     {itemIndex === 0 && (
