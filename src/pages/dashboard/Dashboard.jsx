@@ -52,6 +52,22 @@ const PALETTE = {
   slate: "#64748b",
 };
 
+const STATUS_ORDER = ["Order received", "Shipped", "Delivered"];
+
+const normalizeStatus = (s = "") => {
+  const raw = s.toString().trim().toLowerCase();
+  if (
+    raw.startsWith("order") ||
+    raw === "received" ||
+    raw === "processing" ||
+    raw === "pending"
+  )
+    return "Order received";
+  if (raw === "shipped" || raw === "in transit") return "Shipped";
+  if (raw === "delivered" || raw === "completed") return "Delivered";
+  return "Order received";
+};
+
 // Small helpers --------------------------------------------------------------
 const currency = (n) =>
   new Intl.NumberFormat(undefined, {
@@ -131,17 +147,15 @@ export default function AdminDashboard() {
       return sum + Number(v || 0);
     }, 0);
 
-    // Orders by status (schema enum: Order received / Shipped / Delivered)
     const byStatus = orders.reduce(
       (acc, o) => {
-        const k = o?.status || "Unknown";
+        const k = normalizeStatus(o?.status);
         acc[k] = (acc[k] || 0) + 1;
         return acc;
       },
       { "Order received": 0, Shipped: 0, Delivered: 0 }
     );
 
-    // Orders by day (last 30 days)
     const now = new Date();
     const days = [...Array(30)].map((_, i) => {
       const d = new Date(now);
@@ -159,7 +173,6 @@ export default function AdminDashboard() {
       }).length;
     });
 
-    // New users by month (last 6 months)
     const months = [...Array(6)].map((_, i) => {
       const d = new Date(now.getFullYear(), now.getMonth() - (5 - i), 1);
       return d;
@@ -224,7 +237,7 @@ export default function AdminDashboard() {
   );
 
   const ordersByStatusData = useMemo(() => {
-    const labels = Object.keys(metrics.byStatus);
+    const labels = STATUS_ORDER.filter((k) => (metrics.byStatus[k] || 0) > 0);
     const bg = [PALETTE.info, PALETTE.warning, PALETTE.success];
     return {
       labels,
@@ -440,40 +453,48 @@ export default function AdminDashboard() {
                 <thead className="table-light">
                   <tr>
                     <th>#</th>
-                    <th>Customer</th>
+                    <th>Customer Name</th>
                     <th>Status</th>
                     <th>Total</th>
                     <th>Date</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {orders.slice(0, 8).map((o, idx) => (
-                    <tr key={o._id || idx}>
-                      <td className="text-muted">
-                        {String(o._id || "").slice(-6)}
-                      </td>
-                      <td>{o?.customerName || o?.customer?.name || "-"}</td>
-                      <td>
-                        {o?.status === "Delivered" ? (
-                          <span className="badge bg-success">Delivered</span>
-                        ) : o?.status === "Shipped" ? (
-                          <span className="badge bg-warning text-dark">
-                            Shipped
-                          </span>
-                        ) : (
-                          <span className="badge bg-info text-dark">
-                            Order received
-                          </span>
-                        )}
-                      </td>
-                      <td>
-                        {currency(o?.total ?? o?.grandTotal ?? o?.amount ?? 0)}
-                      </td>
-                      <td className="text-nowrap">
-                        {new Date(o?.createdAt || Date.now()).toLocaleString()}
-                      </td>
-                    </tr>
-                  ))}
+                  {orders.slice(0, 8).map((o, idx) => {
+                    console.log("order row:", o);
+                    return (
+                      <tr key={o?._id ?? idx}>
+                        <td className="text-muted">
+                          {String(o?._id || "").slice(-6)}
+                        </td>
+                        <td>{o.customerName || "-"}</td>
+                        <td>
+                          {o?.status === "Delivered" ? (
+                            <span className="badge bg-success">Delivered</span>
+                          ) : o?.status === "Shipped" ? (
+                            <span className="badge bg-warning text-dark">
+                              Shipped
+                            </span>
+                          ) : (
+                            <span className="badge bg-info text-dark">
+                              Order received
+                            </span>
+                          )}
+                        </td>
+                        <td>
+                          {currency(
+                            o?.total ?? o?.grandTotal ?? o?.amount ?? 0
+                          )}
+                        </td>
+                        <td className="text-nowrap">
+                          {new Date(
+                            o?.createdAt || Date.now()
+                          ).toLocaleString()}
+                        </td>
+                      </tr>
+                    );
+                  })}
+
                   {!orders.length && (
                     <tr>
                       <td colSpan={5} className="text-center text-muted py-4">
