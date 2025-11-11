@@ -85,8 +85,8 @@ export default function AdminDashboard() {
   const dispatch = useDispatch();
 
   // Redux state
-  const { users = [] } = useSelector((s) => s.userStore || {});
-  const { products = [] } = useSelector((s) => s.productStore || {});
+  const { users } = useSelector((store) => store.userStore);
+  const { products } = useSelector((store) => store.productStore);
 
   // Local state
   const [orders, setOrders] = useState([]);
